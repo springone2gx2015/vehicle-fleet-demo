@@ -16,26 +16,30 @@
 
 package demo;
 
-import java.util.Collections;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-/**
- * @author Dave Syer
- *
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
+@Entity
 @RequiredArgsConstructor
-public class FleetLocation {
-
+public class FaultCode {
+	@Id
+	@GeneratedValue
 	private Long id;
-	private long movingTrucks;
-	private long stoppedTrucks;
-	private List<Location> trucks = Collections.emptyList();
-
+	private String engineMake;
+	private String faultCode;
+	private String faultCodeId;
+	private String faultCodeClassification;
+	private String description;
+	private String repairInstructions;
+	private long fmi;
+	private String sa;
+	private long spn;
 }

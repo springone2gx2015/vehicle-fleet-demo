@@ -36,12 +36,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor=@__(@PersistenceConstructor))
 @Document
 public class ServiceLocation {
 
 	@Id
-	private Long id;
+	private String id;
 	private String address1;
 	private String address2;
 	private String city;
@@ -57,7 +57,6 @@ public class ServiceLocation {
 		this.point = new Point(0, 0);
 	}
 
-	@PersistenceConstructor
 	@JsonCreator
 	public ServiceLocation(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
 		this.point = new Point(longitude, latitude);

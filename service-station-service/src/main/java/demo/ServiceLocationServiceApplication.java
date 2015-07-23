@@ -17,6 +17,11 @@ package demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.Cloud;
+import org.springframework.cloud.CloudFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class ServiceLocationServiceApplication {
@@ -24,4 +29,16 @@ public class ServiceLocationServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceLocationServiceApplication.class, args);
 	}
+
+	@Configuration
+	@Profile("cloud")
+	protected static class CloudFoundryConfiguration {
+
+		@Bean
+		public Cloud cloud() {
+			return new CloudFactory().getCloud();
+		}
+
+	}
+
 }

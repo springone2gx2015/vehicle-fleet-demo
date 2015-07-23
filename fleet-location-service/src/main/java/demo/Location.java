@@ -19,6 +19,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -54,9 +55,9 @@ public class Location {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private final UnitInfo unitInfo;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private UnitFault unitFault;
 	private double latitude;
 	private double longitude;
@@ -73,7 +74,8 @@ public class Location {
 	private VehicleMovementType vehicleMovementType = VehicleMovementType.STOPPED;
 	private String serviceType;
 	// TODO: why is this not part of UnitFault?
-	private String faultCode;
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private FaultCode faultCode;
 
 	@SuppressWarnings("unused")
 	private Location() {
@@ -81,7 +83,7 @@ public class Location {
 	}
 
 	public String getVin() {
-		return this.unitInfo.getUnitVin();
+		return this.unitInfo==null ? null : this.unitInfo.getUnitVin();
 	}
 
 }

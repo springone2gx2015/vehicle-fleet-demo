@@ -18,6 +18,9 @@ package demo;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +46,10 @@ public class FleetLocationService {
 	@RequestMapping(value = "/fleet", method = RequestMethod.GET)
 	public FleetResource fleet() {
 		FleetLocation fleet = new FleetLocation();
-		fleet.setTrucks(this.repository.findAll());
+		List<Location> trucks = new ArrayList<Location>();
+		this.repository.findAll().iterator()
+		.forEachRemaining(location -> trucks.add(location));
+		fleet.setTrucks(trucks);
 		fleet.setId(123456L);
 		int stopped = 0;
 		int moving = 0;
