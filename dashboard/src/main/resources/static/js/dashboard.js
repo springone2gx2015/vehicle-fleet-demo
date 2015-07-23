@@ -458,7 +458,7 @@ function setupServiceCenters() {
 	        xhrObj.setRequestHeader(header, token);
 	    },
 	    crossDomain: 'true',
-	    url: '/service-location-service',
+	    url: '/service-location-service/locations',
 	    success: function(data) {
 	    	
 	    	// iterate over the list of results
