@@ -5,7 +5,7 @@ zuul:
   routes:
     fleet-location-service:
       path: /fleet-location-service/**
-      url: http://fleet-location-service.cfapps.io
+      url: http://localhost:9000
     truck-detail-service:
       path: /truck-detail-service/**
       url: http://truck-details-service-integration.apps.cf.vca08.pivotal.io
@@ -14,7 +14,7 @@ zuul:
       url: http://data-export-service-integration.apps.cf.vca08.pivotal.io
     service-location-service:
       path: /service-location-service/**
-      url: http://service-location-service.cfapps.io
+      url: http://localhost:9001
             
 ---
 spring:
@@ -23,7 +23,7 @@ zuul:
   routes:
     fleet-location-service:
       path: /fleet-location-service/**
-      url: http://fleet-location-service.cfapps.io
+      url: http://localhost:9000
     truck-detail-service:
       path: /truck-detail-service/**
       url: http://truck-details-service-integration.apps.cf.vca08.pivotal.io
@@ -32,7 +32,7 @@ zuul:
       url: http://data-export-service-integration.apps.cf.vca08.pivotal.io
     service-location-service:
       path: /service-location-service/**
-      url: http://service-location-service.cfapps.io      
+      url: http://localhost:9001      
 
 ---
 spring:

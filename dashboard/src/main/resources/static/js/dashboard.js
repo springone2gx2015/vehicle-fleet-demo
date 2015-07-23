@@ -458,11 +458,13 @@ function setupServiceCenters() {
 	        xhrObj.setRequestHeader(header, token);
 	    },
 	    crossDomain: 'true',
-	    url: '/service-location-service/locations',
-	    success: function(data) {
+	    url: '/service-location-service/serviceLocations',
+	    success: function(result) {
+
+	    	var data = Array.isArray(result) ? result : (result.content && Array.isArray(result.content) ? result.content : []);
 	    	
 	    	// iterate over the list of results
-	    	$.each(data, function(index, value) {
+	    	data.forEach(function(value, index) {
 	    		var content = "<div class='scg_popup'>" +
 		        "<div class='loc_header'><i class='fa fa-wrench'></i> " + value.location +"</div>" +
 		        "<div class='loc_comments'>" + value.address2 + "</div>" +
