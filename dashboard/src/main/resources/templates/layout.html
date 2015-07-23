@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+	<title>Base Registration Page</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap-3.2.0.css}"></link>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}"></link>
+    
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"></link>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"></link>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<style type="text/css">
+	/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background-color: rgba(254,203,0,0.5);
+}
+section {
+  margin-top: 40px;
+}
+
+.feature-list .col-md-4 {
+  margin-bottom: 22px;
+}
+.feature-list h4 .fa:before {
+  vertical-align: -10%;
+  font-size: 28px;
+  display: inline-block;
+  width: 1.07142857em;
+  text-align: center;
+  margin-right: 5px;
+}
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+  font-size: 80px;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin: 0;
+}
+
+footer {
+	text-align: center;
+	font-size: 10px;
+}
+	</style>
+  </head>
+
+  <body>
+  
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">
+            <img th:class="img-rounded" th:src="@{/images/rentme_logo_small.png}" />
+      	  </a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <div class="navbar-right">
+            Welcome <span sec:authentication="name">Bob</span>
+	        <a class="btn-xs" th:href="@{/logout}" href="logout"> [ Logout ] </a>
+          </div>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+   
+    <div layout:fragment="announcementBox">
+		Announcements GOES HERE!
+	</div>
+
+    <div class="container">
+            
+      <div layout:fragment="content">
+		BODY PAGE GOES HERE!
+	  </div>
+      
+      <hr />
+      <footer>
+        <p>Version - 2015 - Connected Trucks for RentMe</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script th:src="@{/js/bootstrap-3.2.0.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
+    
+  </body>
+</html>

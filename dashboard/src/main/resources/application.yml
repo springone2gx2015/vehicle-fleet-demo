@@ -1,0 +1,54 @@
+spring:
+  thymeleaf:
+    cache: false
+zuul:
+  routes:
+    fleet-location-service:
+      path: /fleet-location-service/**
+      url: http://fleet-location-service.cfapps.io
+    truck-detail-service:
+      path: /truck-detail-service/**
+      url: http://truck-details-service-integration.apps.cf.vca08.pivotal.io
+    data-export-service:
+      path: /data-export-service/**
+      url: http://data-export-service-integration.apps.cf.vca08.pivotal.io
+    service-location-service:
+      path: /service-location-service/**
+      url: http://service-location-service.cfapps.io
+            
+---
+spring:
+  profiles: integration
+zuul:
+  routes:
+    fleet-location-service:
+      path: /fleet-location-service/**
+      url: http://fleet-location-service.cfapps.io
+    truck-detail-service:
+      path: /truck-detail-service/**
+      url: http://truck-details-service-integration.apps.cf.vca08.pivotal.io
+    data-export-service:
+      path: /data-export-service/**
+      url: http://data-export-service-integration.apps.cf.vca08.pivotal.io
+    service-location-service:
+      path: /service-location-service/**
+      url: http://service-location-service.cfapps.io      
+
+---
+spring:
+  profiles: production
+zuul:
+  routes:
+    fleet-query-service:
+      path: /fleet-location-service/**
+      url: http://fleet-location-service.cfapps.io
+    truck-detail-service:
+      path: /truck-detail-service/**
+      url: http://truck-details-service-production.apps.cf.vca08.pivotal.io
+    data-export-service:
+      path: /data-export-service/**
+      url: http://data-export-service-production.apps.cf.vca08.pivotal.io
+    service-location-service:
+      path: /service-location-service/**
+      url: http://service-location-service.cfapps.io      
+      

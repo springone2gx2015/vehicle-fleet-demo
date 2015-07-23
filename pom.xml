@@ -17,6 +17,7 @@
 	<modules>
 		<module>fleet-location-service</module>
 		<module>service-station-service</module>
+		<module>dashboard</module>
 	</modules>
 
 	<properties>

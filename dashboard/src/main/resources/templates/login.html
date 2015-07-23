@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+  <head>
+	<title>RentMe: Login</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap-3.2.0.css}"></link>
+	<!-- Custom styles for this template -->
+    <link rel="stylesheet" th:href="@{/css/login.css}"></link>
+    
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"></link>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"></link>
+	<style type="text/css">
+	/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background-color: rgba(254,203,0,0.5);
+}
+section {
+  margin-top: 40px;
+}
+.navbar-brand {
+	padding: 0px;
+}
+
+.feature-list .col-md-4 {
+  margin-bottom: 22px;
+}
+.feature-list h4 .fa:before {
+  vertical-align: -10%;
+  font-size: 28px;
+  display: inline-block;
+  width: 1.07142857em;
+  text-align: center;
+  margin-right: 5px;
+}
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+  font-size: 80px;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin: 0;
+}
+
+footer {
+	text-align: center;
+	font-size: 10px;
+}
+	</style>
+  </head>
+
+  <body>
+  
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">
+            <img th:class="img-rounded" th:src="@{/images/pivotal_logo.png}" />
+      	  </a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <a class="navbar-right" href="#">
+            <img th:class="img-rounded" class="navbar-right" th:src="@{/images/bcg_logo.png}" />
+      	  </a>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+    
+	<div class="jumbotron">
+      <div class="container">
+          <form class="form-signin" name="form" th:action="@{/login}" action="/login" method="POST">
+       		<h2>Please Sign In</h2>
+       		
+       		<label for="username" class="sr-only">Email address</label>
+	        <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
+	        
+	        <label for="inputPassword" class="sr-only">Password</label>
+	        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" />
+	        
+	        <div class="checkbox">
+	          <label>
+	            <input type="checkbox" value="remember-me"/> Remember me
+	          </label>
+	        </div>
+	        <p th:if="${param.logout}" class="alert">You have been logged out</p>
+			<p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	      </form>
+      </div>
+    </div>
+
+    <div class="container">
+		<section id="why" class="feature-list">
+		    <div class="row">
+		    <div class="col-md-4 col-sm-6">
+		      <h4><i class="fa fa-road"></i>24x7 Roadside Assistance</h4>
+		      Remotely diagnose vehicle issues and identify best courses of resolution, from service center repair dispatch to vehicle replacement.
+		    </div>
+		    <div class="col-md-4 col-sm-6">
+		      <h4><i class="fa fa-share-alt"></i>Real-Time Tracking</h4>
+		     Live information from all fleet vehicles presented in a consolidated map view with instant access to detailed metrics. 
+		    </div>
+		    <div class="col-md-4 col-sm-6">
+		      <h4><i class="fa fa-area-chart"></i>BI Integration</h4>
+		      Easily integrate any JDBC-compliant BI visualization tool to perform advanced historical reporting and analysis.
+		    </div>
+		  </div>
+    	</section>
+	    <hr />
+      	<footer>
+        	<img th:class="img-rounded" th:src="@{/images/rentme_logo_medium.png}" />
+        	<p>Copyright &copy; 2015 RentMe</p>
+      	</footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script th:src="@{/js/bootstrap-3.2.0.js}"></script>
+    
+  </body>
+</html>
