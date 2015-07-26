@@ -68,6 +68,7 @@ public class DashboardApplication {
 	private static final int BUFFER_SIZE = 4096;
 
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	// TODO: stub this out or remove it in UI
 	public void downloadFile(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "columns") String columns,
 			@RequestParam(value = "startDate") String startDate,
