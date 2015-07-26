@@ -1,4 +1,4 @@
-function collectPages(url, callback, page) {
+function collectPages(url, collector, callback, page) {
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
 	
@@ -13,9 +13,11 @@ function collectPages(url, callback, page) {
 	    url: url + '?page=' + page,
 	    success: function(result) {
 	    	console.log("Loaded page: " + page + " from " + url);
-	    	callback(result._embedded);
-	    	if (page<result.page.totalPages) {
-	    		collectPages(url, callback, page+1);
+	    	collector(result._embedded);
+	    	if (page<result.page.totalPages-1) {
+	    		collectPages(url, collector, callback, page+1);
+	    	} else {
+	    		callback()
 	    	}
 	    },
 	    dataType: 'json'

@@ -161,47 +161,45 @@ function queryFleetInfo(query) {
 	// processing - spin!
 	$("#spinnerIcon").show();
 	collectPages('/fleet-location-service/locations', function(result) {
-		if (result.locations && result.locations.length > 0) {
-			data = data.concat(result.locations);
-		} else {
-			// See https://github.com/Leaflet/Leaflet.markercluster
-			markers = L.markerClusterGroup();
+		data = data.concat(result.locations);
+	}, function() {
+		// See https://github.com/Leaflet/Leaflet.markercluster
+		markers = L.markerClusterGroup();
 
-			// iterate over the list of results
-			$.each(data, function(index, value) {
-				// console.log(data.trucks[index]);
-				var truck = data[index];
-				var iconType = resolveMarker(truck.vehicleMovementType,
-						truck.serviceType);
+		// iterate over the list of results
+		$.each(data, function(index, value) {
+			// console.log(data.trucks[index]);
+			var truck = data[index];
+			var iconType = resolveMarker(truck.vehicleMovementType,
+					truck.serviceType);
 
-				// var marker = L.marker([truck.latitude, truck.longitude], {icon:
-				// iconType}).addTo(map);
-				var obj = {
+			// var marker = L.marker([truck.latitude, truck.longitude], {icon:
+			// iconType}).addTo(map);
+			var obj = {
+				lat : truck.latitude,
+				lon : truck.longitude
+			};
+			if (truck.latitude && truck.longitude) {
+				var marker = L.marker({
 					lat : truck.latitude,
 					lon : truck.longitude
-				};
-				if (truck.latitude && truck.longitude) {
-					var marker = L.marker({
-						lat : truck.latitude,
-						lon : truck.longitude
-					}, {
-						icon : iconType
-					});
-					marker.vin = "" + truck.vin;
-					marker.truck = truck;
-					marker.on('click', markerClickHandler);
-					marker.bindPopup("Vin: " + truck.vin);
-					markers.addLayer(marker);
-				} else {
-					msg = "FAIL - VIN: " + truck.vin + " JSON: " + JSON.stringify(obj)
-							+ " TSP: " + truck.tspProvider;
-					console.log(msg);
-				}
-			});
+				}, {
+					icon : iconType
+				});
+				marker.vin = "" + truck.vin;
+				marker.truck = truck;
+				marker.on('click', markerClickHandler);
+				marker.bindPopup("Vin: " + truck.vin);
+				markers.addLayer(marker);
+			} else {
+				msg = "FAIL - VIN: " + truck.vin + " JSON: "
+						+ JSON.stringify(obj) + " TSP: " + truck.tspProvider;
+				console.log(msg);
+			}
+		});
 
-			map.addLayer(markers);
-			$("#spinnerIcon").hide();
-		}
+		map.addLayer(markers);
+		$("#spinnerIcon").hide();
 	});
 }
 
@@ -477,34 +475,43 @@ function createIdFromCoordinates(latitude, longitude) {
 
 function setupServiceCenters() {
 	var scg = new L.LayerGroup();
+	var scg2 = new L.LayerGroup();
 	var data = [];
 
 	collectPages(
 			'/service-location-service/serviceLocations',
 			function(result) {
-				if (result.locations && result.locations.length > 0) {
-					data = data.concat(result.locations);
-				} else {
-					// iterate over the list of results
-					data
-							.forEach(function(value, index) {
-								var content = "<div class='scg_popup'>"
-										+ "<div class='loc_header'><i class='fa fa-wrench'></i> "
-										+ value.location + "</div>"
-										+ "<div class='loc_comments'>"
-										+ value.address2 + "</div>" + "<div>"
-										+ value.address1 + "</div>" + "<div>"
-										+ value.city + ", " + value.state + " "
-										+ value.zip + "</div>" + "</div>";
+				data = data.concat(result.locations);
+			},
+			function() {
+				// iterate over the list of results
+				data
+						.forEach(function(value, index) {
+							var content = "<div class='scg_popup'>"
+									+ "<div class='loc_header'><i class='fa fa-wrench'></i> "
+									+ value.location + "</div>"
+									+ "<div class='loc_comments'>"
+									+ value.address2 + "</div>" + "<div>"
+									+ value.address1 + "</div>" + "<div>"
+									+ value.city + ", " + value.state + " "
+									+ value.zip + "</div>" + "</div>";
 
-								L.marker({
-									lat : value.latitude,
-									lon : value.longitude
-								}, {
-									icon : serviceCenterMarker
-								}).bindPopup(content).addTo(scg);
-							});
-				}
+							L.marker({
+								lat : value.latitude,
+								lon : value.longitude
+							}, {
+								icon : serviceCenterMarker
+							}).bindPopup(content).addTo(scg);
+
+
+							L.marker({
+								lat : value.latitude,
+								lon : value.longitude
+							}, {
+								icon : serviceCenterMarker
+							}).bindPopup(content).addTo(scg2);
+
+						});
 			});
 
 	// Overlay layers are grouped
@@ -514,9 +521,18 @@ function setupServiceCenters() {
 		}
 	};
 
+	// Overlay layers are grouped
+	var groupedOverlays2 = {
+		"<i class='fa fa-truck'></i> RentMe Locations" : {
+			"Service Center <i class='fa fa-wrench'></i>" : scg2
+		}
+	};
+
 	// Use the custom grouped layer control, not "L.control.layers"
 	var layerControl = L.control.groupedLayers(null, groupedOverlays, null);
 	map.addControl(layerControl);
+	var layerControl2 = L.control.groupedLayers(null, groupedOverlays2, null);
+	miniMap.addControl(layerControl2);
 }
 
 function getMiles(i) {
