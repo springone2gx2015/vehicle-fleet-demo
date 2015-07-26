@@ -1,13 +1,12 @@
-package io.pivotal.rentme.poc;
+package demo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import io.pivotal.rentme.poc.DashboardApplication;
-
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import demo.DashboardApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DashboardApplication.class)
