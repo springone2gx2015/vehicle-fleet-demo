@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author Dave Syer
  *
@@ -34,19 +32,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FleetBulkUploadController {
 
 	private LocationRepository repository;
-	private ObjectMapper mapper;
 
 	@Autowired
-	public FleetBulkUploadController(LocationRepository repository, ObjectMapper mapper) {
+	public FleetBulkUploadController(LocationRepository repository) {
 		this.repository = repository;
-		this.mapper = mapper;
 
 	}
 
 	@RequestMapping(value="/fleet", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void upload(@RequestBody String body) throws Exception {
-		FleetLocation fleet = this.mapper.readValue(body, FleetLocation.class);
+	public void upload(@RequestBody FleetLocation fleet) throws Exception {
 		this.repository.save(fleet.getTrucks());
 	}
 

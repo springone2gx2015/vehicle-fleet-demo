@@ -16,9 +16,7 @@
 
 package demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -27,16 +25,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@Entity
+@Embeddable
 @RequiredArgsConstructor
 public class UnitFault {
 
-	@Id
-	@GeneratedValue
-	private Long id;
 	private final String vin;
-	private long spn;
-	private long fmi;
+	private Long spn;
+	private Long fmi;
 
 	@SuppressWarnings("unused")
 	private UnitFault() {

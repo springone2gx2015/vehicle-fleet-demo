@@ -22,8 +22,7 @@
 "unitNumber":"129423"},
 "unitFault":{"vin":"4V4NC9EH4GN938973",
 "spn":"3031",
-"fmi":"2"},
-"faultCode":null},
+"fmi":"2"}},
 {"vin":"1FUJGEDV9ELFS0265",
 "latitude":"43.227576",
 "longitude":"-77.408081",
@@ -74,5 +73,4 @@
 "engineMake":"DET",
 "customerName":"DRB TRUCKING",
 "unitNumber":"680161"},
-"unitFault":null,
-"faultCode":null}]}
+"unitFault":null}]}

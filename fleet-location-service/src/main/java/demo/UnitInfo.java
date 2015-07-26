@@ -16,9 +16,7 @@
 
 package demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +25,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@Entity
+@Embeddable
 @RequiredArgsConstructor
 public class UnitInfo {
 
-	@Id
-	@GeneratedValue
-	private Long id;
 	private final String unitVin;
 	private String engineMake;
 	private String customerName;

@@ -17,18 +17,18 @@ package demo;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 
 /**
  * A POJO representation of a truck on the road.
@@ -48,16 +48,20 @@ public class Location {
 		STOPPED, IN_MOTION;
 
 		public boolean isMoving() {
-			return this!=STOPPED;
+			return this != STOPPED;
 		}
 	}
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Embedded
+	@AttributeOverride(name = "engineMake", column = @Column(name = "unit_engine_make"))
 	private final UnitInfo unitInfo;
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "fmi", column = @Column(name = "unit_fmi")),
+		@AttributeOverride(name = "spn", column = @Column(name = "unit_spn")) })
 	private UnitFault unitFault;
 	private double latitude;
 	private double longitude;
@@ -74,7 +78,7 @@ public class Location {
 	private VehicleMovementType vehicleMovementType = VehicleMovementType.STOPPED;
 	private String serviceType;
 	// TODO: why is this not part of UnitFault?
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Embedded
 	private FaultCode faultCode;
 
 	@SuppressWarnings("unused")
@@ -83,7 +87,7 @@ public class Location {
 	}
 
 	public String getVin() {
-		return this.unitInfo==null ? null : this.unitInfo.getUnitVin();
+		return this.unitInfo == null ? null : this.unitInfo.getUnitVin();
 	}
 
 }

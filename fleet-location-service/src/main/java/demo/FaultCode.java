@@ -16,9 +16,7 @@
 
 package demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -27,19 +25,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@Entity
+@Embeddable
 @RequiredArgsConstructor
 public class FaultCode {
-	@Id
-	@GeneratedValue
-	private Long id;
 	private String engineMake;
 	private String faultCode;
 	private String faultCodeId;
 	private String faultCodeClassification;
 	private String description;
 	private String repairInstructions;
-	private long fmi;
+	private Long fmi;
 	private String sa;
-	private long spn;
+	private Long spn;
 }
