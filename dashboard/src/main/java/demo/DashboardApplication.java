@@ -1,12 +1,6 @@
 package demo;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -22,12 +16,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
-import org.springframework.cloud.netflix.zuul.filters.ZuulProperties.ZuulRoute;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpEntity;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -38,12 +29,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.header.HeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
@@ -55,110 +41,9 @@ import org.springframework.web.util.WebUtils;
 public class DashboardApplication {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DashboardApplication.class);
-	@Autowired
-	private ZuulProperties zuulProperties;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DashboardApplication.class, args);
-	}
-
-	/**
-	 * Size of a byte buffer to read/write file
-	 */
-	private static final int BUFFER_SIZE = 4096;
-
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	// TODO: stub this out or remove it in UI
-	public void downloadFile(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value = "columns") String columns,
-			@RequestParam(value = "startDate") String startDate,
-			@RequestParam(value = "endDate") String endDate,
-			@RequestParam(value = "type") String type) {
-		response.setContentType("text/csv");
-		response.setHeader("X-Frame-Options", "ALLOWALL");
-
-		String requestType = "text/csv";
-		String fileExtension = ".csv";
-		if (type.equals("json")) {
-			requestType = "application/json";
-			fileExtension = ".json";
-		}
-		else if (type.equals("tsv")) {
-			requestType = "text/tsv";
-			fileExtension = ".tsv";
-		}
-		else if (type.equals("psv")) {
-			requestType = "text/psv";
-			fileExtension = ".psv";
-		}
-
-		String fileName = "export-" + System.currentTimeMillis() + fileExtension;
-		// creates mock data
-		String headerKey = "Content-Disposition";
-		String headerValue = String.format("attachment; filename=\"%s\"", fileName);
-		response.setHeader(headerKey, headerValue);
-
-		RestTemplate restTemplate = new RestTemplate();
-		DataExportRequest exportRequest = new DataExportRequest();
-		Set<String> requestedColumns = new HashSet<>();
-		String[] columnParameter = columns.split(",");
-		for (String columnRequest : columnParameter) {
-			requestedColumns.add(columnRequest);
-		}
-		exportRequest.setColumns(requestedColumns);
-		Long startDateRequest = 0L;
-		Long endDateRequest = 0L;
-		try {
-			startDateRequest = Long.parseLong(startDate);
-		}
-		catch (NumberFormatException e) {
-			logger.warn("Invalid Start Date...");
-		}
-		exportRequest.setStartDate(startDateRequest);
-
-		try {
-			endDateRequest = Long.parseLong(endDate);
-		}
-		catch (NumberFormatException e) {
-			logger.warn("Invalid End Date...");
-		}
-		exportRequest.setEndDate(endDateRequest);
-
-		ZuulRoute route = this.zuulProperties.getRoutes().get("data-export-service");
-		String exportEndpoint = route.getUrl() + "/export";
-		logger.info("Requesting export from: {}", exportEndpoint);
-
-		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-		headers.add("Accept", requestType);
-		HttpEntity<DataExportRequest> entity = new HttpEntity<DataExportRequest>(
-				exportRequest, headers);
-
-		String exportContent = restTemplate.postForObject(exportEndpoint, entity,
-				String.class);
-
-		// get output stream of the response
-		OutputStream outStream;
-		try {
-			outStream = response.getOutputStream();
-			byte[] buffer = new byte[BUFFER_SIZE];
-			int bytesRead = -1;
-
-			// String exampleString =
-			// "4V4NC9EH7FN187429,32.4857252827719,-100.19494832724";
-			InputStream inputStream = new ByteArrayInputStream(
-					exportContent.getBytes(StandardCharsets.UTF_8));
-
-			// write bytes read from the input stream into the output stream
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				outStream.write(buffer, 0, bytesRead);
-			}
-			inputStream.close();
-			outStream.close();
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@RequestMapping("/")

@@ -438,28 +438,6 @@ function handleExportButton() {
 }
 
 function handleExportRequest() {
-	var exportRequest = {};
-	exportRequest.columns = [];
-	exportRequest.exportType = $('input[name="dataExportType"]:checked').val();
-
-	$('input[name="dataExportColumns"]:checked').each(function() {
-		exportRequest.columns.push(this.value);
-	});
-
-	exportRequest.startDate = $('#actualFromDate').val();
-	exportRequest.endDate = $('#actualToDate').val();
-
-	// build the new URL
-	var download_url = '/download?columns=' + exportRequest.columns;
-	download_url += '&startDate=' + $('#actualFromDate').val();
-	download_url += '&endDate=' + $('#actualToDate').val();
-	download_url += '&type=' + $('input[name="dataExportType"]:checked').val();
-
-	// load it into a hidden iframe
-	var iframe = $("<iframe/>").attr({
-		src : download_url,
-		style : "visibility:hidden;display:none"
-	}).appendTo('body');
 }
 
 /**
