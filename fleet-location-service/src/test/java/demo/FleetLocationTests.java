@@ -18,6 +18,8 @@ package demo;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -44,17 +47,11 @@ public class FleetLocationTests {
 	LocationRepository repository;
 
 	@Test
-	public void json() throws Exception {
-		FleetLocation value = this.mapper.readValue(this.mapper.writeValueAsString(new FleetLocation()), FleetLocation.class);
-		assertEquals(0, value.getStoppedTrucks());
-	}
-
-	@Test
 	public void stub() throws Exception {
-		FleetLocation value = this.mapper.readValue(new ClassPathResource("fleet.json").getInputStream(), FleetLocation.class);
-		assertEquals(2, value.getStoppedTrucks());
-		assertEquals(3, value.getTrucks().size());
-		this.repository.save(value.getTrucks());
+		List<Location> value = this.mapper.readValue(new ClassPathResource("fleet.json").getInputStream(), new TypeReference<List<Location>>() {
+		});
+		assertEquals(3, value.size());
+		this.repository.save(value);
 	}
 
 }

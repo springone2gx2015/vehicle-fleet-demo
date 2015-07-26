@@ -99,25 +99,16 @@ function buildQuery() {
 // executes ajax call to remote server
 function queryFleetInfo(query) {
 	// debug
-	console.log("Igonred Query: [" + JSON.stringify(query) + "]");
-	
-	var header = $("meta[name='_csrf_header']").attr("content");
-	var token = $("meta[name='_csrf']").attr("content");
-	
+	console.log("Ignored Query: [" + JSON.stringify(query) + "]");
+	var data = [];
 	// processing - spin!
 	$("#spinnerIcon").show();
-	
-	$.ajax({
-		beforeSend: function(xhrObj){
-	        xhrObj.setRequestHeader("Content-Type","application/json");
-	        xhrObj.setRequestHeader(header, token);
-	    },
-	    type: 'GET',
-	    crossDomain: 'true',
-	    url: '/fleet-location-service/fleet',
-//	    data: JSON.stringify(query), 
-	    success: queryResponseHandler,
-	    dataType: 'json'
+	collectPages('/fleet-location-service/locations', function(result) {
+		if (result.locations && result.locations.length>0) {
+			data = data.concat(result.locations);
+		} else {
+			queryResponseHandler(data);
+		}
 	}); 
 }
 
@@ -178,9 +169,9 @@ function queryResponseHandler(data) {
 	markers = L.markerClusterGroup();
 	
 	// iterate over the list of results
-	$.each(data.trucks, function(index, value) {
+	$.each(data, function(index, value) {
 		  //console.log(data.trucks[index]);  
-	    var truck = data.trucks[index];
+	    var truck = data[index];
 	    var iconType = resolveMarker(truck.vehicleMovementType, truck.serviceType);
 	    
 	    //var marker = L.marker([truck.latitude, truck.longitude], {icon: iconType}).addTo(map);
@@ -190,7 +181,7 @@ function queryResponseHandler(data) {
 		    marker.vin = "" + truck.vin;
 		    marker.truck = truck;
 		    marker.on('click', markerClickHandler);
-		    marker.bindPopup("Vin: " + data.trucks[index].vin);
+		    marker.bindPopup("Vin: " + truck.vin);
 		    markers.addLayer(marker);
 	    } else {
 	    	msg = "FAIL - VIN: " + truck.vin + " JSON: " + JSON.stringify(obj) + " TSP: " +truck.tspProvider;
@@ -448,21 +439,12 @@ function createIdFromCoordinates(latitude, longitude) {
 function setupServiceCenters() {
 	var scg = new L.LayerGroup();
 	var scg2 = new L.LayerGroup();
+	var data = [];
 	
-	var header = $("meta[name='_csrf_header']").attr("content");
-	var token = $("meta[name='_csrf']").attr("content");	
-	
-	$.ajax({
-		beforeSend: function(xhrObj){
-			xhrObj.setRequestHeader("Content-Type","application/json");
-	        xhrObj.setRequestHeader(header, token);
-	    },
-	    crossDomain: 'true',
-	    url: '/service-location-service/serviceLocations',
-	    success: function(result) {
-
-	    	var data = Array.isArray(result) ? result : (result.content && Array.isArray(result.content) ? result.content : []);
-	    	
+	collectPages('/service-location-service/serviceLocations', function(result) {
+		if (result.locations && result.locations.length>0) {
+			data = data.concat(result.locations);
+		} else {
 	    	// iterate over the list of results
 	    	data.forEach(function(value, index) {
 	    		var content = "<div class='scg_popup'>" +
@@ -489,8 +471,7 @@ function setupServiceCenters() {
 	    		// sc marker
 	    		L.marker({lat: value.latitude, lon: value.longitude}, {icon: serviceCenterMarker}).bindPopup(content2).addTo(scg2);
 	    	});
-	    },
-	    dataType: 'json'
+	    }
 	});
     
 
@@ -534,17 +515,12 @@ function showClosestTruck(coordinates) {
 	var token = $("meta[name='_csrf']").attr("content");
 	
 	console.log("Ignored Query: " + JSON.stringify(query));
+	var data = [];
 	
-	$.ajax({
-		beforeSend: function(xhrObj){
-	        xhrObj.setRequestHeader("Content-Type","application/json");
-	        xhrObj.setRequestHeader(header, token);
-	    },
-	    type: 'GET',
-	    crossDomain: 'true',
-	    url: '/fleet-location-service/fleet',
-//	    data: JSON.stringify(query), 
-	    success: function(data) {
+	collectPages('/fleet-location-service/locations', function(result) {
+		if (result.locations && result.locations.length>0) {
+			data = data.concat(result.locations);
+		} else {
 	    	// add trucks into miniMap
 	    	
 	    	// See https://github.com/Leaflet/Leaflet.markercluster
@@ -555,7 +531,7 @@ function showClosestTruck(coordinates) {
     		
 	    	// iterate over the list of results
 	    	$.each(data.trucks, function(index, value) {
-	    		var truck = data.trucks[index];
+	    		var truck = data[index];
 	    		
 	    		// Only add markers to nearby trucks if they are within a mile radius of the service center
 	    		if (latlng.distanceTo({lat: truck.latitude, lon:truck.longitude}) < 1620) {
@@ -574,7 +550,7 @@ function showClosestTruck(coordinates) {
 		    	    marker.vin = "" + truck.vin;
 		    	    marker.truck = truck;
 		    	    //marker.on('click', markerClickHandler);
-		    	    marker.bindPopup("Vin: " + data.trucks[index].vin);
+		    	    marker.bindPopup("Vin: " + truck.vin);
 		    	    markers.addLayer(marker);	
 	    		}
 	    	});
@@ -588,8 +564,7 @@ function showClosestTruck(coordinates) {
 	    	$("#spinnerIcon").hide();
 	    	
 	    	// ---
-	    },
-	    dataType: 'json'
+	    }
 	}); 
 }
 

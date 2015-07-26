@@ -16,6 +16,8 @@
 
 package demo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,8 +43,8 @@ public class FleetBulkUploadController {
 
 	@RequestMapping(value="/fleet", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void upload(@RequestBody FleetLocation fleet) throws Exception {
-		this.repository.save(fleet.getTrucks());
+	public void upload(@RequestBody List<Location> trucks) throws Exception {
+		this.repository.save(trucks);
 	}
 
 }

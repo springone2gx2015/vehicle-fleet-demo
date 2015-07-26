@@ -31,12 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-public class BulkUploadController {
+public class ServiceLocationBulkUploadController {
 
 	private ServiceLocationRepository repository;
 
 	@Autowired
-	public BulkUploadController(ServiceLocationRepository repository) {
+	public ServiceLocationBulkUploadController(ServiceLocationRepository repository) {
 		this.repository = repository;
 
 	}

@@ -22,10 +22,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FleetLocationServiceApplication.class)
@@ -33,9 +30,6 @@ public class DemoApplicationTests {
 
 	@Autowired
 	LocationRepository repository;
-
-	@Autowired
-	FleetLocationService fleetService;
 
 	@Test
 	public void saveLocation() {
@@ -56,16 +50,6 @@ public class DemoApplicationTests {
 		this.repository.save(location);
 		assertTrue(this.repository.findByServiceType("foo", new PageRequest(0, 20))
 				.getSize() > 0);
-	}
-
-	@Test
-	public void serviceOperating() {
-		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(
-				new MockHttpServletRequest()));
-		Location location = new Location(new UnitInfo("VIN1"));
-		location.setUnitFault(new UnitFault(location.getVin()));
-		this.repository.save(location);
-		assertTrue(this.fleetService.fleet().getFleet().getStoppedTrucks() > 0);
 	}
 
 }
