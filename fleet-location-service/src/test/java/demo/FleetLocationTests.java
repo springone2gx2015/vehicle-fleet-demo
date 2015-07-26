@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FleetLocationServiceApplication.class)
+@WebAppConfiguration
 public class FleetLocationTests {
 
 	@Autowired
@@ -53,8 +55,6 @@ public class FleetLocationTests {
 		assertEquals(2, value.getStoppedTrucks());
 		assertEquals(3, value.getTrucks().size());
 		this.repository.save(value.getTrucks());
-		Location location = this.repository.findOne(1L);
-		System.err.println(this.mapper.writeValueAsString(location));
 	}
 
 }

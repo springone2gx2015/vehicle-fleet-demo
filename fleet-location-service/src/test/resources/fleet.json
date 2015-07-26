@@ -70,6 +70,9 @@
 "tspProvider":"cyntrx",
 "vehicleMovementvType":"STOPPED",
 "serviceType":"None",
-"unitInfo":null,
+"unitInfo":{"unitVin":"3ALACWDT9EDFK02D4",
+"engineMake":"DET",
+"customerName":"DRB TRUCKING",
+"unitNumber":"680161"},
 "unitFault":null,
 "faultCode":null}]}
