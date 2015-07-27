@@ -10,7 +10,7 @@ function collectPages(url, collector, callback, page) {
 	        xhrObj.setRequestHeader(header, token);
 	    },
 	    crossDomain: 'true',
-	    url: url + '?page=' + page,
+	    url: url + '?page=' + page + '&size=200',
 	    success: function(result) {
 	    	console.log("Loaded page: " + page + " from " + url);
 	    	collector(result._embedded);

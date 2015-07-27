@@ -1,6 +1,10 @@
 spring:
   thymeleaf:
     cache: false
+
+---
+spring:
+  profiles: test
 zuul:
   routes:
     fleet-location-service:
