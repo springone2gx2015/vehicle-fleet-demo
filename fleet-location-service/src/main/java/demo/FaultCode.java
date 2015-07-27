@@ -16,6 +16,7 @@
 
 package demo;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import lombok.Data;
@@ -33,6 +34,7 @@ public class FaultCode {
 	private String faultCodeId;
 	private String faultCodeClassification;
 	private String description;
+	@Column(length=1024)
 	private String repairInstructions;
 	private Long fmi;
 	private String sa;

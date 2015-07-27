@@ -15,8 +15,6 @@
  */
 package demo;
 
-import java.util.Date;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -44,6 +42,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Entity
 public class Location {
 
+	enum GpsStatus {
+		EXCELLENT,OK,UNRELIABLE,BAD,NOFIX,UNKNOWN;
+	}
+
 	enum VehicleMovementType {
 		STOPPED, IN_MOTION;
 
@@ -67,13 +69,13 @@ public class Location {
 	private double longitude;
 	private String heading;
 	private double gpsSpeed;
-	private boolean gpsStatus;
-	private long odometer;
+	private GpsStatus gpsStatus;
+	private double odometer;
 	private double totalEngineTime;
 	private double totalIdleTime;
 	private double totalFuelUsage;
 	private String address;
-	private Date timestamp = new Date();
+	private String timestamp; // Date timestamp = new Date();
 	private String tspProvider;
 	private VehicleMovementType vehicleMovementType = VehicleMovementType.STOPPED;
 	private String serviceType;
