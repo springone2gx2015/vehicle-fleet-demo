@@ -55,7 +55,7 @@
 "latitude":"43.212511",
 "longitude":"-88.148228",
 "heading":"E",
-"gpsSpeed":"NaN",
+"gpsSpeed":0,
 "gpsStatus":null,
 "odometer":"84623",
 "totalEngineTime":"2529.35",

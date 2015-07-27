@@ -1,6 +1,15 @@
 spring:
   thymeleaf:
     cache: false
+security:
+  user:
+    name: admin
+    password: admin
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
 
 ---
 spring:
@@ -13,3 +22,11 @@ zuul:
     service-location-service:
       path: /service-location-service/**
       url: http://localhost:9001
+
+---
+spring:
+  profiles: pez
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka.cfapps.pez.pivotal.io/eureka/

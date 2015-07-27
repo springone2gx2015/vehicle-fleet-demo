@@ -6,3 +6,10 @@ spring:
       uri: ${CONFIG_SERVER_URI:${vcap.services.${PREFIX:}configserver.credentials.uri:http://localhost:8888}}
 encrypt:
   failOnError: false
+
+---
+spring:
+  profiles: pez
+  cloud:
+    config:
+      uri: http://configserver.cfapps.pez.pivotal.io
