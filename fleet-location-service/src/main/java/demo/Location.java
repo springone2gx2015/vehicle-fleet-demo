@@ -15,6 +15,8 @@
  */
 package demo;
 
+import java.util.Date;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -75,7 +77,7 @@ public class Location {
 	private double totalIdleTime;
 	private double totalFuelUsage;
 	private String address;
-	private String timestamp; // Date timestamp = new Date();
+	private Date timestamp = new Date();
 	private String tspProvider;
 	private VehicleMovementType vehicleMovementType = VehicleMovementType.STOPPED;
 	private String serviceType;
