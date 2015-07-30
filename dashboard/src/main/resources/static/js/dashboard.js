@@ -5,6 +5,59 @@ var mapID = 'albertoaflores.llpjgl43';
 var mapToken = 'pk.eyJ1IjoiYWxiZXJ0b2FmbG9yZXMiLCJhIjoiS3duWUxzUSJ9.X1rRTTRkktNR7DFIc0DsCw';
 var mapboxAttribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
 
+L.FlashingMarker = L.Marker.extend({
+	options : {
+		interval : 500,
+	},
+
+	onAdd : function(map) {
+		L.Marker.prototype.onAdd.call(this, map);
+		this.start();
+	},
+
+	onRemove : function(map) {
+		this.stop();
+		L.Marker.prototype.onRemove.call(this, map);
+	},
+
+	flash : function() {
+		if (this._originalIcon) {
+			this.setIcon(this._originalIcon);
+			delete this._originalIcon;
+		} else {
+			this._originalIcon = this.options.icon;
+			this.setIcon(this.options.icon.options.flashIcon);
+		}
+
+		// Queue up the animation
+		this._tid = setTimeout(this.flash.bind(this), this.options.interval);
+	},
+
+	// Start the animation
+	start : function() {
+		if (this.options.icon.options.flashIcon && this.options.interval && this.options.interval > 0) {
+			delete this._originalIcon;
+			this.flash();
+		}
+	},
+
+	// Stop the animation in place
+	stop : function() {
+		if (this._tid) {
+			clearTimeout(this._tid);
+		}
+		if (this._originalIcon) {
+			this.setIcon(this._originalIcon);
+			delete this._originalIcon;
+		}
+	}
+
+});
+
+L.flashingMarker = function(latlngs, options) {
+	return new L.FlashingMarker(latlngs, options);
+};
+
 // create map
 var map = L.map('map', {
 	center : [ 40.061, -97.515 ],
@@ -17,79 +70,31 @@ var miniMap = L.map('miniMap', {
 });
 
 // Creates markers for each group
-var inMotionNormalMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'green',
-	prefix : 'fa',
-	extraClasses : 'faa-flash animated'
-});
-var stoppedNormalMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'green',
-	prefix : 'fa'
-});
-var inMotionServiceInfoMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'blue',
-	prefix : 'fa',
-	extraClasses : 'faa-flash animated'
-});
-var stoppedServiceInfoMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'blue',
-	prefix : 'fa'
-});
-var inMotionServiceSoonMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'beige',
-	prefix : 'fa',
-	extraClasses : 'faa-flash animated'
-});
-var stoppedServiceSoonMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'beige',
-	prefix : 'fa'
-});
-var inMotionServiceNowMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'orange',
-	prefix : 'fa',
-	extraClasses : 'faa-flash animated'
-});
-var stoppedServiceNowMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'orange',
-	prefix : 'fa'
-});
-var inMotionStopTruckMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'red',
-	prefix : 'fa',
-	extraClasses : 'faa-flash animated'
-});
-var stoppedStopTruckMarker = L.AwesomeMarkers.icon({
-	icon : 'bullseye',
-	iconColor : '#FFFFFF',
-	markerColor : 'red',
-	prefix : 'fa'
-});
+var inMotionNormalMarker = icon('bus', '#00FF00', icon('', '#00FF00'));
+var stoppedNormalMarker = icon('bus', '#00FF00');
+var inMotionServiceInfoMarker = icon('bus', '#FF0000', icon('', '#FF0000'));
+var stoppedServiceInfoMarker = icon('bus', '#0000FF');
+var inMotionServiceSoonMarker = icon('bus', '#F5F5DC', icon('', '#F5F5DC'));
+var stoppedServiceSoonMarker = icon('bus', '#F5F5DC');
+var inMotionServiceNowMarker = icon('bus', '#FFA500', icon('', '#FFA500'));
+var stoppedServiceNowMarker = icon('bus', '#FFA500');
+var inMotionStopTruckMarker = icon('bus', '#FF0000', icon('', '#FF0000'));
+var stoppedStopTruckMarker = icon('bus', '#FF0000');
 
 // Create markers for the RentMe Unit Locations
-var serviceCenterMarker = L.AwesomeMarkers.icon({
-	icon : 'truck',
-	iconColor : '#FFFFFF',
-	markerColor : 'cadetblue',
-	prefix : 'fa'
-});
+var serviceCenterMarker = icon('warehouse', '#5F9EA0');
+
+function icon(symbol, color, flashIcon, size) {
+	size = size || [35, 90];
+	color = (color || '7e7e7e').replace('#', '');
+	return L.icon({
+		iconUrl: 'http://a.tiles.mapbox.com/v4/marker/pin-l' + (symbol ? "-" + symbol : '') + '+' + color + (L.Browser.retina ? '@2x' : '') + '.png?access_token=' + mapToken,
+		iconSize: [35, 90],
+	    iconAnchor: [size[0] / 2, size[1] / 2],
+	    popupAnchor: [0, -size[1] / 2],
+	    flashIcon: flashIcon
+	});
+}
 
 function setupDefaultMap() {
 	// add map tiles
@@ -180,7 +185,7 @@ function queryFleetInfo(query) {
 				lon : truck.longitude
 			};
 			if (truck.latitude && truck.longitude) {
-				var marker = L.marker({
+				var marker = L.flashingMarker({
 					lat : truck.latitude,
 					lon : truck.longitude
 				}, {
@@ -264,7 +269,7 @@ function markerClickHandler(event) {
 	// add marker
 	var iconType = resolveMarker(markerInUse.truck.vehicleMovementType,
 			markerInUse.truck.serviceType);
-	truckMarker = L.marker({
+	truckMarker = L.flashingMarker({
 		lat : markerInUse.truck.latitude,
 		lon : markerInUse.truck.longitude
 	}, {
@@ -529,8 +534,9 @@ function setupMapLegend() {
 
 	info.onAdd = function(map) {
 		this._div = L.DomUtil.create('div', 'info');
+		var img = '<img src="https://www.mapbox.com/maki/renders/bus-18' + (L.Browser.retina ? '@2x' : '') + '.png">';
 		this._div.innerHTML = '<h4 style="color: black">RentMe Trucks</h4>'
-				+ '<i class="fa fa-bullseye faa-flash animated"></i> Moving &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-bullseye"></i> Stopped <br/>'
+				+ '<i class="faa-flash animated">' + img + '</i> Moving &nbsp;&nbsp;&nbsp;&nbsp; ' + img + ' Stopped <br/>'
 				+ '<i class="fa fa-map-marker" style="color: green;"></i> Normal &nbsp;&nbsp;'
 				+ '<i class="fa fa-map-marker" style="color: blue"></i> ServiceInfo &nbsp;&nbsp;'
 				+ '<i class="fa fa-map-marker" style="color: yellow"></i> ServiceSoon &nbsp;&nbsp;'
