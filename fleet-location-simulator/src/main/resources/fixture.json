@@ -1,0 +1,85 @@
+{
+  "numberOfGpsSimulatorRequests": 8,
+  "gpsSimulatorRequests": [
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 0,
+      "vehicleStatus": "NORMAL",
+      "polyline": "}_ulFvq|tM@wLtOCnG@RHhArAfEdFRRVL~DjAxA`@`@Vx@p@ZZnAbBtAdBnA`Bl@lAh@xArCnJrD~LdCfIrEbK|@zAdAnA~FxEvC`CXXZd@Nf@LrAb@~FXtE@Xf@?xC?vJ@zG?lL?rEAt@?VJ~@DnD@vC?|@lDzB`Jt@bDzElRpF|Tr@xC`CvJtB`ItEjR`B|Gt@xCAZETILMh@Gj@@j@Jb@P^ZTt@LVCRGTSPIFITITBjAl@NDrFlCfCnAVRNJFJ@^DRNPRBLHPRHTNNRFP@NC^Op@c@XMJGNCdBANIhBCvB@dBFl@?lA?JGzBAdDAx@?vC?xB~InBAlA?"
+    },
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 0,
+      "vehicleStatus": "NORMAL",
+      "polyline": "mfmlFxpbuMAlECl@[vAcDnMqC~KS`@IZg@tBqDbO}AbG}@zDKv@U~@CJi@dAa@r@MHSZEPAXBt@KvACZQr@mA`FsAnFyB|I]rAUn@Wv@KH[L]B[LUTQ^Ib@Ab@Bb@HXTf@B\\C`@SrAsGvWU|@m@hCUh@Mb@GLIJIDUFQLOVG^Db@JXTT^CRIPSH_@?KvB?^?P^V`@L^Pt@Nx@Dt@@fADlOHbYFjPJvMF|BSH}@\\kElBsClAg@VHtIBnGJjJDdI?lIIxIvBF@@BBL@HIBOEOKEKBGJ_@@"
+    },
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 60,
+      "vehicleStatus": "NORMAL",
+      "polyline": "mrhlFpa}tM@rFm@zDmAlGkArGg@nCq@`EGr@C~@YrBQzBCrABt@A~@EhHEbCQpB[fBw@dFWtAMd@kAtGUtAYlBI|@Gr@CpB?|@?HAzAAjYCnRIrCAdCKXEb@GbCArB?nBGbH?`A?fB@HDX@\\NlCFx@HbB?nAG~AShB_@jBONi@lBe@vAc@fAOXwAdD_@p@}@hA{@z@qA`AoAn@{Bt@mAn@g@`@]b@e@|@Wr@Mp@m@jEKl@Oh@Ef@QfAYfCEj@AdBFrANrAXlAjBpFTdARjBD`BInH_@dYG~DEp@Gt@Mt@Qp@Un@eAlBg@b@c@TkAl@a@Nc@Je@B[?e@Ec@KmB{@g@[QIe@Ga@B[JUXSl@q@hCWn@{@|AQ^Ml@MxAKj@U\\kHxD}A|@m@Tk@J_@BaI?cA?WC}@MeAGQAgAI]@W@]@kBZoFrAyBj@c@Jc@DiACiAU{DeAWGw@IeBOy@OcAg@a@WaC_BaAe@eBq@_HeC}@_@c@[gA_A]c@e@w@_@gAOq@Ek@?aAH}B@e@C_@Kw@Og@k@aAy@]OEY?_@@_@Fg@Vc@`@mChCyB|BqAbBeA`Bg@jAMb@Ub@_@r@g@j@m@d@w@h@k@n@a@z@g@`BSp@e@t@eBlCgBnCOPOJSFm@@s@KUM]W][QOCFoAlBsBzC{@nA_AxAeNrSQRa@Ng@Xk@Ps@Hs@Pu@Vm@Zu@f@y@t@o@x@e@x@g@dA_@lAYxAS`BEj@B`AGj@Ol@Sn@Wj@cFvH_AxAAoFfC?L?JDDBrB_DNWTg@Rq@Lq@Fm@LaABa@"
+    },
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 0,
+      "vehicleStatus": "WARNING",
+      "polyline": "{fllFfsduMkD?uBuIiGiWoCwKsBwIIy@McA?yBE}FBSx@aDxAwFdB}GjA}EZqALm@JI\\mAv@}C`A}DLe@bCeJr@_C?c@jAsDnAcE^y@Tu@kHA?mJjDv@zA^"
+    },
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 45,
+      "vehicleStatus": "NORMAL",
+      "polyline": "gaulF~shuM`AWZG~@BVJjAbAXHt@Fn@NRHb@T^^PDI{BI_AMoC?w@BYH[D[d@g@h@k@HIpAmAR_@Zs@^q@`@i@nAqAr@_AR_@nAwDrAsELWrAqApAcATU^e@Pc@HUJk@DONU`BgAbBaAf@Ml@AV@`CXfAJVAVG^UVW^wAj@mCv@{BJ]FWDs@@}IC_CC]YuBOeACk@HcAd@_@ZELI~DoAxBuHZcAb@A|C?f@AzF@bFBfEApJAbEBvE?nADtB?fFEfJ@vIDtLArC?jK@tG?dAFpC?h@L\\?dD?RB^Rf@l@D@`@k@DOB]A[ESHu@Hm@PiAT_AXs@Ry@l@wBvAiGpE{QP{@Fg@fAkEpCcLzA_G"
+    },
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 60,
+      "vehicleStatus": "NORMAL",
+      "polyline": "ikilFrlttMiAvNAxS?lE~ChBlCdBpAx@xRbMn@b@Z\\^h@P^xApDnAvCpHpRtDhJxApDr@fBAr@Q|D@TBLPVGLoBzF}AlEu@nCUz@SL[\\MBO?OCMIY]Qa@Uy@IgA?a@HWTWTGVDVRXh@`@bBP\\f@rBdArDbCpItBnGrFdNb@nA^zAtAbErApEnBrH\\lBFt@@pAEnAKv@Mr@Wr@e@v@WZMZ}I`H{@j@k@V_@Ps@P}@TeA@aC@{@E_@CiBQkCM{@@o@Fy@`@g@j@e@dAUhAe@nCcA~Gs@dGq@zEQr@[tBeAjGKh@aBvIoAbHe@bDWjCCr@CbBC`CCdEEhBQpB[fBKJ_@rAyBfIa@nBQjA[dBm@fBa@`@k@`@a@J]LK@o@A}@CoA@gAJoAXy@Vo@\\]R{@d@oBfAkEjBUF}A^e@Fg@BgVAiJ?{@?w@?UIMCc@AsCCcCQcG@k@CiB]oBAY?ERSx@Md@y@nDw@jCS^Af@C`@?NMl@Qp@I^kA|EeB|GyAvFy@`DCRARY?s@A_B@Dh@DL?vICx@Ef@WdA"
+    },
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 30,
+      "vehicleStatus": "WARNING",
+      "polyline": "kwhlFxfhuMvA{BvAsBzCuDnBqBhDaDpGuFfC}BrDuD`DcEV_@Zg@vDyFb@o@`@GNCT?RHRPLb@?PEXMTGDUFWGQQMOg@[][[[sBwBeD_DoBiBoCqCoFeFsFgFwAuAuAoAa@u@o@sAWw@Oo@SiBEgB?iDEkBSqBQu@]iAa@_As@kA_AuAqBwCs@eA?O?GAKYq@a@uAcA}FUw@Sg@c@o@k@e@_@S[Mi@K[Cq@BwBB{EAqA?w@FoAVg@RSJORiCfB_@T_@Jc@D_D?cG@kD?oICYT{D?uJE{EGsFE_EBoGAeFC{E@wBBmB@QAc@@oA@?sE?uB^yAzA_G"
+    },
+    {
+      "speedInKph": 50,
+      "move": true,
+      "exportPositionsToKml": true,
+      "exportPositionsToMessaging": true,
+      "reportInterval": 1000,
+      "secondsToError": 60,
+      "vehicleStatus": "NORMAL",
+      "polyline": "sablFx~`uM~@iHd@yAdAoBAwCA{E?iGCiE@uAKi@?O?iA?KAeAFSLa@V_@TQPGT?XHVPNXD\\AZMZWX]Js@N_@A_AAwA@oME}IEkAEsAO}@SmA_@{BaAoFkCoBy@k@YoBs@wJaDyGqBuA[iCg@wE{@w@Qu@WeAi@}@k@e@]w@{@a@e@aA{Am@mAa@gAa@oAo@mD]aCaAiIU{B_AeH[aBk@mBw@uB}@{AgAwAo@u@y@s@aBuAUAWKoBkAmBuA_Ay@yA}Aa@i@aCoDi@k@eA_@_AGo@HYH]Pq@d@y@f@}I`H{@j@k@V_@Ps@P}@TeA@aC@{@E_@CiBQkCM{@@o@Fy@`@g@j@e@dAUhAe@nCcA~Gs@dGq@zEQr@[tBeAjGKh@aBvIoAbHe@bDWjCCr@CbBC`CCdEEhBQpB[fBKJ_@rAyBfIa@nBQjA[dBm@fBa@`@k@`@a@J]LK@o@A}@CoA@gAJoAXy@Vo@\\]RkDlBkEjBUF}A^e@Fg@BgVAiJ?{@?w@?UIMCc@AsCCcCQcG@k@CiB]oBAY?ERSx@Md@y@nDw@jCS^Af@C`@?NMl@Qp@I^kA|EeB|GyAvFy@`DCRARY?s@A_B@Dh@DL?vICx@Ef@WdA"
+    }
+  ]
+}

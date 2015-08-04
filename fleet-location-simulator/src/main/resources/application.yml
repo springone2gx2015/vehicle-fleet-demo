@@ -1,0 +1,8 @@
+server:
+  port: 9005
+
+spring:
+  application:
+    name: service-location-simulator
+gpsSimmulator:
+  googleApiKey:
