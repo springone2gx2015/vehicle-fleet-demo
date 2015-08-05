@@ -19,6 +19,7 @@ import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -27,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.IfProfileValue;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.google.maps.model.EncodedPolyline;
@@ -44,9 +44,9 @@ import demo.service.PathService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Configuration
 @SpringApplicationConfiguration(classes = {GpsSimulatorApplication.class})
-public class KmlUtilTests {
+public class PathServiceTests {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(KmlUtilTests.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PathServiceTests.class);
 
 	@Autowired
 	private PathService pathService;
@@ -66,7 +66,8 @@ public class KmlUtilTests {
 		ids.add(2L);
 		ids.add(3L);
 
-		kmlService.setupKmlIntegration(ids, new Point(123d, 123d));
+		kmlService.setupKmlIntegration(ids, new Point(123d, 123d), null);
+		Assert.assertNotNull(kmlService.getKmlBootstrap());
 	}
 
 	@Test
@@ -80,6 +81,8 @@ public class KmlUtilTests {
 		List<LatLng> latlongs = encodedPolyline.decodePath();
 		LOGGER.info("Number of coordinates: {}", latlongs.size());
 		LOGGER.info("Coordinates: {}", latlongs);
+
+		Assert.assertTrue(!latlongs.isEmpty());
 	}
 
 	@Test

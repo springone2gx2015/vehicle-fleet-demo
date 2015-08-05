@@ -19,8 +19,6 @@ import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import demo.GpsSimulatorRequest;
-
 /**
  *
  * @author Gunnar Hillert

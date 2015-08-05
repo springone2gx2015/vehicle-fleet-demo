@@ -41,12 +41,6 @@ import de.micromata.opengis.kml.v_2_2_0.Kml;
 @ImportResource("classpath:spring-integration-context.xml")
 public class GpsSimulatorApplication {
 
-	@Autowired
-	MessageSource messageSource;
-
-	@Autowired
-	Environment environment;
-
 	public static void main(String[] args) throws Exception {
 		final SpringApplication application = new SpringApplication(GpsSimulatorApplication.class);
 		application.run(args);
@@ -54,7 +48,7 @@ public class GpsSimulatorApplication {
 
 	@Bean
 	public Jaxb2Marshaller getMarshaller() {
-		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+		final Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
 		jaxb2Marshaller.setClassesToBeBound(Kml.class);
 
 		final Map<String,Object> map = new HashMap<>();

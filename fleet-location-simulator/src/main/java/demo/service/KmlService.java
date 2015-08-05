@@ -28,11 +28,16 @@ public interface KmlService {
 	 * Creates a kml object containing a network link and writes it a file,
 	 * This file is read by google earth. The file points to another file 'pos.kml' which has
 	 * the latest position and is read periodically by google earth.
+	 * @param kmlUrl
 	 */
-	void setupKmlIntegration(Set<Long> intanceIds, Point lookAtPoint);
+	void setupKmlIntegration(Set<Long> intanceIds, Point lookAtPoint, String kmlUrl);
 
 	void updatePosition(Long id, PositionInfo position);
 
 	byte[] getKmlInstance(Long instanceId);
+
+	byte[] getKmlBootstrap();
+
+	void clearKmlInstances();
 
 }

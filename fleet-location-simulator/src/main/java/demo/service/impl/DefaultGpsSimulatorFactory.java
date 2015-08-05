@@ -22,14 +22,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Service;
 
-import demo.GpsSimulator;
-import demo.GpsSimulatorRequest;
+import demo.model.GpsSimulatorRequest;
 import demo.model.Leg;
 import demo.model.Point;
 import demo.service.GpsSimulatorFactory;
 import demo.service.KmlService;
 import demo.service.PathService;
 import demo.support.NavUtils;
+import demo.task.GpsSimulator;
 
 /**
  * @author Gunnar Hillert

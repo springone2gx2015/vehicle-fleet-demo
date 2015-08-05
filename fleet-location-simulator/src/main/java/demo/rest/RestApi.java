@@ -24,17 +24,17 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Future;
 
-import org.springframework.aop.support.Pointcuts;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import demo.GpsSimulator;
-import demo.GpsSimulatorRequest;
 import demo.model.DirectionInput;
 import demo.model.GpsSimulatorInstance;
+import demo.model.GpsSimulatorRequest;
 import demo.model.Point;
 import demo.model.PositionInfo.VehicleStatus;
 import demo.model.SimulatorFixture;
@@ -42,6 +42,7 @@ import demo.service.GpsSimulatorFactory;
 import demo.service.KmlService;
 import demo.service.PathService;
 import demo.support.NavUtils;
+import demo.task.GpsSimulator;
 
 /**
  *
@@ -67,7 +68,7 @@ public class RestApi {
 	private Map<Long, GpsSimulatorInstance> taskFutures = new HashMap<>();
 
 	@RequestMapping("/dc")
-	public List<GpsSimulatorInstance>dc() {
+	public List<GpsSimulatorInstance>dc(HttpServletRequest request) {
 		final SimulatorFixture fixture = this.pathService.loadSimulatorFixture();
 
 		final List<GpsSimulatorInstance> instances = new ArrayList<>();
@@ -88,7 +89,7 @@ public class RestApi {
 		}
 
 		if (fixture.usesKmlIntegration()) {
-			kmlService.setupKmlIntegration(instanceIds, NavUtils.getLookAtPoint(lookAtPoints));
+			kmlService.setupKmlIntegration(instanceIds, NavUtils.getLookAtPoint(lookAtPoints), getKmlUrl(request));
 		}
 
 		return instances;
@@ -111,6 +112,7 @@ public class RestApi {
 			}
 		}
 		taskFutures.clear();
+		this.kmlService.clearKmlInstances();
 		return numberOfCancelledTasks;
 	}
 
@@ -148,5 +150,28 @@ public class RestApi {
 	@RequestMapping("/kml/{instanceId}")
 	public byte[] getKmlInstance(@PathVariable Long instanceId) {
 		return kmlService.getKmlInstance(instanceId);
+	}
+
+	@RequestMapping("/gps.kml")
+	public byte[] getKmlBootstrapKml() {
+		return kmlService.getKmlBootstrap();
+	}
+
+	private String getKmlUrl(HttpServletRequest request) {
+
+		final String scheme = request.getScheme();
+		final String serverName = request.getServerName();
+		final int serverPort = request.getServerPort();
+		final String contextPath = request.getContextPath();
+
+		StringBuilder url =  new StringBuilder();
+		url.append(scheme).append("://").append(serverName);
+
+		if ((serverPort != 80) && (serverPort != 443)) {
+			url.append(":").append(serverPort);
+		}
+
+		url.append(contextPath).append("/api/kml/");
+		return url.toString();
 	}
 }

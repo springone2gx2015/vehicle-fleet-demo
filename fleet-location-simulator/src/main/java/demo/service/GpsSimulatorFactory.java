@@ -15,9 +15,9 @@ package demo.service;
 import java.io.File;
 import java.util.List;
 
-import demo.GpsSimulator;
-import demo.GpsSimulatorRequest;
+import demo.model.GpsSimulatorRequest;
 import demo.model.Point;
+import demo.task.GpsSimulator;
 
 /**
  * @author Gunnar Hillert

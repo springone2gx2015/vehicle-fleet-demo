@@ -13,11 +13,7 @@
 package demo.service.impl;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,13 +59,12 @@ public class DefaultKmlService implements KmlService {
 	private Marshaller marshaller;
 
 	private Map<Long, byte[]> kmlInstances = new ConcurrentHashMap<>();
+	private volatile byte[]   kmlBootstrap = null;
 
 	@Override
-	public final void setupKmlIntegration(Set<Long> intanceIds, Point lookAtPoint) {
+	public final void setupKmlIntegration(Set<Long> intanceIds, Point lookAtPoint, String kmlUrl) {
 		Assert.notEmpty(intanceIds);
 		Assert.isTrue(intanceIds.size() >= 1);
-
-		File f = new File("gps.kml");
 
 		Kml kml = KmlFactory.createKml();
 		Document folder = KmlFactory.createDocument();
@@ -80,13 +75,13 @@ public class DefaultKmlService implements KmlService {
 		final LookAt lookAt = KmlFactory.createLookAt();
 		lookAt.setLatitude(lookAtPoint.getLatitude());
 		lookAt.setLongitude(lookAtPoint.getLongitude());
-		lookAt.setAltitude(13000);
+		lookAt.setAltitude(25000);
 		lookAt.setAltitudeMode(AltitudeMode.ABSOLUTE);;
 		folder.setAbstractView(lookAt);
 
 		for (long instanceId : intanceIds) {
 			Link link = KmlFactory.createLink();
-			link.setHref("http://localhost:9005/api/kml/" + instanceId);
+			link.setHref(kmlUrl + instanceId);
 			link.setRefreshMode(RefreshMode.ON_INTERVAL);
 			link.setRefreshInterval(1d);
 
@@ -97,20 +92,15 @@ public class DefaultKmlService implements KmlService {
 			folder.addToFeature(networkLink);
 		}
 
-		final OutputStream out;
-
-		try {
-			out = new FileOutputStream(f);
-		}
-		catch (FileNotFoundException e) {
-			throw new IllegalStateException(e);
-		}
+		final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 		try {
 			marshaller.marshal(kml, new StreamResult(out));
 		} catch (XmlMappingException | IOException e) {
 			throw new IllegalStateException(e);
 		}
+
+		this.kmlBootstrap = out.toByteArray();
 	}
 
 	/* (non-Javadoc)
@@ -190,4 +180,16 @@ public class DefaultKmlService implements KmlService {
 	public byte[] getKmlInstance(Long instanceId) {
 		return this.kmlInstances.get(instanceId);
 	}
+
+	@Override
+	public void clearKmlInstances() {
+		this.kmlInstances.clear();
+		this.kmlBootstrap = null;
+	}
+
+	@Override
+	public byte[] getKmlBootstrap() {
+		return kmlBootstrap;
+	}
+
 }

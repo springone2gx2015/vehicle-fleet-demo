@@ -31,7 +31,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import demo.GpsSimulatorApplication;
 import demo.model.DirectionInput;
 import demo.model.Point;
 import demo.service.PathService;

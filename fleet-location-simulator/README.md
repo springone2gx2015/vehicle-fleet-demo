@@ -58,13 +58,17 @@ This is the main simulator fixture. Contains simulator settings (e.g. the speed 
 
 	$ java -jar target/gps-vehicle-simulator-1.x.x.BUILD-SNAPSHOT.jar
 
-Start the Washington DC simulation by opening:
+A simple UI is provided at:
+
+	http://localhost:9005/
+
+Start the Washington DC simulation by clicking the button `Start Simulation` or by invoking the URL:
 
 	http://localhost:8080/api/dc
 
 This will create 8 vehicles driving with 50 km/h through Washington DC. Some of these vehicle have different vehicle statuses. Some of the vehicles will fall into an error state after 60 seconds.
 
-For a quick visualization, open the `gps.kml` file in Google Earth. You should see 3 place-marks in the Washington DC area.
+For a quick visualization, open the `gps.kml` file in Google Earth. Click on the `Open Google Earth` button. You should see 8 place-marks in the Washington DC area.
 
 ## REST Api
 

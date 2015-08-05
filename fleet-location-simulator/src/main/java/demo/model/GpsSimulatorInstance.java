@@ -17,7 +17,7 @@ package demo.model;
 
 import java.util.concurrent.Future;
 
-import demo.GpsSimulator;
+import demo.task.GpsSimulator;
 
 /**
  * @author Gunnar Hillert
