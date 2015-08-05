@@ -10,6 +10,12 @@
 	<!-- Bootstrap -->
 	<link href="webjars/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
+	<style type="text/css">
+		.control-buttons a {
+			margin-bottom: 1em;
+		}
+	</style>
+
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -21,13 +27,21 @@
 
 	<div class="container">
 		<h1>Service Location Simulator</h1>
-		<p class="lead">Generates vehicle traffic as defined in <code>fixture.json</code>.</p>
-		<a class="btn btn-default" href="api/dc">Start Simulation</a>
-		<a class="btn btn-default" href="api/cancel">Cancel Simulation</a>
-		<a class="btn btn-default" href="api/gps.kml">Open Google Earth</a>
-		<a class="btn btn-default" href="api/status">Status</a>
-	</div><!-- /.container -->
-
+		<div class="row">
+			<div class="col-xs-12 control-buttons">
+				<p class="lead">Generates vehicle traffic as defined in <code>fixture.json</code>.</p>
+				<a class="btn btn-default" href="api/dc">Start Simulation</a>
+				<a class="btn btn-default" href="api/cancel">Cancel Simulation</a>
+				<a class="btn btn-default" href="api/gps.kml">Open Google Earth</a>
+				<a class="btn btn-default" href="api/status">Status</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<p>Source code at: <a href="https://github.com/springone2gx2015/vehicle-fleet-demo"><code>https://github.com/springone2gx2015/vehicle-fleet-demo</code></a></p>
+			</div>
+		</div>
+	</div><
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->

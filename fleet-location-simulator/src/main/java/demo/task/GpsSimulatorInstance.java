@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package demo.model;
+package demo.task;
 
 import java.util.concurrent.Future;
-
-import demo.task.GpsSimulator;
 
 /**
  * @author Gunnar Hillert

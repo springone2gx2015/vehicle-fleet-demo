@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.model.DirectionInput;
-import demo.model.GpsSimulatorInstance;
 import demo.model.GpsSimulatorRequest;
 import demo.model.Point;
 import demo.model.PositionInfo.VehicleStatus;
@@ -43,6 +42,7 @@ import demo.service.KmlService;
 import demo.service.PathService;
 import demo.support.NavUtils;
 import demo.task.GpsSimulator;
+import demo.task.GpsSimulatorInstance;
 
 /**
  *
