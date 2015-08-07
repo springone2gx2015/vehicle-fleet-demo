@@ -1,3 +1,5 @@
+Vehicle Fleet
+=============
 
 [![Build Status](https://travis-ci.org/ghillert/vehicle-fleet-demo.svg)](https://travis-ci.org/ghillert/vehicle-fleet-demo)
 
@@ -14,11 +16,23 @@ menu item.
 
 ![Architecture Diagram](https://raw.githubusercontent.com/springone2gx2015/vehicle-fleet-demo/master/architecture.png)
 
-## Building
+## Building from Source
 
-```
-$ ./mvnw clean install
-```
+This application uses a [Maven][]-based build system. Please ensure it is installed.
+
+### Prerequisites
+
+* [Git][]
+* [JDK 8][]
+* [MongoDB][]
+
+### Check out sources
+
+	$ git clone https://github.com/springone2gx2015/vehicle-fleet-demo.git
+
+### Compile, test and build all jars
+
+	$ mvn clean install
 
 ## Running
 
@@ -29,3 +43,8 @@ can run locally without them if you use the "test" profile
 (e.g. `--spring.profiles.active=test` on the command line). In Cloud
 Foundry the platform services are provided by Spring Cloud Services
 (available as a tile in PCF).
+
+[Git]: https://help.github.com/articles/set-up-git/
+[JDK 8]: http://www.oracle.com/technetwork/java/javase/downloads
+[Maven]: https://maven.apache.org/
+[MongoDB]: https://www.mongodb.org/
