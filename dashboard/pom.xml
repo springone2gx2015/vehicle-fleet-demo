@@ -18,9 +18,7 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>io.pivotal.rentme.poc.DashboardApplication</start-class>
-		<java.version>1.7</java.version>
+		<start-class>democ.DashboardApplication</start-class>
 	</properties>
 
 	<dependencies>
