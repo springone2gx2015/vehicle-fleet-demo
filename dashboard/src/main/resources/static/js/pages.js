@@ -14,7 +14,7 @@ function collectPages(url, collector, callback, page) {
 	    success: function(result) {
 	    	console.log("Loaded page: " + page + " from " + url);
 	    	collector(result._embedded);
-	    	if (page<result.page.totalPages-1) {
+	    	if (result.page && typeof result.page.totalPages === 'number' && page < result.page.totalPages-1) {
 	    		collectPages(url, collector, callback, page+1);
 	    	} else {
 	    		callback()
