@@ -102,6 +102,10 @@ $( "#toDate" ).datepicker({
 						<input name="serviceFilter" value="ServiceInfo" type="checkbox"/>
 						<span> ServiceInfo</span>
 					</label>
+					<label>
+						<input name="serviceFilter" value="None" type="checkbox"/>
+						<span> None</span>
+					</label>
 				</div>
 				<div>
 					<span class="leaflet-control-layers-group-name">Vehicle Movement</span>
@@ -223,27 +227,11 @@ $( "#toDate" ).datepicker({
     </div>
     
     <!-- Include jQuery Popup Overlay -->
-    <script src="http://vast-engineering.github.io/jquery-popup-overlay/jquery.popupoverlay.js"></script>
-    
+    <script src="http://vast-engineering.github.io/jquery-popup-overlay/jquery.popupoverlay.js"></script>    
     <script th:src="@{/js/bootstrap-3.2.0.js}"></script>
     <script th:src="@{/js/leaflet.easybutton.js}"></script>
     <script th:src="@{/js/leaflet.control.sidebar.js}"></script>
     <script th:src="@{/js/pages.js}"></script>
     <script th:src="@{/js/dashboard.js}"></script>
-    <script>
-    $(document).ready(function() {
-      // See http://dev.vast.com/jquery-popup-overlay/
-      
-   // Initialize the plugin
-      $('#my_popup').popup({
-          type: 'tooltip',
-          transition: '0.3s all 0.1s',
-          tooltipanchor: $('#navbar'),
-          vertical: 'bottom'
-      });
-
-    });
-    
-  </script>
   </body>
 </html>

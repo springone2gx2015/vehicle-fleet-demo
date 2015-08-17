@@ -130,8 +130,8 @@ function setupDefaultMap() {
 	}).addTo(map);
 
 	// query for all points by default
-	var queryFilter = buildQuery();
-	queryFleetInfo(queryFilter);
+	initFilter();
+	initVehicles();
 }
 
 function setupMinimap() {
@@ -181,68 +181,93 @@ function buildQuery() {
 	return queryFilter;
 }
 
-// executes ajax call to remote server
-function queryFleetInfo(query) {
-	// debug
-	console.log("Ignored Query: [" + JSON.stringify(query) + "]");
-	var data = [];
+function initFilter() {
+	filter = buildQuery();
+}
+
+function initVehicles() {
+	var vehicles = [];
 	// processing - spin!
 	$("#spinnerIcon").show();
 	collectPages('/fleet-location-service/locations', function(result) {
-		data = data.concat(result.locations);
+		vehicles = vehicles.concat(result.locations);
 	}, function() {
-		// See https://github.com/Leaflet/Leaflet.markercluster
-		markers = /*L.markerClusterGroup();*/ L.layerGroup();
-		markersMap = [];
+		vehiclesIndex = {};
 		
 //		var trimedData = [];
-//		for (var i = 0; i < data.length && trimedData.length < 1; i++) {
-//			if (data[i].vin && data[i].latitude && data[i].longitude) {
-//				trimedData.push(data[i]);
+//		for (var i = 0; i < vehicles.length && trimedData.length < 1; i++) {
+//			if (vehicles[i].vin && vehicles[i].latitude && vehicles[i].longitude) {
+//				trimedData.push(vehicles[i]);
 //			}
 //		}
-//		data = trimedData;
+//		vehicles = trimedData;
 
-		// iterate over the list of results
-		$.each(data, function(index, value) {
-			// console.log(data.trucks[index]);
-			var truck = data[index];
-			var iconType = resolveMarker(truck);
-
-			// var marker = L.marker([truck.latitude, truck.longitude], {icon:
-			// iconType}).addTo(map);
-			var obj = {
-				lat : truck.latitude,
-				lon : truck.longitude
-			};
-			if (truck.vin && truck.latitude && truck.longitude) {
-				var marker = L.flashingMarker({
-					lat : truck.latitude,
-					lon : truck.longitude
-				}, {
-					icon : iconType
-				});
-				marker.vin = "" + truck.vin;
-				marker.truck = truck;
-				marker.on('click', markerClickHandler);
-				marker.bindPopup("Vin: " + truck.vin);
-				markers.addLayer(marker);
-				markersMap[truck.vin] = marker;
-				
-//				setTimeout(function() {
-//					liveGpsUpdate(truck);
-//					liveServiceUpdate(truck);
-//				}, 5000);
-			} else {
-				msg = "FAIL - VIN: " + truck.vin + " JSON: "
-						+ JSON.stringify(obj) + " TSP: " + truck.tspProvider;
-				console.log(msg);
+		// Fix up the data
+		vehicles.forEach(function(vehicle) {
+			if (!vehicle.vin && vehicle.latitude && vehicle.longitude) {
+				vehicle.vin = createIdFromCoordinates(vehicle.latitude, vehicle.longitude);
+			}
+			if (vehicle.vin) {
+				vehiclesIndex[vehicle.vin] = vehicle;				
 			}
 		});
-
-		map.addLayer(markers);
+		
+		showVehicles();
 		$("#spinnerIcon").hide();
 	});
+}
+
+function showVehicles() {
+	clearFleetMarkers();
+	// See https://github.com/Leaflet/Leaflet.markercluster
+	markers = /*L.markerClusterGroup();*/ L.layerGroup();
+	markersMap = [];
+	Object.keys(vehiclesIndex).forEach(function(vin) {
+    	var vehicle = vehiclesIndex[vin];
+		if (shouldShowMarker(vehicle)) {
+			if (vehicle.latitude && vehicle.longitude) {
+				createMarker(vehicle);
+//				setTimeout(function() {
+////					if (vehicle.vehicleMovementType === 'IN_MOTION') {
+//						liveGpsUpdate(vehiclesIndex[vin]);
+////					}
+//					liveServiceUpdate(vehiclesIndex[vin]);
+//				}, 5000);
+			} else {
+				var obj = {
+					lat : vehicle.latitude,
+					lon : vehicle.longitude
+				};
+				msg = "FAIL - VIN: " + vehicle.vin + " JSON: "
+						+ JSON.stringify(obj) + " TSP: " + vehicle.tspProvider;
+				console.log(msg);
+			}
+		}
+	});
+	map.addLayer(markers);
+}
+
+function shouldShowMarker(vehicle) {
+	return vehicle &&
+		(filter.serviceFilters.length === 0 || filter.serviceFilters.indexOf(vehicle.serviceType) >= 0) &&
+		(filter.vehicleMovementFilters.length === 0 || filter.vehicleMovementFilters.indexOf(vehicle.vehicleMovementType) >= 0);
+}
+
+function createMarker(vehicle) {
+	var iconType = resolveMarker(vehicle);
+	var marker = L.flashingMarker({
+		lat : vehicle.latitude,
+		lon : vehicle.longitude
+	}, {
+		icon : iconType
+	});
+	marker.vin = "" + vehicle.vin;
+	marker.vehicle = vehicle;
+	marker.on('click', markerClickHandler);
+	marker.bindPopup("Vin: " + vehicle.vin);
+	markers.addLayer(marker);
+	markersMap[vehicle.vin] = marker;
+	return marker;
 }
 
 function getRandomInt(min, max) {
@@ -250,91 +275,119 @@ function getRandomInt(min, max) {
 }
 
 function updateTruckGpsData(info) {
-	var marker = markersMap[info.vin];
-	if (marker) {
-		marker.truck.latitude = info.latitude;
-		marker.truck.longitude = info.longitude;
-		marker.truck.heading = info.heading;
-		marker.truck.address = info.address
-		marker.truck.odometer = info.odometer;
-		marker.truck.vehicleMovementType = info.movementType;
-		updateMarker(marker);
+	var vehicle = vehiclesIndex[info.vin];
+	if (vehicle) {
+		vehicle.latitude = info.latitude;
+		vehicle.longitude = info.longitude;
+		vehicle.heading = info.heading;
+		vehicle.address = info.address
+		vehicle.odometer = info.odometer;
+		vehicle.vehicleMovementType = info.movementType;
+		updateVehicleOnMap(vehicle);
+		updateVehicleOnMiniMap(vehicle);
 	}
 }
 
 function updateServiceData(info) {
-	var marker = markersMap[info.vin];
-	if (marker) {
-		marker.truck.serviceType = info.serviceType;
-		updateMarker(marker);
+	var vehicle = vehiclesIndex[info.vin];
+	if (vehicle) {
+		vehicle.serviceType = info.serviceType;
+		updateVehicleOnMap(vehicle);
+		updateVehicleOnMiniMap(vehicle);
+	}
+}
+
+function updateVehicleOnMap(vehicle) {
+	var marker = markersMap[vehicle.vin];
+	if (shouldShowMarker(vehicle)) {
+		if (marker) {
+			updateMarker(marker);
+		} else {
+			createMarker(vehicle);
+		}
+	} else {
+		if (marker) {
+			removeMarker(marker);
+		} else {
+			// Do nothing
+		}
+	}
+}
+
+function updateVehicleOnMiniMap(vehicle) {
+	if (minimapMarker && minimapMarker.vehicle && vehicle.vin === minimapMarker.vehicle.vin) {
+		minimapMarker.vehicle = vehicle;
+		setupMiniMapMarker();
 	}
 }
 
 function updateMarker(marker) {
 	marker.setLatLng({
-		lat : marker.truck.latitude,
-		lon : marker.truck.longitude
+		lat : marker.vehicle.latitude,
+		lon : marker.vehicle.longitude
 	});
-	marker.setIcon(resolveMarker(marker.truck));
-	if (markerInUse === marker && truckMarker) {
-		setupMiniMapMarker();
-	}
+	marker.setIcon(resolveMarker(marker.vehicle));
+}
+
+function removeMarker(marker) {
+	markers.removeLayer(marker);
+	delete markersMap[marker.vehicle.vin];
 }
 
 function setupMiniMapMarker() {
-	truckMarker.setLatLng({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
+	minimapMarker.setLatLng({
+		lat : minimapMarker.vehicle.latitude,
+		lon : minimapMarker.vehicle.longitude
 	});
 	
-	truckMarker.setIcon(resolveMarker(markerInUse.truck));
+	minimapMarker.setIcon(resolveMarker(minimapMarker.vehicle));
 	
 	circle.setLatLng({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
+		lat : minimapMarker.vehicle.latitude,
+		lon : minimapMarker.vehicle.longitude
 	});
 
 	// Loading truck telemetry data
-	$('#telemetryVin').text(markerInUse.truck.vin);
-	$('#telemetryLatitude').text(markerInUse.truck.latitude);
-	$('#telemetryLongitude').text(markerInUse.truck.longitude);
-	$('#telemetryAddress').text(markerInUse.truck.address);
-	$('#telemetryHeading').text(markerInUse.truck.heading);
-	$('#telemetryOdometer').text(markerInUse.truck.odometer);
-	$('#telemetryGpsSpeed').text(markerInUse.truck.gpsSpeed);
-	$('#telemetryGpsStatus').text(markerInUse.truck.gpsStatus);
-	$('#telemetryTotalIdleTime').text(markerInUse.truck.totalIdleTime);
-	$('#telemetryTotalFuelUsage').text(markerInUse.truck.totalFuelUsage);
-	$('#telemetryTimestamp').text(markerInUse.truck.timestamp);
-	$('#telemetryTotalEngineTime').text(markerInUse.truck.totalEngineTime);
-	$('#telemetryTspProvider').text(markerInUse.truck.tspProvider);
+	$('#telemetryVin').text(minimapMarker.vehicle.vin);
+	$('#telemetryLatitude').text(minimapMarker.vehicle.latitude);
+	$('#telemetryLongitude').text(minimapMarker.vehicle.longitude);
+	$('#telemetryAddress').text(minimapMarker.vehicle.address);
+	$('#telemetryHeading').text(minimapMarker.vehicle.heading);
+	$('#telemetryOdometer').text(minimapMarker.vehicle.odometer);
+	$('#telemetryGpsSpeed').text(minimapMarker.vehicle.gpsSpeed);
+	$('#telemetryGpsStatus').text(minimapMarker.vehicle.gpsStatus);
+	$('#telemetryTotalIdleTime').text(minimapMarker.vehicle.totalIdleTime);
+	$('#telemetryTotalFuelUsage').text(minimapMarker.vehicle.totalFuelUsage);
+	$('#telemetryTimestamp').text(minimapMarker.vehicle.timestamp);
+	$('#telemetryTotalEngineTime').text(minimapMarker.vehicle.totalEngineTime);
+	$('#telemetryTspProvider').text(minimapMarker.vehicle.tspProvider);
 
 	// update RentMe unit info
-	if (markerInUse.truck.unitInfo) {
+	if (minimapMarker.vehicle.unitInfo) {
 		$('#rentmeUnitInfo').show();
-		$("#customerNumber").text(markerInUse.truck.unitInfo.unitNumber);
-		$("#customerName").text(markerInUse.truck.unitInfo.customerName);
-		$("#engineMake").text(markerInUse.truck.unitInfo.engineMake);
+		$("#customerNumber").text(minimapMarker.vehicle.unitInfo.unitNumber);
+		$("#customerName").text(minimapMarker.vehicle.unitInfo.customerName);
+		$("#engineMake").text(minimapMarker.vehicle.unitInfo.engineMake);
 	} else {
 		$('#rentmeUnitInfo').hide();
 	}
 
 	// update fault info
-	if (markerInUse.truck.unitFault) {
+	if (minimapMarker.vehicle.unitFault) {
 		$('#rentmeFaultInfo').show();
-		$("#faultSpn").text(markerInUse.truck.unitFault.spn);
-		$("#faultFmi").text(markerInUse.truck.unitFault.fmi);
+		$("#faultSpn").text(minimapMarker.vehicle.unitFault.spn);
+		$("#faultFmi").text(minimapMarker.vehicle.unitFault.fmi);
 
 		// update fault code info
-		if (markerInUse.truck.faultCode) {
+		if (minimapMarker.vehicle.faultCode) {
 			$('.rentmeFaultCode').show();
-			$("#rentmeFCfaultCode").text(markerInUse.truck.faultCode.faultCode);
+			$("#rentmeFCfaultCode").text(minimapMarker.vehicle.faultCode.faultCode);
 			$("#rentmeFCfaultCodeId").text(
-					markerInUse.truck.faultCode.faultCodeId);
+					minimapMarker.vehicle.faultCode.faultCodeId);
 			$("#rentmeFCdescription").text(
-					markerInUse.truck.faultCode.description);
+					minimapMarker.vehicle.faultCode.description);
 			$("#rentmeFCinstructions").text(
-					markerInUse.truck.faultCode.repairInstructions);
+					minimapMarker.vehicle.faultCode.repairInstructions);
 		} else {
 			$('.rentmeFaultCode').hide();
 		}
@@ -343,39 +396,39 @@ function setupMiniMapMarker() {
 	}
 }
 
-function simulateTruckMove(truck) {
+function simulateMove(vehicle) {
 	return {
-		vin: truck.vin,
-		latitude: truck.latitude + getRandomInt(-1000, 1000) * 0.00001,
-		longitude: truck.longitude + getRandomInt(-1000, 1000) * 0.00001,
-		heading: truck.heading,
-		address: truck.address,
+		vin: vehicle.vin,
+		latitude: vehicle.latitude + getRandomInt(-1000, 1000) * 0.00001,
+		longitude: vehicle.longitude + getRandomInt(-1000, 1000) * 0.00001,
+		heading: vehicle.heading,
+		address: vehicle.address,
 		odometer: getRandomInt(100, 599999),
 		movementType: getRandomInt(0, 100) < 50? 'STOPPED' : 'IN_MOTION'
 	};
 }
 
-function liveGpsUpdate(truck) {
-	updateTruckGpsData(simulateTruckMove(truck));
+function liveGpsUpdate(vehicle) {
+	updateTruckGpsData(simulateMove(vehicle));
 	setTimeout(function() {
-		liveGpsUpdate(truck);
+		liveGpsUpdate(vehicle);
 	}, 3000);
 }
 
-function liveServiceUpdate(truck) {
+function liveServiceUpdate(vehicle) {
 	var serviceInfoVals = ['None', 'ServiceInfo', 'ServiceSoon', 'ServiceNow', 'StopTruck'];
 	updateServiceData({
-		vin: truck.vin,
+		vin: vehicle.vin,
 		serviceType: serviceInfoVals[getRandomInt(0, serviceInfoVals.length - 1)]
 	});
 	setTimeout(function() {
-		liveServiceUpdate(truck);
+		liveServiceUpdate(vehicle);
 	}, 5000);
 }
 
-function resolveMarker(truck) {
-	var movementType = truck.vehicleMovementType;
-	var serviceType = truck.serviceType;
+function resolveMarker(vehicle) {
+	var movementType = vehicle.vehicleMovementType;
+	var serviceType = vehicle.serviceType;
 	var iconType = stoppedNormalMarker;
 	if (movementType == 'IN_MOTION' && serviceType == 'None') {
 		iconType = inMotionNormalMarker;
@@ -403,51 +456,51 @@ function resolveMarker(truck) {
 }
 
 var markers;
-
-var markerInUse;
 var markersMap;
+var vehiclesIndex = {};
 var sidebar;
-var truckMarker;
+var minimapMarker;
 var circle;
+var filter;
 function markerClickHandler(event) {
-	markerInUse = this;
 	if (!(sidebar.isVisible())) {
 		sidebar.toggle();
 	}
 
 	// update miniMap
-	if (truckMarker) {
-		miniMap.removeLayer(truckMarker);
+	if (minimapMarker) {
+		miniMap.removeLayer(minimapMarker);
 		miniMap.removeLayer(circle);
 	}
 	miniMap.setView({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
+		lat : this.vehicle.latitude,
+		lon : this.vehicle.longitude
 	}, 8, {
 		duration : 0.5
 	});
 
 	map.panTo({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
+		lat : this.vehicle.latitude,
+		lon : this.vehicle.longitude
 	}, {
 		duration : 0.5
 	});
 
 	// add marker
-	var iconType = resolveMarker(markerInUse.truck);
-	truckMarker = L.flashingMarker({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
+	var iconType = resolveMarker(this.vehicle);
+	minimapMarker = L.flashingMarker({
+		lat : this.vehicle.latitude,
+		lon : this.vehicle.longitude
 	}, {
 		icon : iconType
 	});
-	truckMarker.addTo(miniMap);
+	minimapMarker.vehicle = this.vehicle;
+	minimapMarker.addTo(miniMap);
 
 	// add circle
 	circle = L.circle({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
+		lat : this.vehicle.latitude,
+		lon : this.vehicle.longitude
 	}, 40000, {
 		color : 'red',
 		fillColor : '#f03',
@@ -458,101 +511,45 @@ function markerClickHandler(event) {
 	setupMiniMapMarker();
 }
 
-function updateVehicleWidget(data) {
-	// debug
-	console.log("Truck Info: [" + JSON.stringify(data) + "]");
-	console.log("Truck: [" + JSON.stringify(markerInUse.truck) + "]");
-
-	// Loading truck telemetry data
-	$('#telemetryVin').text(markerInUse.truck.vin);
-	$('#telemetryLatitude').text(markerInUse.truck.latitude);
-	$('#telemetryLongitude').text(markerInUse.truck.longitude);
-	$('#telemetryAddress').text(markerInUse.truck.address);
-	$('#telemetryHeading').text(markerInUse.truck.heading);
-	$('#telemetryOdometer').text(markerInUse.truck.odometer);
-	$('#telemetryGpsSpeed').text(markerInUse.truck.gpsSpeed);
-	$('#telemetryGpsStatus').text(markerInUse.truck.gpsStatus);
-	$('#telemetryTotalIdleTime').text(markerInUse.truck.totalIdleTime);
-	$('#telemetryTotalFuelUsage').text(markerInUse.truck.totalFuelUsage);
-	$('#telemetryTimestamp').text(markerInUse.truck.timestamp);
-	$('#telemetryTotalEngineTime').text(markerInUse.truck.totalEngineTime);
-	$('#telemetryTspProvider').text(markerInUse.truck.tspProvider);
-
-	// update RentMe unit info
-	if (markerInUse.truck.unitInfo) {
-		$('#rentmeUnitInfo').show();
-		$("#customerNumber").text(markerInUse.truck.unitInfo.unitNumber);
-		$("#customerName").text(markerInUse.truck.unitInfo.customerName);
-		$("#engineMake").text(markerInUse.truck.unitInfo.engineMake);
-	} else {
-		$('#rentmeUnitInfo').hide();
-	}
-
-	// update fault info
-	if (markerInUse.truck.unitFault) {
-		$('#rentmeFaultInfo').show();
-		$("#faultSpn").text(markerInUse.truck.unitFault.spn);
-		$("#faultFmi").text(markerInUse.truck.unitFault.fmi);
-
-		// update fault code info
-		if (markerInUse.truck.faultCode) {
-			$('.rentmeFaultCode').show();
-			$("#rentmeFCfaultCode").text(markerInUse.truck.faultCode.faultCode);
-			$("#rentmeFCfaultCodeId").text(
-					markerInUse.truck.faultCode.faultCodeId);
-			$("#rentmeFCdescription").text(
-					markerInUse.truck.faultCode.description);
-			$("#rentmeFCinstructions").text(
-					markerInUse.truck.faultCode.repairInstructions);
-		} else {
-			$('.rentmeFaultCode').hide();
-		}
-	} else {
-		$('#rentmeFaultInfo').hide();
-	}
-
-	// update spinner
-	$("#spinnerIcon").hide();
-}
-
 function closeTruckInfoView() {
 	$('#truckView').popup('hide');
 }
 
 // This runs from the "Search Bar" and from the "Filter" pop-up
 function updateSearch() {
-	var query = buildQuery();
+	filter = buildQuery();
 
 	// iterate over the facets
 	$.each(visualSearch.searchQuery.facets(), function(index, value) {
 		if (value['VIN']) {
-			query.vins.push(value['VIN']);
+			filter.vins.push(value['VIN']);
 		}
 		if (value['Customer']) {
-			query.customers.push(value['Customer']);
+			filter.customers.push(value['Customer']);
 		}
 		if (value['Unit ID']) {
-			query.unitIds.push(value['Unit ID']);
+			filter.unitIds.push(value['Unit ID']);
 		}
 	});
 
 	$('input[name="serviceFilter"]:checked').each(function() {
-		query.serviceFilters.push(this.value);
+		filter.serviceFilters.push(this.value);
 	});
 	$('input[name="vehicleMovementFilter"]:checked').each(function() {
-		query.vehicleMovementFilters.push(this.value);
+		filter.vehicleMovementFilters.push(this.value);
 	});
 
-	// clean up map
-	clearFleetMarkers();
-
-	// querying
-	queryFleetInfo(query);
+	$("#spinnerIcon").show();
+	showVehicles();
+	$("#spinnerIcon").hide();
 }
 
 function clearFleetMarkers() {
 	// clean up map
-	map.removeLayer(markers);
+	if (markers) {
+		map.removeLayer(markers);
+		markers = null;
+	}
 	// clear the id -> markers map
 	markersMap = [];
 }
@@ -691,6 +688,25 @@ function setupSidebar() {
 		console.log('Close button clicked.');
 	});
 }
+
+// See http://dev.vast.com/jquery-popup-overlay/  
+$(document).ready(function() {
+	// Initialize the plugin
+    $('#my_popup').popup({
+        type: 'tooltip',
+        transition: '0.3s all 0.1s',
+        tooltipanchor: $('#navbar'),
+        vertical: 'bottom',
+        onopen: function () {
+        	$('input[name="serviceFilter"]').each(function() {
+        		this.checked = filter.serviceFilters.indexOf(this.value) >= 0;
+        	});
+        	$('input[name="vehicleMovementFilter"]').each(function() {
+        		this.checked = filter.vehicleMovementFilters.indexOf(this.value) >= 0;
+        	});
+        }
+    });
+});
 
 setupSearchBar();
 setupDefaultMap();
