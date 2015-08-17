@@ -185,6 +185,28 @@ function initFilter() {
 	filter = buildQuery();
 }
 
+function setupRabbitConnection() {
+//	var socket = new SockJS('http://localhost:61613/stomp');
+//    var stompClient = Stomp.over(socket);
+//    stompClient.connect({}, function(frame) {
+//        setConnected(true);
+//        console.log('Connected: ' + frame);
+//        stompClient.subscribe('/topic/notify', function(message){
+//            showMessage(JSON.parse(message.body).content);
+//        });
+//    });	
+//	var sock = new SockJS('http://localhost:5672', null, {headers: {'Access-Control-Allow-Origin': 'http://localhost:8080/'}});
+//	 sock.onopen = function() {
+//	     console.log('open');
+//	 };
+//	 sock.onmessage = function(e) {
+//	     console.log('message', e.data);
+//	 };
+//	 sock.onclose = function() {
+//	     console.log('close');
+//	 };
+}
+
 function initVehicles() {
 	var vehicles = [];
 	// processing - spin!
@@ -213,6 +235,9 @@ function initVehicles() {
 		});
 		
 		showVehicles();
+		
+		setupRabbitConnection();
+		
 		$("#spinnerIcon").hide();
 	});
 }
@@ -220,7 +245,7 @@ function initVehicles() {
 function showVehicles() {
 	clearFleetMarkers();
 	// See https://github.com/Leaflet/Leaflet.markercluster
-	markers = /*L.markerClusterGroup();*/ L.layerGroup();
+	markers = L.markerClusterGroup(); /*L.layerGroup();*/
 	markersMap = [];
 	Object.keys(vehiclesIndex).forEach(function(vin) {
     	var vehicle = vehiclesIndex[vin];
