@@ -121,59 +121,7 @@ $( "#toDate" ).datepicker({
 		<!-- Add an optional button to close the popup -->
         <button class="btn btn-info btn-sm  my_popup_close" onclick="updateSearch()">Update Search</button>
         
-      </div>
-       
-       <div id="dataExportView" class="well">
-         <h3>Data Export</h3>
-         From: <input type="text" id="fromDate"/><input type="hidden" id="actualFromDate"/>
-         To: <input type="text" id="toDate" /><input type="hidden" id="actualToDate"/>  
-         <br/>
-         <table>
-           <tr>
-             <th colspan="2">Columns</th>
-           </tr>
-           <tr>
-             <td><input name="dataExportColumns" value="vin" type="checkbox" />VIN</td>
-             <td><input name="dataExportColumns" value="speed" type="checkbox"/>Speed</td>
-             <td><input name="dataExportColumns" value="latitude" type="checkbox"/>Latitude</td>
-           </tr>
-           <tr>
-           	 <td><input name="dataExportColumns" value="gpsStatus" type="checkbox"/>GPS Status</td>
-             <td><input name="dataExportColumns" value="heading" type="checkbox" />Heading</td>
-             <td><input name="dataExportColumns" value="longitude" type="checkbox"/>Longitude</td>
-           </tr>
-           <tr>
-             <td><input name="dataExportColumns" value="gpsSpeed" type="checkbox"/>GPS Speed</td>
-             <td><input name="dataExportColumns" value="engineRpm" type="checkbox"/>RPM</td>
-             <td><input name="dataExportColumns" value="altitude" type="checkbox" />Altitude</td>
-           </tr>
-           <tr>
-             <td><input name="dataExportColumns" value="fuelLevel" type="checkbox"/>Fuel Level</td>
-             <td><input name="dataExportColumns" value="engineCoolantTemp" type="checkbox"/>Coolant Temp</td>
-             <td><input name="dataExportColumns" value="odometer" type="checkbox" />Odometer</td>
-           </tr>
-           <tr>
-             <td><input name="dataExportColumns" value="batteryVoltage" type="checkbox"/>Battery Voltage</td>
-             <td><input name="dataExportColumns" value="seatBeltUsage" type="checkbox"/>Seat Belt Usage</td>
-             <td><input name="dataExportColumns" value="throttle" type="checkbox" />Throttle</td>
-           </tr>
-         </table>
-         <table>
-           <tr>
-             <th colspan="2">Export Type</th>
-           </tr>
-           <tr>
-             <td><input name="dataExportType" value="csv" type="radio" />CSV</td>
-             <td><input name="dataExportType" value="tsv" type="radio" />TSV</td>
-             <td><input name="dataExportType" value="psv" type="radio" />PSV</td>
-             <td><input name="dataExportType" value="json" type="radio"/>JSON</td>
-           </tr>
-         </table>
-         <!-- Add an optional button to close the popup -->
-         <button class="btn btn-info btn-sm  dataExportView_close" onclick="handleExportRequest()">Export</button>
-         
-       </div>
-      
+      </div>      
        
        <div id="sidebar">
          	   <table class="truckDetails">
@@ -281,7 +229,6 @@ $( "#toDate" ).datepicker({
     <script th:src="@{/js/bootstrap-3.2.0.js}"></script>
     <script th:src="@{/js/leaflet.easybutton.js}"></script>
     <script th:src="@{/js/leaflet.control.sidebar.js}"></script>
-    <script th:src="@{/js/leaflet.animated.marker.js}"></script>
     <script th:src="@{/js/pages.js}"></script>
     <script th:src="@{/js/dashboard.js}"></script>
     <script>
@@ -297,8 +244,6 @@ $( "#toDate" ).datepicker({
 
     });
     
-    // see https://github.com/CliffCloud/Leaflet.EasyButton
-    L.easyButton( 'fa-cloud-download' , handleExportButton , "Export Data" );
   </script>
   </body>
 </html>

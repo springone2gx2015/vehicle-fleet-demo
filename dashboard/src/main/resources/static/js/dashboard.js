@@ -21,35 +21,56 @@ L.FlashingMarker = L.Marker.extend({
 	},
 
 	flash : function() {
-		if (this._originalIcon) {
-			this.setIcon(this._originalIcon);
-			delete this._originalIcon;
-		} else {
-			this._originalIcon = this.options.icon;
-			this.setIcon(this.options.icon.options.flashIcon);
-		}
-
-		// Queue up the animation
-		this._tid = setTimeout(this.flash.bind(this), this.options.interval);
+		if (this._icon) {
+			if (this._flashed) {
+				this._icon.src = this.options.icon.options.iconUrl;
+				delete this._flashed;
+			} else {
+				this._icon.src = this.options.icon.options.flashIconUrl;
+				 this._flashed = true;
+			}
+			
+			// Queue up the animation
+			if (this.options.icon.options.flashIconUrl && this.options.interval > 0) {
+				this._tid = setTimeout(this.flash.bind(this), this.options.interval);
+			} else {
+				this.stop();
+			}
+		}		
 	},
 
+	setIcon : function(icon) {
+		L.Marker.prototype.setIcon.call(this, icon);
+		if (icon.options.flashIconUrl) {
+			if (this._icon && this._flashed) {
+				this._icon.src = icon.options.flashIconUrl;
+			}
+			this.start();
+		} else {
+			this.stop();
+		}
+	},
+	
 	// Start the animation
 	start : function() {
-		if (this.options.icon.options.flashIcon && this.options.interval && this.options.interval > 0) {
-			delete this._originalIcon;
+		if (!this._started && this.options.icon.options.flashIconUrl && this.options.interval && this.options.interval > 0) {
+			delete this._flashed;
 			this.flash();
+			this._started = true;
 		}
 	},
-
+	
 	// Stop the animation in place
 	stop : function() {
 		if (this._tid) {
 			clearTimeout(this._tid);
+			delete this._tid;
 		}
-		if (this._originalIcon) {
-			this.setIcon(this._originalIcon);
-			delete this._originalIcon;
+		if (this._flashed && this._icon) {
+			this._icon.src = this.options.icon.options.iconUrl;
+			delete this._flashed;
 		}
+		this._started = false;
 	}
 
 });
@@ -60,40 +81,42 @@ L.flashingMarker = function(latlngs, options) {
 
 // create map
 var map = L.map('map', {
-	center : [ 40.061, -97.515 ],
-	zoom : 4
+	center : [ 38.9047, -77.0164 ],
+	zoom : 10,
+//	markerZoomAnimation: false
 });
 
 var miniMap = L.map('miniMap', {
-	center : [ 40.061, -97.515 ],
+	center : [ 38.9047, -77.0164 ],
 	zoom : 15
 });
 
 // Creates markers for each group
-var inMotionNormalMarker = icon('bus', '#00FF00', icon('', '#00FF00'));
-var stoppedNormalMarker = icon('bus', '#00FF00');
-var inMotionServiceInfoMarker = icon('bus', '#FF0000', icon('', '#FF0000'));
+var inMotionNormalMarker = icon('bus', '#009500', true);
+var stoppedNormalMarker = icon('bus', '#009500');
+var inMotionServiceInfoMarker = icon('bus', '#0000FF', true);
 var stoppedServiceInfoMarker = icon('bus', '#0000FF');
-var inMotionServiceSoonMarker = icon('bus', '#F5F5DC', icon('', '#F5F5DC'));
-var stoppedServiceSoonMarker = icon('bus', '#F5F5DC');
-var inMotionServiceNowMarker = icon('bus', '#FFA500', icon('', '#FFA500'));
+var inMotionServiceSoonMarker = icon('bus', '#FFFF00', true);
+var stoppedServiceSoonMarker = icon('bus', '#FFFF00');
+var inMotionServiceNowMarker = icon('bus', '#FFA500', true);
 var stoppedServiceNowMarker = icon('bus', '#FFA500');
-var inMotionStopTruckMarker = icon('bus', '#FF0000', icon('', '#FF0000'));
+var inMotionStopTruckMarker = icon('bus', '#FF0000', true);
 var stoppedStopTruckMarker = icon('bus', '#FF0000');
 
 // Create markers for the RentMe Unit Locations
-var serviceCenterMarker = icon('warehouse', '#5F9EA0');
+var serviceCenterMarker = icon('commercial', '#5F9EA0');
 
-function icon(symbol, color, flashIcon, size) {
+function icon(symbol, color, flash, size) {
 	size = size || [35, 90];
 	color = (color || '7e7e7e').replace('#', '');
-	return L.icon({
+	var icon = L.icon({
 		iconUrl: 'http://a.tiles.mapbox.com/v4/marker/pin-l' + (symbol ? "-" + symbol : '') + '+' + color + (L.Browser.retina ? '@2x' : '') + '.png?access_token=' + mapToken,
 		iconSize: [35, 90],
 	    iconAnchor: [size[0] / 2, size[1] / 2],
 	    popupAnchor: [0, -size[1] / 2],
-	    flashIcon: flashIcon
+	    flashIconUrl: flash ? 'http://a.tiles.mapbox.com/v4/marker/pin-l+' + color + (L.Browser.retina ? '@2x' : '') + '.png?access_token=' + mapToken : undefined
 	});
+	return icon;
 }
 
 function setupDefaultMap() {
@@ -169,14 +192,22 @@ function queryFleetInfo(query) {
 		data = data.concat(result.locations);
 	}, function() {
 		// See https://github.com/Leaflet/Leaflet.markercluster
-		markers = L.markerClusterGroup();
+		markers = /*L.markerClusterGroup();*/ L.layerGroup();
+		markersMap = [];
+		
+//		var trimedData = [];
+//		for (var i = 0; i < data.length && trimedData.length < 1; i++) {
+//			if (data[i].vin && data[i].latitude && data[i].longitude) {
+//				trimedData.push(data[i]);
+//			}
+//		}
+//		data = trimedData;
 
 		// iterate over the list of results
 		$.each(data, function(index, value) {
 			// console.log(data.trucks[index]);
 			var truck = data[index];
-			var iconType = resolveMarker(truck.vehicleMovementType,
-					truck.serviceType);
+			var iconType = resolveMarker(truck);
 
 			// var marker = L.marker([truck.latitude, truck.longitude], {icon:
 			// iconType}).addTo(map);
@@ -184,7 +215,7 @@ function queryFleetInfo(query) {
 				lat : truck.latitude,
 				lon : truck.longitude
 			};
-			if (truck.latitude && truck.longitude) {
+			if (truck.vin && truck.latitude && truck.longitude) {
 				var marker = L.flashingMarker({
 					lat : truck.latitude,
 					lon : truck.longitude
@@ -196,6 +227,12 @@ function queryFleetInfo(query) {
 				marker.on('click', markerClickHandler);
 				marker.bindPopup("Vin: " + truck.vin);
 				markers.addLayer(marker);
+				markersMap[truck.vin] = marker;
+				
+//				setTimeout(function() {
+//					liveGpsUpdate(truck);
+//					liveServiceUpdate(truck);
+//				}, 5000);
 			} else {
 				msg = "FAIL - VIN: " + truck.vin + " JSON: "
 						+ JSON.stringify(obj) + " TSP: " + truck.tspProvider;
@@ -208,85 +245,54 @@ function queryFleetInfo(query) {
 	});
 }
 
-function resolveMarker(movementType, serviceType) {
-	var iconType = stoppedNormalMarker;
-	if (movementType == 'IN_MOTION' && serviceType == 'None') {
-		iconType = inMotionNormalMarker;
-	} else if (movementType == 'STOPPED' && serviceType == 'None') {
-		iconType = stoppedNormalMarker;
-	} else if (movementType == 'IN_MOTION' && serviceType == 'ServiceInfo') {
-		iconType = inMotionServiceInfoMarker;
-	} else if (movementType == 'STOPPED' && serviceType == 'ServiceInfo') {
-		iconType = stoppedServiceInfoMarker;
-	} else if (movementType == 'IN_MOTION' && serviceType == 'ServiceSoon') {
-		iconType = inMotionServiceSoonMarker;
-	} else if (movementType == 'STOPPED' && serviceType == 'ServiceSoon') {
-		iconType = stoppedServiceSoonMarker;
-	} else if (movementType == 'IN_MOTION' && serviceType == 'ServiceNow') {
-		iconType = inMotionServiceNowMarker;
-	} else if (movementType == 'STOPPED' && serviceType == 'ServiceNow') {
-		iconType = stoppedServiceNowMarker;
-	} else if (movementType == 'IN_MOTION' && serviceType == 'StopTruck') {
-		iconType = inMotionStopTruckMarker;
-	} else if (movementType == 'STOPPED' && serviceType == 'StopTruck') {
-		iconType = stoppedStopTruckMarker;
-	}
-
-	return iconType;
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
 }
 
-var markers;
-
-var markerInUse;
-var sidebar;
-var truckMarker;
-var circle;
-function markerClickHandler(event) {
-	markerInUse = this;
-	if (!(sidebar.isVisible())) {
-		sidebar.toggle();
+function updateTruckGpsData(info) {
+	var marker = markersMap[info.vin];
+	if (marker) {
+		marker.truck.latitude = info.latitude;
+		marker.truck.longitude = info.longitude;
+		marker.truck.heading = info.heading;
+		marker.truck.address = info.address
+		marker.truck.odometer = info.odometer;
+		marker.truck.vehicleMovementType = info.movementType;
+		updateMarker(marker);
 	}
+}
 
-	// update miniMap
-	if (truckMarker) {
-		miniMap.removeLayer(truckMarker);
-		miniMap.removeLayer(circle);
+function updateServiceData(info) {
+	var marker = markersMap[info.vin];
+	if (marker) {
+		marker.truck.serviceType = info.serviceType;
+		updateMarker(marker);
 	}
-	miniMap.setView({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
-	}, 8, {
-		duration : 0.5
-	});
+}
 
-	map.panTo({
-		lat : markerInUse.truck.latitude,
-		lon : markerInUse.truck.longitude
-	}, {
-		duration : 0.5
+function updateMarker(marker) {
+	marker.setLatLng({
+		lat : marker.truck.latitude,
+		lon : marker.truck.longitude
 	});
+	marker.setIcon(resolveMarker(marker.truck));
+	if (markerInUse === marker && truckMarker) {
+		setupMiniMapMarker();
+	}
+}
 
-	// add marker
-	var iconType = resolveMarker(markerInUse.truck.vehicleMovementType,
-			markerInUse.truck.serviceType);
-	truckMarker = L.flashingMarker({
+function setupMiniMapMarker() {
+	truckMarker.setLatLng({
 		lat : markerInUse.truck.latitude,
 		lon : markerInUse.truck.longitude
-	}, {
-		icon : iconType
 	});
-	truckMarker.addTo(miniMap);
-
-	// add circle
-	circle = L.circle({
+	
+	truckMarker.setIcon(resolveMarker(markerInUse.truck));
+	
+	circle.setLatLng({
 		lat : markerInUse.truck.latitude,
 		lon : markerInUse.truck.longitude
-	}, 40000, {
-		color : 'red',
-		fillColor : '#f03',
-		fillOpacity : 0.5
 	});
-	circle.addTo(miniMap);
 
 	// Loading truck telemetry data
 	$('#telemetryVin').text(markerInUse.truck.vin);
@@ -335,6 +341,121 @@ function markerClickHandler(event) {
 	} else {
 		$('#rentmeFaultInfo').hide();
 	}
+}
+
+function simulateTruckMove(truck) {
+	return {
+		vin: truck.vin,
+		latitude: truck.latitude + getRandomInt(-1000, 1000) * 0.00001,
+		longitude: truck.longitude + getRandomInt(-1000, 1000) * 0.00001,
+		heading: truck.heading,
+		address: truck.address,
+		odometer: getRandomInt(100, 599999),
+		movementType: getRandomInt(0, 100) < 50? 'STOPPED' : 'IN_MOTION'
+	};
+}
+
+function liveGpsUpdate(truck) {
+	updateTruckGpsData(simulateTruckMove(truck));
+	setTimeout(function() {
+		liveGpsUpdate(truck);
+	}, 3000);
+}
+
+function liveServiceUpdate(truck) {
+	var serviceInfoVals = ['None', 'ServiceInfo', 'ServiceSoon', 'ServiceNow', 'StopTruck'];
+	updateServiceData({
+		vin: truck.vin,
+		serviceType: serviceInfoVals[getRandomInt(0, serviceInfoVals.length - 1)]
+	});
+	setTimeout(function() {
+		liveServiceUpdate(truck);
+	}, 5000);
+}
+
+function resolveMarker(truck) {
+	var movementType = truck.vehicleMovementType;
+	var serviceType = truck.serviceType;
+	var iconType = stoppedNormalMarker;
+	if (movementType == 'IN_MOTION' && serviceType == 'None') {
+		iconType = inMotionNormalMarker;
+	} else if (movementType == 'STOPPED' && serviceType == 'None') {
+		iconType = stoppedNormalMarker;
+	} else if (movementType == 'IN_MOTION' && serviceType == 'ServiceInfo') {
+		iconType = inMotionServiceInfoMarker;
+	} else if (movementType == 'STOPPED' && serviceType == 'ServiceInfo') {
+		iconType = stoppedServiceInfoMarker;
+	} else if (movementType == 'IN_MOTION' && serviceType == 'ServiceSoon') {
+		iconType = inMotionServiceSoonMarker;
+	} else if (movementType == 'STOPPED' && serviceType == 'ServiceSoon') {
+		iconType = stoppedServiceSoonMarker;
+	} else if (movementType == 'IN_MOTION' && serviceType == 'ServiceNow') {
+		iconType = inMotionServiceNowMarker;
+	} else if (movementType == 'STOPPED' && serviceType == 'ServiceNow') {
+		iconType = stoppedServiceNowMarker;
+	} else if (movementType == 'IN_MOTION' && serviceType == 'StopTruck') {
+		iconType = inMotionStopTruckMarker;
+	} else if (movementType == 'STOPPED' && serviceType == 'StopTruck') {
+		iconType = stoppedStopTruckMarker;
+	}
+
+	return iconType;
+}
+
+var markers;
+
+var markerInUse;
+var markersMap;
+var sidebar;
+var truckMarker;
+var circle;
+function markerClickHandler(event) {
+	markerInUse = this;
+	if (!(sidebar.isVisible())) {
+		sidebar.toggle();
+	}
+
+	// update miniMap
+	if (truckMarker) {
+		miniMap.removeLayer(truckMarker);
+		miniMap.removeLayer(circle);
+	}
+	miniMap.setView({
+		lat : markerInUse.truck.latitude,
+		lon : markerInUse.truck.longitude
+	}, 8, {
+		duration : 0.5
+	});
+
+	map.panTo({
+		lat : markerInUse.truck.latitude,
+		lon : markerInUse.truck.longitude
+	}, {
+		duration : 0.5
+	});
+
+	// add marker
+	var iconType = resolveMarker(markerInUse.truck);
+	truckMarker = L.flashingMarker({
+		lat : markerInUse.truck.latitude,
+		lon : markerInUse.truck.longitude
+	}, {
+		icon : iconType
+	});
+	truckMarker.addTo(miniMap);
+
+	// add circle
+	circle = L.circle({
+		lat : markerInUse.truck.latitude,
+		lon : markerInUse.truck.longitude
+	}, 40000, {
+		color : 'red',
+		fillColor : '#f03',
+		fillOpacity : 0.5
+	});
+	circle.addTo(miniMap);
+	
+	setupMiniMapMarker();
 }
 
 function updateVehicleWidget(data) {
@@ -423,26 +544,17 @@ function updateSearch() {
 	});
 
 	// clean up map
-	map.removeLayer(markers);
+	clearFleetMarkers();
 
 	// querying
 	queryFleetInfo(query);
 }
 
-function handleExportButton() {
-
-	$('#dataExportView').popup({
-		tooltipanchor : $('.leaflet-bar-part'),
-		autoopen : true,
-		offsettop : 13,
-		offsetleft : 20,
-		vertical : 'topedge',
-		horizontal : 'leftedge',
-		type : 'tooltip'
-	});
-}
-
-function handleExportRequest() {
+function clearFleetMarkers() {
+	// clean up map
+	map.removeLayer(markers);
+	// clear the id -> markers map
+	markersMap = [];
 }
 
 /**
@@ -499,14 +611,14 @@ function setupServiceCenters() {
 
 	// Overlay layers are grouped
 	var groupedOverlays = {
-		"<i class='fa fa-truck'></i> RentMe Locations" : {
+		"<i class='fa fa-bus'></i> RentMe Locations" : {
 			"Service Center <i class='fa fa-wrench'></i>" : scg
 		}
 	};
 
 	// Overlay layers are grouped
 	var groupedOverlays2 = {
-		"<i class='fa fa-truck'></i> RentMe Locations" : {
+		"<i class='fa fa-bus'></i> RentMe Locations" : {
 			"Service Center <i class='fa fa-wrench'></i>" : scg2
 		}
 	};

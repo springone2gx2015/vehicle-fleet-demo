@@ -56,7 +56,7 @@ legend.scheduler-border {
 	font-size: xx-small;
 }
 
-#dataExportView > h3 {
+/* #dataExportView > h3 {
 	margin-top: 5px;
 }
 #dataExportView > hr {
@@ -69,7 +69,7 @@ legend.scheduler-border {
 #dataExportView > #tabs {
 	font-size: small;
 }
-
+ */
 .well {
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     display:none;
