@@ -48,7 +48,7 @@ $( "#toDate" ).datepicker({
 </script>
   </head>
   <body>
-    <div class="navbar navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-fixed-top" role="navigation" id="navbar">
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="/">
@@ -77,7 +77,6 @@ $( "#toDate" ).datepicker({
     </div>
     
     <div class="container">
-      <div id="foo"></div>
       <div id="map" class="sidebar-map"></div>
 
 	  <!-- Add content to the popup -->
@@ -239,7 +238,8 @@ $( "#toDate" ).datepicker({
       $('#my_popup').popup({
           type: 'tooltip',
           transition: '0.3s all 0.1s',
-          tooltipanchor: $('#foo')
+          tooltipanchor: $('#navbar'),
+          vertical: 'bottom'
       });
 
     });
