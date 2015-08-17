@@ -1,8 +1,6 @@
 Vehicle Fleet
 =============
 
-[![Build Status](https://travis-ci.org/ghillert/vehicle-fleet-demo.svg)](https://travis-ci.org/ghillert/vehicle-fleet-demo)
-
 Demo system for RentMe fleet of connected rental trucks. Each truck in
 our fleet sends us telemetry data updates, including location, heading
 and various internal indicators, including whether of not a service is

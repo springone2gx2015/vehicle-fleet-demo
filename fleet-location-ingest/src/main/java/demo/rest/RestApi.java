@@ -15,6 +15,10 @@
  */
 package demo.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RestApi {
 
+	@Autowired
+	private MessageChannel toRabbit;
+
 	@RequestMapping(path="/locations", method=RequestMethod.POST)
-	public void locations() {
+	public void locations(@RequestBody String positionInfo) {
+		toRabbit.send(MessageBuilder.withPayload(positionInfo).build());
 	}
 
 }

@@ -27,10 +27,12 @@ import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import demo.model.DirectionInput;
 import demo.model.GpsSimulatorRequest;
@@ -66,6 +68,13 @@ public class RestApi {
 	private AsyncTaskExecutor taskExecutor;
 
 	private Map<Long, GpsSimulatorInstance> taskFutures = new HashMap<>();
+
+	@Autowired
+	private RestTemplate rt;
+
+
+	@Autowired
+	private ApplicationContext ctx;
 
 	@RequestMapping("/dc")
 	public List<GpsSimulatorInstance>dc(HttpServletRequest request) {

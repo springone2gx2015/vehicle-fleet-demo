@@ -4,12 +4,32 @@
 	xmlns:int="http://www.springframework.org/schema/integration"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-4.2.xsd
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<int:channel id="sendPosition"/>
-	<int:logging-channel-adapter id="loggit" log-full-message="true" level="INFO" channel="sendPosition"/>
+
+	<int:chain input-channel="sendPosition" output-channel="requestChannel">
+		<int:header-enricher>
+			<int:header name="Content-Type" value="application/json" />
+		</int:header-enricher>
+		<int:object-to-json-transformer/>
+	</int:chain>
+
+	<int:channel id="requestChannel">
+		<int:interceptors>
+			<int:wire-tap channel="loggit"/>
+		</int:interceptors>
+	</int:channel>
+
+	<int-http:outbound-channel-adapter id="sendToIngest" channel="requestChannel" http-method="POST" rest-template="loadBalancedRestTemplate"
+		url="http://service-location-ingest/api/locations">
+	</int-http:outbound-channel-adapter>
+
+	<int:logging-channel-adapter id="loggit" log-full-message="true" level="INFO"/>
 
 </beans>

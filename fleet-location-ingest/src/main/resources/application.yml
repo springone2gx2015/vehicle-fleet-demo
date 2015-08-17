@@ -4,6 +4,4 @@ server:
   context-path: "/"
 spring:
   application:
-    name: service-location-simulator
-gpsSimmulator:
-  googleApiKey:
+    name: service-location-ingest

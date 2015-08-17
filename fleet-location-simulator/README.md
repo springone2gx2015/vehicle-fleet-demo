@@ -78,3 +78,32 @@ For a quick visualization, open the `gps.kml` file in Google Earth. Click on the
 * GET http://localhost:8080/api/fixture (Creates content for `fixture.json`)
 * GET http://localhost:8080/api/directions
 * GET http://localhost:8080/api/kml/{instanceId} (used by `gps.kml`)
+
+## Emmitted Messages
+
+When `exportPositionsToMessaging` is `true` the GPS position and vehicle status information is send using Spring Integration messaging. Ultimately the data is serialized to JSON and transmitted to the `fleet-location-ingest` for further processing. The following JSON message format is used:
+
+```json
+{
+  "position": {
+    "latitude": 38.94286343501579,
+    "longitude": -76.99099467966852
+  },
+  "vehicleStatus": "NORMAL",
+  "leg": {
+    "id": 0,
+    "startPosition": {
+      "latitude": 38.942870000000006,
+      "longitude": -76.99244
+    },
+    "endPosition": {
+      "latitude": 38.94286,
+      "longitude": -76.99024
+    },
+    "length": 190.26924849743094,
+    "heading": 90.33415225409419
+  },
+  "distanceFromStart": 124.99999999999999,
+  "speed": 13.88888888888889
+}
+```
