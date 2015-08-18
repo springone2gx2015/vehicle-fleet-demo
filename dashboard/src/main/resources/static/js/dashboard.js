@@ -256,7 +256,7 @@ function initVehicles() {
 function showVehicles() {
 	clearFleetMarkers();
 	// See https://github.com/Leaflet/Leaflet.markercluster
-	markers = L.markerClusterGroup(); /*L.layerGroup();*/
+	markers = L.markerClusterGroup({maxClusterRadius: 30}); /*L.layerGroup();*/
 	markersMap = [];
 	Object.keys(vehiclesIndex).forEach(function(vin) {
     	var vehicle = vehiclesIndex[vin];
@@ -358,11 +358,13 @@ function updateVehicleOnMiniMap(vehicle) {
 }
 
 function updateMarker(marker) {
-	marker.setLatLng({
-		lat : marker.vehicle.latitude,
-		lon : marker.vehicle.longitude
-	});
-	marker.setIcon(resolveMarker(marker.vehicle));
+//	marker.setLatLng({
+//		lat : marker.vehicle.latitude,
+//		lon : marker.vehicle.longitude
+//	});
+//	marker.setIcon(resolveMarker(marker.vehicle));
+	removeMarker(marker);
+	createMarker(marker.vehicle);
 }
 
 function removeMarker(marker) {
