@@ -18,18 +18,25 @@ package demo;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -39,6 +46,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FleetLocationServiceApplication.class)
 @WebAppConfiguration
+@TestPropertySource(properties="spring.jpa.showSql=true")
 public class FleetLocationTests {
 
 	@Autowired
@@ -47,15 +55,31 @@ public class FleetLocationTests {
 	@Autowired
 	LocationRepository repository;
 
+	@Before
+	public void setup() throws Exception {
+		saveJson();
+	}
+
 	@Test
-	public void saveAndFindAll() throws Exception {
-		List<Location> value = this.mapper.readValue(new ClassPathResource("fleet.json").getInputStream(), new TypeReference<List<Location>>() {
-		});
-		assertEquals(4, value.size());
-		this.repository.save(value);
+	public void findAll() throws Exception {
 		Iterable<Location> vehicles = this.repository.findAll();
-		// TODO: findByVin("1FUJGBDV20LBZ2345", new PageRequest(0, 20));
 		assertEquals(4, getList(vehicles).size());
+	}
+
+	@Test
+	public void findByVin() throws Exception {
+		Page<Location> vehicles = this.repository.findByUnitInfoUnitVin("1FUJGBDV20LBZ2345", new PageRequest(0, 20));
+		assertEquals(1, getList(vehicles).size());
+	}
+
+	private void saveJson() throws IOException, JsonParseException, JsonMappingException {
+		if (this.repository.count() == 0) {
+			List<Location> value = this.mapper.readValue(new ClassPathResource(
+					"fleet.json").getInputStream(), new TypeReference<List<Location>>() {
+			});
+			assertEquals(4, value.size());
+			this.repository.save(value);
+		}
 	}
 
 	private List<Location> getList(Iterable<Location> vehicles) {

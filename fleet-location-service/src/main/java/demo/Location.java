@@ -28,7 +28,9 @@ import javax.persistence.Id;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A POJO representation of a truck on the road.
@@ -88,6 +90,11 @@ public class Location {
 	@SuppressWarnings("unused")
 	private Location() {
 		this.unitInfo = null;
+	}
+
+	@JsonCreator
+	private Location(@JsonProperty("vin") String vin) {
+		this.unitInfo = new UnitInfo(vin);
 	}
 
 	public String getVin() {
