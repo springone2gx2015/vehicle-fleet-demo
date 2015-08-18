@@ -186,25 +186,36 @@ function initFilter() {
 }
 
 function setupRabbitConnection() {
-//	var socket = new SockJS('http://localhost:61613/stomp');
-//    var stompClient = Stomp.over(socket);
+	var socket = new SockJS('/location-updates-stomp/stomp');
+    var stompClient = Stomp.over(socket);
+    var on_connect = function() {
+        console.log('connected');
+    };
+    var on_error =  function() {
+        console.log('error');
+        console.log(JSON.stringify(arguments));
+    };
+    stompClient.connect('guest', 'guest', on_connect, on_error, '/');
+    
 //    stompClient.connect({}, function(frame) {
 //        setConnected(true);
 //        console.log('Connected: ' + frame);
 //        stompClient.subscribe('/topic/notify', function(message){
 //            showMessage(JSON.parse(message.body).content);
 //        });
-//    });	
-//	var sock = new SockJS('http://localhost:5672', null, {headers: {'Access-Control-Allow-Origin': 'http://localhost:8080/'}});
-//	 sock.onopen = function() {
-//	     console.log('open');
-//	 };
-//	 sock.onmessage = function(e) {
-//	     console.log('message', e.data);
-//	 };
-//	 sock.onclose = function() {
-//	     console.log('close');
-//	 };
+//    });
+    
+//	Stomp.WebSocketClass = SockJS;
+//
+//    var client = Stomp.client('/location-updates-stomp/stomp');
+//    var on_connect = function() {
+//        console.log('connected');
+//    };
+//    var on_error =  function() {
+//       console.log('error');
+//     console.log(JSON.stringify(arguments));
+//    };
+//    client.connect('guest', 'guest', on_connect, on_error, '/');
 }
 
 function initVehicles() {

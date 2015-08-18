@@ -22,6 +22,9 @@ zuul:
     service-location-service:
       path: /service-location-service/**
       url: http://localhost:9001
+    location-updates-stomp:
+      path: /location-updates-stomp/**
+      url: http://localhost:15674
 
 ---
 spring:
