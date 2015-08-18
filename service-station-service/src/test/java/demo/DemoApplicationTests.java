@@ -15,15 +15,25 @@
  */
 package demo;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.rules.SpringClassRule;
+import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ServiceLocationServiceApplication.class)
 public class DemoApplicationTests {
+
+	@ClassRule
+	public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+
+	@ClassRule
+	public static MongoTestSupport mongo = new MongoTestSupport("mongoClient");
+
+	@Rule
+	public SpringMethodRule springMethod = new SpringMethodRule();
 
 	@Autowired
 	ServiceLocationRepository repository;

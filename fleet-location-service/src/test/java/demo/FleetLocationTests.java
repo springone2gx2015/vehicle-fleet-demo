@@ -18,6 +18,7 @@ package demo;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -47,11 +48,22 @@ public class FleetLocationTests {
 	LocationRepository repository;
 
 	@Test
-	public void stub() throws Exception {
+	public void saveAndFindAll() throws Exception {
 		List<Location> value = this.mapper.readValue(new ClassPathResource("fleet.json").getInputStream(), new TypeReference<List<Location>>() {
 		});
-		assertEquals(3, value.size());
+		assertEquals(4, value.size());
 		this.repository.save(value);
+		Iterable<Location> vehicles = this.repository.findAll();
+		// TODO: findByVin("1FUJGBDV20LBZ2345", new PageRequest(0, 20));
+		assertEquals(4, getList(vehicles).size());
+	}
+
+	private List<Location> getList(Iterable<Location> vehicles) {
+		ArrayList<Location> list = new ArrayList<Location>();
+		for (Location location : vehicles) {
+			list.add(location);
+		}
+		return list;
 	}
 
 }

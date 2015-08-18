@@ -19,29 +19,33 @@ package bootstrap;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.cloud.bootstrap.config.PropertySourceLocator;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
-import org.springframework.core.env.PropertySource;
 
 /**
  * @author Dave Syer
  *
  */
-@Configuration
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class ConfigServerBootstrapConfiguration implements PropertySourceLocator {
+public class ConfigServerBootstrapConfiguration implements EnvironmentPostProcessor {
+
+	private static final String CONFIG_SERVER_BOOTSTRAP = "configServerBootstrap";
 
 	@Override
-	public PropertySource<?> locate(Environment environment) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("spring.cloud.config.uri",
-				"${CONFIG_SERVER_URI:${vcap.services.${PREFIX:}configserver.credentials.uri:http://localhost:8888}}");
-		map.put("encrypt.failOnError", "false");
-		return new MapPropertySource("config_bootstrap", map);
+	public void postProcessEnvironment(ConfigurableEnvironment environment,
+			SpringApplication application) {
+		if (!environment.getPropertySources().contains(CONFIG_SERVER_BOOTSTRAP)) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("spring.cloud.config.uri",
+					"${CONFIG_SERVER_URI:${vcap.services.${PREFIX:}configserver.credentials.uri:http://localhost:8888}}");
+			map.put("encrypt.failOnError", "false");
+			environment.getPropertySources().addLast(
+					new MapPropertySource(CONFIG_SERVER_BOOTSTRAP, map));
+		}
 	}
 
 }

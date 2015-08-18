@@ -15,6 +15,7 @@
 	<name>Spring Cloud Sample Vehicle Fleet</name>
 
 	<modules>
+		<module>config-bootstrap</module>
 		<module>fleet-location-service</module>
 		<module>fleet-location-simulator</module>
 		<module>fleet-location-ingest</module>
