@@ -54,10 +54,10 @@ public class FleetLocationRandomizer implements CommandLineRunner {
 	private static Map<String, String> FAULT_REPAIRS = new HashMap<String, String>();
 	private SecureRandom random = new SecureRandom();
 
-	@Value("${companies.txt:file://${user.home}/tmp/companies.txt}")
+	@Value("${companies.txt:classpath:/companies.txt}")
 	private Resource companies;
 
-	@Value("${fleet.json:file:../../fleet.json}")
+	@Value("${fleet.json:classpath:/fleet.json}")
 	private Resource fleet;
 
 	static {
