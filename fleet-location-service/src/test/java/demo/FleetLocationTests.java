@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
@@ -46,7 +47,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FleetLocationServiceApplication.class)
 @WebAppConfiguration
-@TestPropertySource(properties="spring.jpa.showSql=true")
+@TestPropertySource(properties = "spring.jpa.showSql=true")
 public class FleetLocationTests {
 
 	@Autowired
@@ -68,14 +69,20 @@ public class FleetLocationTests {
 
 	@Test
 	public void findByVin() throws Exception {
-		Page<Location> vehicles = this.repository.findByUnitInfoUnitVin("1FUJGBDV20LBZ2345", new PageRequest(0, 20));
+		Page<Location> vehicles = this.repository.findByUnitInfoUnitVin(
+				"1FUJGBDV20LBZ2345", new PageRequest(0, 20));
 		assertEquals(1, getList(vehicles).size());
 	}
 
 	private void saveJson() throws IOException, JsonParseException, JsonMappingException {
+		saveJson(new ClassPathResource("fleet.json"));
+	}
+
+	private void saveJson(Resource resource) throws IOException, JsonParseException,
+	JsonMappingException {
 		if (this.repository.count() == 0) {
-			List<Location> value = this.mapper.readValue(new ClassPathResource(
-					"fleet.json").getInputStream(), new TypeReference<List<Location>>() {
+			List<Location> value = this.mapper.readValue(resource.getInputStream(),
+					new TypeReference<List<Location>>() {
 			});
 			assertEquals(4, value.size());
 			this.repository.save(value);
