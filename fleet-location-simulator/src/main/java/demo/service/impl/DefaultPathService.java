@@ -32,7 +32,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.GeocodingApiRequest;
+import com.google.maps.model.AddressComponent;
+import com.google.maps.model.AddressComponentType;
 import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
 import de.micromata.opengis.kml.v_2_2_0.Coordinate;
@@ -43,8 +48,13 @@ import de.micromata.opengis.kml.v_2_2_0.LineString;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import demo.model.DirectionInput;
 import demo.model.Point;
+import demo.model.ServiceLocation;
 import demo.model.SimulatorFixture;
 import demo.service.PathService;
+import net.sf.sprockets.Sprockets;
+import net.sf.sprockets.google.Place;
+import net.sf.sprockets.google.Places;
+import net.sf.sprockets.google.Places.Params;
 
 /**
  *
@@ -114,6 +124,69 @@ public class DefaultPathService implements PathService {
 		catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	@Override
+	public List<ServiceLocation> getServiceStations() {
+
+		Sprockets.getConfig().setProperty("google.api-key", environment.getRequiredProperty("gpsSimmulator.googleApiKey"));
+
+		List<Place> stations = null;
+		try {
+			//Spring One Conference Center location
+			stations = Places.nearbySearch(new Params().location(38.903638,-77.0247618).radius(5000)
+			        .keyword("gasoline").openNow().maxResults(6000)).getResult();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
+
+		final List<ServiceLocation> serviceLocations = new ArrayList<>();
+		final GeoApiContext context = new GeoApiContext().setApiKey(environment.getRequiredProperty("gpsSimmulator.googleApiKey"));
+
+		for (Place place : stations) {
+			final ServiceLocation serviceLocation = new ServiceLocation(place.getLatitude(), place.getLongitude());
+			final GeocodingApiRequest request =  GeocodingApi.reverseGeocode(context, new LatLng(place.getLatitude(), place.getLongitude()));
+
+				try {
+					final GeocodingResult[] result = request.await();
+
+					String street = "";
+					String streetNumber = "";
+
+					for (AddressComponent addressComponent : result[0].addressComponents) {
+						for (AddressComponentType type : addressComponent.types) {
+							switch (type) {
+								case ROUTE:
+									street = addressComponent.shortName;
+									break;
+								case STREET_NUMBER:
+									streetNumber = addressComponent.shortName;
+									break;
+								case LOCALITY:
+									serviceLocation.setCity(addressComponent.longName);
+									break;
+								case ADMINISTRATIVE_AREA_LEVEL_1:
+									serviceLocation.setState(addressComponent.shortName);
+									break;
+								case POSTAL_CODE:
+									serviceLocation.setZip(addressComponent.shortName);
+									break;
+								default:
+									break;
+							}
+						}
+					}
+					serviceLocation.setAddress1(streetNumber + " " + street);
+					serviceLocation.setType("Service");
+				}
+				catch (Exception e) {
+					throw new IllegalStateException(e);
+				}
+
+			serviceLocations.add(serviceLocation);
+		}
+
+		return serviceLocations;
 	}
 
 	/* (non-Javadoc)

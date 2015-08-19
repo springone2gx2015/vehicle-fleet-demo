@@ -34,6 +34,7 @@ import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.LatLng;
 
 import demo.model.Point;
+import demo.model.ServiceLocation;
 import demo.service.KmlService;
 import demo.service.PathService;
 
@@ -93,6 +94,17 @@ public class PathServiceTests {
 		LOGGER.info("Number of coordinates: {}", points.size());
 		LOGGER.info("Coordinates: {}", points);
 
+	}
+
+	@Test
+	@IfProfileValue(name="use-google-directions", value="true")
+	public void testGetServiceStationCoordinates() {
+		List<ServiceLocation> serviceLocations = pathService.getServiceStations();
+		Assert.assertNotNull(serviceLocations);
+
+		for (ServiceLocation serviceLocation : serviceLocations) {
+			LOGGER.info("ServiceLocation: {}", serviceLocation);
+		}
 	}
 
 }

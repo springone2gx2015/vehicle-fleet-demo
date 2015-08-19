@@ -27,17 +27,16 @@ import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import demo.model.DirectionInput;
 import demo.model.GpsSimulatorRequest;
 import demo.model.Point;
 import demo.model.PositionInfo.VehicleStatus;
+import demo.model.ServiceLocation;
 import demo.model.SimulatorFixture;
 import demo.service.GpsSimulatorFactory;
 import demo.service.KmlService;
@@ -68,13 +67,6 @@ public class RestApi {
 	private AsyncTaskExecutor taskExecutor;
 
 	private Map<Long, GpsSimulatorInstance> taskFutures = new HashMap<>();
-
-	@Autowired
-	private RestTemplate rt;
-
-
-	@Autowired
-	private ApplicationContext ctx;
 
 	@RequestMapping("/dc")
 	public List<GpsSimulatorInstance>dc(HttpServletRequest request) {
@@ -128,6 +120,11 @@ public class RestApi {
 	@RequestMapping("/directions")
 	public List<DirectionInput> directions() {
 		return pathService.loadDirectionInput();
+	}
+
+	@RequestMapping("/service-locations")
+	public List<ServiceLocation> serviceLocations() {
+		return pathService.getServiceStations();
 	}
 
 	@RequestMapping("/fixture")

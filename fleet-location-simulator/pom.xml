@@ -74,6 +74,16 @@
 			<artifactId>bootstrap</artifactId>
 			<version>3.3.5</version>
 		</dependency>
+		<dependency>
+		    <groupId>net.sf.sprockets</groupId>
+		    <artifactId>sprockets</artifactId>
+		    <version>2.6.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.squareup.okhttp</groupId>
+		  <artifactId>okhttp</artifactId>
+		  <version>2.4.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

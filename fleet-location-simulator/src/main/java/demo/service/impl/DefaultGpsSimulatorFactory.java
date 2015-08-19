@@ -22,9 +22,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Service;
 
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.DiscoveryClient;
-
 import demo.model.GpsSimulatorRequest;
 import demo.model.Leg;
 import demo.model.Point;

@@ -17,6 +17,7 @@ import java.util.List;
 
 import demo.model.DirectionInput;
 import demo.model.Point;
+import demo.model.ServiceLocation;
 import demo.model.SimulatorFixture;
 
 /**
@@ -48,4 +49,6 @@ public interface PathService {
 	 * @return
 	 */
 	List<Point> getCoordinatesFromKmlFile(File kmlFile);
+
+	List<ServiceLocation> getServiceStations();
 }
