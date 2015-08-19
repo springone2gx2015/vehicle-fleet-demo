@@ -6,6 +6,7 @@
 target
 bin
 /data
+.factorypath
 .classpath
 .project
 .settings
@@ -14,3 +15,4 @@ bin
 *.sw*
 *.iml
 .idea
+new_fleet.json

@@ -52,7 +52,6 @@ public class Location {
 
 	enum VehicleMovementType {
 		STOPPED, IN_MOTION;
-
 		public boolean isMoving() {
 			return this != STOPPED;
 		}
