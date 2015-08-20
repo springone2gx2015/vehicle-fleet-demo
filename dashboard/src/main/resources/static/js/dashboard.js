@@ -104,7 +104,13 @@ var inMotionStopTruckMarker = icon('bus', '#FF0000', true);
 var stoppedStopTruckMarker = icon('bus', '#FF0000');
 
 // Create markers for the RentMe Unit Locations
-var serviceCenterMarker = icon('commercial', '#5F9EA0');
+//var serviceCenterMarker = icon('commercial', '#5F9EA0');
+var serviceCenterMarker = L.icon({
+	iconUrl: 'images/wrench' + (L.Browser.retina ? '@2x' : '') + '.png',
+	iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12]
+});
 
 function icon(symbol, color, flash, size) {
 	size = size || [35, 90];
