@@ -499,7 +499,7 @@ function markerClickHandler(event) {
 	miniMap.setView({
 		lat : this.vehicle.latitude,
 		lon : this.vehicle.longitude
-	}, 8, {
+	}, 10, {
 		duration : 0.5
 	});
 
@@ -525,7 +525,7 @@ function markerClickHandler(event) {
 	circle = L.circle({
 		lat : this.vehicle.latitude,
 		lon : this.vehicle.longitude
-	}, 40000, {
+	}, 10000, {
 		color : 'red',
 		fillColor : '#f03',
 		fillOpacity : 0.5
