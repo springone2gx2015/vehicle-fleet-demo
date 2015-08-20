@@ -1,27 +1,7 @@
-spring:
-  thymeleaf:
-    cache: false
-security:
-  user:
-    name: admin
-    password: admin
-
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
 ribbon:
   ConnectTimeout: 3000
   ReadTimeout: 60000
-
----
-spring:
-  profiles: test
-zuul:
-  routes:
-    fleet-location-service:
-      path: /fleet-location-service/**
-      url: http://localhost:9000
-    service-location-service:
-      path: /service-location-service/**
-      url: http://localhost:9001
 
 ---
 spring:

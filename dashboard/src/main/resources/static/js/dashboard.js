@@ -193,23 +193,38 @@ function initFilter() {
 }
 
 function setupWebSocketConnection() {
-	var socket = new SockJS('http://localhost:9007/stomp');
-    var stompClient = Stomp.over(socket);
-    stompClient.heartbeat.outgoing = 0;
-    stompClient.heartbeat.incoming = 0;
-    stompClient.debug = function() {};  //turn off debugging
-    var on_connect = function() {
-        console.log('connected');
-        stompClient.subscribe("/queue/fleet.location.ingest.queue", function(m) {
-        	var updateMsg = JSON.parse(m.body);
-			console.log(JSON.stringify(updateMsg));
-		});
-    };
-    var on_error =  function() {
-        console.log('error');
-        console.log(JSON.stringify(arguments));
-    };
-    stompClient.connect('guest', 'guest', on_connect, on_error, '/');
+	$.ajax({
+		beforeSend: function(xhrObj){
+			xhrObj.setRequestHeader("Content-Type","application/json");
+	    },
+	    url: 'clientConfig',
+	    success: function(result) {
+	    	if (result['service-location-updater']) {
+	    		var socket = new SockJS(result['service-location-updater'] + '/stomp');
+	    	    var stompClient = Stomp.over(socket);
+	    	    stompClient.heartbeat.outgoing = 0;
+	    	    stompClient.heartbeat.incoming = 0;
+	    	    stompClient.debug = function() {};  //turn off debugging
+	    	    var on_connect = function() {
+	    	        console.log('connected');
+	    	        stompClient.subscribe("/queue/fleet.location.ingest.queue", function(m) {
+	    	        	var updateMsg = JSON.parse(m.body);
+	    				console.log(JSON.stringify(updateMsg));
+	    			});
+	    	    };
+	    	    var on_error =  function() {
+	    	        console.log('error');
+	    	        console.log(JSON.stringify(arguments));
+	    	    };
+	    	    stompClient.connect('guest', 'guest', on_connect, on_error, '/');
+	    	}
+	    },
+	    error: function(xhr, error){
+	    	console.err('Cannot retrieve "service-location-updater" URL.');
+	    	console.err(JSON.stringify(error));
+	    },
+	    dataType: 'json'
+	});
 }
 
 function initVehicles() {
