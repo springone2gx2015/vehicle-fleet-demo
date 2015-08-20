@@ -1,29 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-  	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-  <head>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <!-- default header name is X-CSRF-TOKEN -->
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    
+<html>
+  <head>    
   	<title>RentMe Fleet</title>
-  	<link rel="stylesheet" th:href="@{/css/bootstrap-3.2.0.css}" type="text/css" ></link>
-    <link rel="stylesheet" th:href="@{/css/visualsearch-datauri.css}" type="text/css" />
+  	<link rel="stylesheet" href="/css/bootstrap-3.2.0.css" type="text/css" ></link>
+    <link rel="stylesheet" href="/css/visualsearch-datauri.css" type="text/css" />
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" type="text/css" />
   	
   	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
   	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"></link>
-  	<link rel="stylesheet" th:href="@{css/font-awesome-animation.css}" type="text/css" ></link>
-  	<link rel="stylesheet" th:href="@{css/leaflet.control.sidebar.css}" type="text/css" ></link>
-  	<link rel="stylesheet" th:href="@{/css/dashboard.css}" type="text/css" ></link>
+  	<link rel="stylesheet" href="/css/font-awesome-animation.css" type="text/css" ></link>
+  	<link rel="stylesheet" href="/css/leaflet.control.sidebar.css" type="text/css" ></link>
+  	<link rel="stylesheet" href="/css/dashboard.css" type="text/css" ></link>
   	
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-	<script th:src="@{/js/leaflet.groupedlayercontrol.js}" type="text/javascript"></script>
-	<script th:src="@{/js/vs-dependencies.js}" type="text/javascript"></script>
-	<script th:src="@{/js/visualsearch.js}" type="text/javascript"></script>
-	<script th:src="@{js/leaflet.markercluster.js}" type="text/javascript"></script>
-	 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="/js/leaflet.groupedlayercontrol.js" type="text/javascript"></script>
+	<script src="/js/vs-dependencies.js" type="text/javascript"></script>
+	<script src="/js/visualsearch.js" type="text/javascript"></script>
+	<script src="js/leaflet.markercluster.js" type="text/javascript"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<style>
 	.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
 	vertical-align: middle;
@@ -52,7 +46,7 @@ $( "#toDate" ).datepicker({
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="/">
-            <img th:class="img-rounded" height="46" width="121" th:src="@{/images/rentme_logo_ent_horiz_RGB.JPG}" />
+            <img class="img-rounded" height="46" width="121" src="/images/rentme_logo_ent_horiz_RGB.JPG" />
       	  </a>
       	  <div class="visual_search"></div>
       	  
@@ -65,10 +59,6 @@ $( "#toDate" ).datepicker({
       	      <span id="spinnerIcon" class="fa fa-spinner fa-spin"></span>
       	  </div>
           <div class="navbar-right">
-            <div class="login">
-              <span sec:authentication="name">Bob</span>
-	          <a class="btn-xs" th:href="@{/logout}" href="logout"> [ Logout ] </a>
-	        </div>
 	        <h4>The Connected Fleet</h4>
           </div>
           
@@ -228,12 +218,12 @@ $( "#toDate" ).datepicker({
     
     <!-- Include jQuery Popup Overlay -->
     <script src="http://vast-engineering.github.io/jquery-popup-overlay/jquery.popupoverlay.js"></script>    
-    <script th:src="@{/js/bootstrap-3.2.0.js}"></script>
-    <script th:src="@{/js/leaflet.easybutton.js}"></script>
-    <script th:src="@{/js/leaflet.control.sidebar.js}"></script>
-    <script th:src="@{/js/sockjs.js}"></script> 
-    <script th:src="@{/js/stomp.js}"></script>
-    <script th:src="@{/js/pages.js}"></script>
-    <script th:src="@{/js/dashboard.js}"></script>
+    <script src="/js/bootstrap-3.2.0.js"></script>
+    <script src="/js/leaflet.easybutton.js"></script>
+    <script src="/js/leaflet.control.sidebar.js"></script>
+    <script src="/js/sockjs.js"></script> 
+    <script src="/js/stomp.js"></script>
+    <script src="/js/pages.js"></script>
+    <script src="/js/dashboard.js"></script>
   </body>
 </html>

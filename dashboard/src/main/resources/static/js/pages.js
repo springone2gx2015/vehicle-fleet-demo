@@ -1,13 +1,10 @@
 function collectPages(url, collector, callback, errorCallback, page) {
-	var header = $("meta[name='_csrf_header']").attr("content");
-	var token = $("meta[name='_csrf']").attr("content");
 	
 	page = page ? page : 0;
 	
 	$.ajax({
 		beforeSend: function(xhrObj){
 			xhrObj.setRequestHeader("Content-Type","application/json");
-	        xhrObj.setRequestHeader(header, token);
 	    },
 	    crossDomain: 'true',
 	    url: url + '?page=' + page + '&size=1000',
