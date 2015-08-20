@@ -42,6 +42,17 @@ can run locally without them if you use the "test" profile
 Foundry the platform services are provided by Spring Cloud Services
 (available as a tile in PCF).
 
+### Locally
+
+| Module                     | Dashboard URL                   |
+|----------------------------|---------------------------------|
+| Eureka                     | http://localhost:8761/          |
+| service-location-simulator | http://localhost:9005/          |
+| fleet-location-ingest      | http://localhost:9006/          |
+| fleet-location-updater     | http://localhost:9007/          |
+| RabbitMQ (guest/guest)     | http://localhost:15672/         |
+
+
 [Git]: https://help.github.com/articles/set-up-git/
 [JDK 8]: http://www.oracle.com/technetwork/java/javase/downloads
 [Maven]: https://maven.apache.org/
