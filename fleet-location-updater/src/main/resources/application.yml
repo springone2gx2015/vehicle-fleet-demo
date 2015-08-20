@@ -1,0 +1,7 @@
+server:
+  port: 9007
+  address: "http://localhost"
+  context-path: "/"
+spring:
+  application:
+    name: service-location-updater
