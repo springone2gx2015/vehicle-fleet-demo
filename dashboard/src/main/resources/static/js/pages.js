@@ -1,4 +1,4 @@
-function collectPages(url, collector, callback, page) {
+function collectPages(url, collector, callback, errorCallback, page) {
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
 	
@@ -15,9 +15,17 @@ function collectPages(url, collector, callback, page) {
 	    	console.log("Loaded page: " + page + " from " + url);
 	    	collector(result._embedded);
 	    	if (result.page && typeof result.page.totalPages === 'number' && page < result.page.totalPages-1) {
-	    		collectPages(url, collector, callback, page+1);
+	    		collectPages(url, collector, callback, errorCallback, page+1);
+	    	} else if (result._links && result._links.next) {
+	    		collectPages(url, collector, callback, errorCallback, page+1);	    		
 	    	} else {
 	    		callback()
+	    	}
+	    },
+	    error: function(xhr, error){
+	    	callback();
+	    	if (errorCallback && errorCallback.call) {
+	    		errorCallback();
 	    	}
 	    },
 	    dataType: 'json'

@@ -132,6 +132,7 @@ function setupDefaultMap() {
 	// query for all points by default
 	initFilter();
 	initVehicles();
+	setupWebSocketConnection();
 }
 
 function setupMinimap() {
@@ -185,37 +186,24 @@ function initFilter() {
 	filter = buildQuery();
 }
 
-function setupRabbitConnection() {
-	var socket = new SockJS('/location-updates-stomp/stomp');
+function setupWebSocketConnection() {
+	var socket = new SockJS('http://localhost:9007/stomp');
     var stompClient = Stomp.over(socket);
+    stompClient.heartbeat.outgoing = 0;
+    stompClient.heartbeat.incoming = 0;
+    stompClient.debug = function() {};  //turn off debugging
     var on_connect = function() {
         console.log('connected');
+        stompClient.subscribe("/queue/fleet.location.ingest.queue", function(m) {
+        	var updateMsg = JSON.parse(m.body);
+			console.log(JSON.stringify(updateMsg));
+		});
     };
     var on_error =  function() {
         console.log('error');
         console.log(JSON.stringify(arguments));
     };
     stompClient.connect('guest', 'guest', on_connect, on_error, '/');
-    
-//    stompClient.connect({}, function(frame) {
-//        setConnected(true);
-//        console.log('Connected: ' + frame);
-//        stompClient.subscribe('/topic/notify', function(message){
-//            showMessage(JSON.parse(message.body).content);
-//        });
-//    });
-    
-//	Stomp.WebSocketClass = SockJS;
-//
-//    var client = Stomp.client('/location-updates-stomp/stomp');
-//    var on_connect = function() {
-//        console.log('connected');
-//    };
-//    var on_error =  function() {
-//       console.log('error');
-//     console.log(JSON.stringify(arguments));
-//    };
-//    client.connect('guest', 'guest', on_connect, on_error, '/');
 }
 
 function initVehicles() {
@@ -246,8 +234,6 @@ function initVehicles() {
 		});
 		
 		showVehicles();
-		
-		setupRabbitConnection();
 		
 		$("#spinnerIcon").hide();
 	});
@@ -310,7 +296,7 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function updateTruckGpsData(info) {
+function updateVehicleGpsData(info) {
 	var vehicle = vehiclesIndex[info.vin];
 	if (vehicle) {
 		vehicle.latitude = info.latitude;
@@ -447,7 +433,7 @@ function simulateMove(vehicle) {
 }
 
 function liveGpsUpdate(vehicle) {
-	updateTruckGpsData(simulateMove(vehicle));
+	updateVehicleGpsData(simulateMove(vehicle));
 	setTimeout(function() {
 		liveGpsUpdate(vehicle);
 	}, 3000);
@@ -549,9 +535,9 @@ function markerClickHandler(event) {
 	setupMiniMapMarker();
 }
 
-function closeTruckInfoView() {
-	$('#truckView').popup('hide');
-}
+//function closeTruckInfoView() {
+//	$('#vehicleView').popup('hide');
+//}
 
 // This runs from the "Search Bar" and from the "Filter" pop-up
 function updateSearch() {
@@ -682,7 +668,7 @@ function setupMapLegend() {
 	info.onAdd = function(map) {
 		this._div = L.DomUtil.create('div', 'info');
 		var img = '<img src="https://www.mapbox.com/maki/renders/bus-18' + (L.Browser.retina ? '@2x' : '') + '.png">';
-		this._div.innerHTML = '<h4 style="color: black">RentMe Trucks</h4>'
+		this._div.innerHTML = '<h4 style="color: black">RentMe Vehicles</h4>'
 				+ '<i class="faa-flash animated">' + img + '</i> Moving &nbsp;&nbsp;&nbsp;&nbsp; ' + img + ' Stopped <br/>'
 				+ '<i class="fa fa-map-marker" style="color: green;"></i> Normal &nbsp;&nbsp;'
 				+ '<i class="fa fa-map-marker" style="color: blue"></i> ServiceInfo &nbsp;&nbsp;'
