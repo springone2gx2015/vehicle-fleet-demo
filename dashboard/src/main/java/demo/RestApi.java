@@ -1,7 +1,5 @@
 package demo;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,26 +14,40 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class RestApi {
 	
-	private static final Collection<String> SERVICES = Arrays.asList(new String[] {
-			"service-location-updater"
-	});
-	
 	@Autowired
     private DiscoveryClient discoveryClient;
+	
+	@Autowired
+	private ClientConfig clientConfig;
 
     @RequestMapping("/clientConfig")
     @ResponseBody
     public Map<String, String> config() throws Exception {
     	Map<String, String> data = new HashMap<String, String>();
-    	for (String service : SERVICES) {
-        	List<ServiceInstance> instances = discoveryClient.getInstances(service);
-        	if (instances != null && !instances.isEmpty()) {
-            	data.put(service, instances.get(0).getUri().toString());    			
-        	}
+    	try {
+    		if (clientConfig != null && clientConfig.getServices() != null) {
+    			data.putAll(clientConfig.getServices());
+    			for (Map.Entry<String, String> serviceEntry : data.entrySet()) {
+    				String serviceUrl = getServiceUrl(serviceEntry.getKey());
+    				if (serviceUrl != null) {
+    					serviceEntry.setValue(serviceUrl);
+    				}
+    			}
+    		}
+    	} catch (Throwable t) {
+    		t.printStackTrace();
     	}
     	return data;
     }
     
-    
+    private String getServiceUrl(String service) {
+		if (discoveryClient != null) {
+        	List<ServiceInstance> instances = discoveryClient.getInstances(service);
+        	if (instances != null && !instances.isEmpty()) {
+            	return instances.get(0).getUri().toString();    			
+        	}
+		}
+		return null;
+    }
 
 }

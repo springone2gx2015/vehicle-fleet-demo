@@ -5,6 +5,14 @@ var mapID = 'albertoaflores.llpjgl43';
 var mapToken = 'pk.eyJ1IjoiYWxiZXJ0b2FmbG9yZXMiLCJhIjoiS3duWUxzUSJ9.X1rRTTRkktNR7DFIc0DsCw';
 var mapboxAttribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
 
+var MESSAGE_STATUS_TO_STATUS_MAP = {
+	'NONE': 'None',
+	'SERVICE_INFO': 'ServiceInfo',
+	'SERVICE_SOON': 'ServiceSoon',
+	'SERVICE_NOW': 'ServiceNow',
+	'STOP_NOW': 'StopTruck'
+};
+
 L.FlashingMarker = L.Marker.extend({
 	options : {
 		interval : 500,
@@ -100,8 +108,8 @@ var inMotionServiceSoonMarker = icon('bus', '#FFFF00', true);
 var stoppedServiceSoonMarker = icon('bus', '#FFFF00');
 var inMotionServiceNowMarker = icon('bus', '#FFA500', true);
 var stoppedServiceNowMarker = icon('bus', '#FFA500');
-var inMotionStopTruckMarker = icon('bus', '#FF0000', true);
-var stoppedStopTruckMarker = icon('bus', '#FF0000');
+var inMotionStopNowMarker = icon('bus', '#FF0000', true);
+var stoppedStopNowMarker = icon('bus', '#FF0000');
 
 // Create markers for the RentMe Unit Locations
 //var serviceCenterMarker = icon('commercial', '#5F9EA0');
@@ -209,7 +217,7 @@ function setupWebSocketConnection() {
 	    	        console.log('connected');
 	    	        stompClient.subscribe("/queue/fleet.location.ingest.queue", function(m) {
 	    	        	var updateMsg = JSON.parse(m.body);
-	    				console.log(JSON.stringify(updateMsg));
+	    				handleUpdateMessage(updateMsg);
 	    			});
 	    	    };
 	    	    var on_error =  function() {
@@ -217,6 +225,8 @@ function setupWebSocketConnection() {
 	    	        console.log(JSON.stringify(arguments));
 	    	    };
 	    	    stompClient.connect('guest', 'guest', on_connect, on_error, '/');
+	    	} else {
+	    		console.err('Unknown URL for "service-location-updater". Vehicle location updates are disabled!');
 	    	}
 	    },
 	    error: function(xhr, error){
@@ -315,6 +325,34 @@ function createMarker(vehicle) {
 
 function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function handleUpdateMessage(msg) {
+	var vehicle = vehiclesIndex[msg.vin];
+	if (vehicle) {
+		if (msg.position) {
+			vehicle.latitude = msg.position.latitude;
+			vehicle.longitude = msg.position.longitude;
+		}
+		if (msg.vehicleStatus && MESSAGE_STATUS_TO_STATUS_MAP[msg.vehicleStatus]) {
+			vehicle.serviceType = MESSAGE_STATUS_TO_STATUS_MAP[msg.vehicleStatus];
+		}
+		if (msg.heading) {
+			vehicle.heading = msg.heading;
+		}
+		if (msg.speed) {
+			vehicle.gpsSpeed = msg.speed;
+			vehicle.vehicleMovementType = 'IN_MOTION';
+		} else {
+			vehicle.gpsSpeed = 0;
+			vehicle.vehicleMovementType = 'STOPPED';
+		}
+		vehicle.timestamp = new Date().toUTCString();
+		updateVehicleOnMap(vehicle);
+		updateVehicleOnMiniMap(vehicle);
+	} else {
+		console.log('Cannot update vehicle with VIN: ' + msg.vin);
+	}
 }
 
 function updateVehicleGpsData(info) {
@@ -492,9 +530,9 @@ function resolveMarker(vehicle) {
 	} else if (movementType == 'STOPPED' && serviceType == 'ServiceNow') {
 		iconType = stoppedServiceNowMarker;
 	} else if (movementType == 'IN_MOTION' && serviceType == 'StopTruck') {
-		iconType = inMotionStopTruckMarker;
+		iconType = inMotionStopNowMarker;
 	} else if (movementType == 'STOPPED' && serviceType == 'StopTruck') {
-		iconType = stoppedStopTruckMarker;
+		iconType = stoppedStopNowMarker;
 	}
 
 	return iconType;
@@ -625,8 +663,7 @@ function setupServiceCenters() {
 				data
 						.forEach(function(value, index) {
 							var content = "<div class='scg_popup'>"
-									+ "<div class='loc_header'><i class='fa fa-wrench'></i> "
-									+ value.location + "</div>"
+									+ "<div class='loc_header'><i class='fa fa-wrench'></i>RentMe Service Center</div>"
 									+ "<div class='loc_comments'>"
 									+ value.address2 + "</div>" + "<div>"
 									+ value.address1 + "</div>" + "<div>"

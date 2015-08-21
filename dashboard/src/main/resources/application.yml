@@ -4,6 +4,16 @@ ribbon:
   ReadTimeout: 60000
 
 ---
+zuul:
+  routes:
+    fleet-location-service:
+      path: /fleet-location-service/**
+      url: http://localhost:9000
+    service-location-service:
+      path: /service-location-service/**
+      url: http://localhost:9001
+
+---
 spring:
   profiles: pez
 eureka:
