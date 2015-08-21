@@ -1,10 +1,9 @@
 package demo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Controller;
@@ -14,30 +13,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class RestApi {
 	
+	private static final String SERVICE_LOCATION_UPDATER = "service-location-updater";
+	
 	@Autowired
     private DiscoveryClient discoveryClient;
 	
-	@Autowired
-	private ClientConfig clientConfig;
-
+	@Value("${stomp.host:}")
+	private String stompHost;
+	
     @RequestMapping("/clientConfig")
     @ResponseBody
-    public Map<String, String> config() throws Exception {
-    	Map<String, String> data = new HashMap<String, String>();
+    public String config() throws Exception {
+    	String url = null;
     	try {
-    		if (clientConfig != null && clientConfig.getServices() != null) {
-    			data.putAll(clientConfig.getServices());
-    			for (Map.Entry<String, String> serviceEntry : data.entrySet()) {
-    				String serviceUrl = getServiceUrl(serviceEntry.getKey());
-    				if (serviceUrl != null) {
-    					serviceEntry.setValue(serviceUrl);
-    				}
-    			}
-    		}
+    		url = getServiceUrl(SERVICE_LOCATION_UPDATER);
     	} catch (Throwable t) {
     		t.printStackTrace();
     	}
-    	return data;
+    	return url == null || url.isEmpty() ? stompHost : url;
     }
     
     private String getServiceUrl(String service) {

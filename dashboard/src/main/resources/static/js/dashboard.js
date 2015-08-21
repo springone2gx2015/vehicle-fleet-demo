@@ -202,13 +202,13 @@ function initFilter() {
 
 function setupWebSocketConnection() {
 	$.ajax({
-		beforeSend: function(xhrObj){
-			xhrObj.setRequestHeader("Content-Type","application/json");
-	    },
+//		beforeSend: function(xhrObj){
+//			xhrObj.setRequestHeader("Content-Type","application/json");
+//	    },
 	    url: 'clientConfig',
-	    success: function(result) {
-	    	if (result['service-location-updater']) {
-	    		var socket = new SockJS(result['service-location-updater'] + '/stomp');
+	    success: function(stompHost) {
+	    	if (stompHost) {
+	    		var socket = new SockJS(stompHost + '/stomp');
 	    	    var stompClient = Stomp.over(socket);
 	    	    stompClient.heartbeat.outgoing = 0;
 	    	    stompClient.heartbeat.incoming = 0;
@@ -226,14 +226,14 @@ function setupWebSocketConnection() {
 	    	    };
 	    	    stompClient.connect('guest', 'guest', on_connect, on_error, '/');
 	    	} else {
-	    		console.err('Unknown URL for "service-location-updater". Vehicle location updates are disabled!');
+	    		console.error('Unknown URL for "service-location-updater". Vehicle location updates are disabled!');
 	    	}
 	    },
 	    error: function(xhr, error){
-	    	console.err('Cannot retrieve "service-location-updater" URL.');
-	    	console.err(JSON.stringify(error));
+	    	console.error('Cannot retrieve "service-location-updater" URL.');
+	    	console.error(JSON.stringify(error));
 	    },
-	    dataType: 'json'
+//	    dataType: 'json'
 	});
 }
 

@@ -14,6 +14,9 @@ zuul:
       url: http://localhost:9001
 
 ---
+stomp.host: http://localhost:9007
+      
+---
 spring:
   profiles: pez
 eureka:
