@@ -46,7 +46,7 @@ public class ServiceLocation {
 
 	@JsonCreator
 	public ServiceLocation(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
-		this.point = new Point(longitude, latitude);
+		this.point = new Point(latitude, longitude);
 	}
 
 	public double getLatitude() {

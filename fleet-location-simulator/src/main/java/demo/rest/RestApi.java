@@ -146,7 +146,7 @@ public class RestApi {
 			gpsSimulatorRequest.setSpeedInKph(50d);
 			gpsSimulatorRequest.setExportPositionsToMessaging(true);
 			gpsSimulatorRequest.setSecondsToError(60);
-			gpsSimulatorRequest.setVehicleStatus(VehicleStatus.NORMAL);
+			gpsSimulatorRequest.setVehicleStatus(VehicleStatus.NONE);
 			fixture.getGpsSimulatorRequests().add(gpsSimulatorRequest);
 		}
 

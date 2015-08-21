@@ -33,8 +33,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.LatLng;
 
+import demo.model.GpsSimulatorRequest;
 import demo.model.Point;
 import demo.model.ServiceLocation;
+import demo.model.SimulatorFixture;
 import demo.service.KmlService;
 import demo.service.PathService;
 
@@ -104,6 +106,24 @@ public class PathServiceTests {
 
 		for (ServiceLocation serviceLocation : serviceLocations) {
 			LOGGER.info("ServiceLocation: {}", serviceLocation);
+		}
+	}
+
+	@Test
+	public void testLoadSimulatorFixture() {
+		final SimulatorFixture fixture = pathService.loadSimulatorFixture();
+		Assert.assertNotNull(fixture);
+
+		final List<GpsSimulatorRequest> gpsSimulatorRequests = fixture.getGpsSimulatorRequests();
+		Assert.assertNotNull(gpsSimulatorRequests);
+		Assert.assertEquals(Integer.valueOf(8), Integer.valueOf(gpsSimulatorRequests.size()));
+		for (GpsSimulatorRequest gpsSimulatorRequest : gpsSimulatorRequests) {
+			Assert.assertNotNull(gpsSimulatorRequest.getVin());
+			Assert.assertNotNull(gpsSimulatorRequest.getPolyline());
+			Assert.assertNotNull(gpsSimulatorRequest.getReportInterval());
+			Assert.assertNotNull(gpsSimulatorRequest.getSecondsToError());
+			Assert.assertNotNull(gpsSimulatorRequest.getSpeedInKph());
+			Assert.assertNotNull(gpsSimulatorRequest.getVehicleStatus());
 		}
 	}
 

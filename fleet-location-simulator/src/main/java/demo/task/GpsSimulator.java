@@ -50,10 +50,11 @@ public class GpsSimulator implements Runnable {
 	private Integer reportInterval = 500; // millisecs at which to send position reports
 	private PositionInfo currentPosition = null;
 	private List<Leg> legs;
-	private VehicleStatus vehicleStatus = VehicleStatus.NORMAL;
+	private VehicleStatus vehicleStatus = VehicleStatus.NONE;
+	private String vin;
+
 	private Integer secondsToError = 45;
 	private Point startPoint;
-
 	private Date executionStartTime;
 
 	public GpsSimulator(GpsSimulatorRequest gpsSimulatorRequest) {
@@ -64,6 +65,7 @@ public class GpsSimulator implements Runnable {
 		this.reportInterval = gpsSimulatorRequest.getReportInterval();
 
 		this.secondsToError = gpsSimulatorRequest.getSecondsToError();
+		this.vin = gpsSimulatorRequest.getVin();
 		this.vehicleStatus = gpsSimulatorRequest.getVehicleStatus();
 	}
 
@@ -86,7 +88,7 @@ public class GpsSimulator implements Runnable {
 					}
 
 					if (this.secondsToError > 0 && startTime  - executionStartTime.getTime() >= this.secondsToError * 1000) {
-						this.vehicleStatus = VehicleStatus.ERROR;
+						this.vehicleStatus = VehicleStatus.SERVICE_NOW;
 					}
 
 					currentPosition.setVehicleStatus(this.vehicleStatus);
@@ -166,6 +168,7 @@ public class GpsSimulator implements Runnable {
 	 */
 	public void setStartPosition() {
 		currentPosition = new PositionInfo();
+		currentPosition.setVin(this.vin);
 		Leg leg = legs.get(0);
 		currentPosition.setLeg(leg);
 		currentPosition.setPosition(leg.getStartPosition());

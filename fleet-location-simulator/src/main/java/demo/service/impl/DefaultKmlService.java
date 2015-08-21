@@ -151,15 +151,15 @@ public class DefaultKmlService implements KmlService {
 			speedKph = 0;
 		}
 
-		if (VehicleStatus.NORMAL.equals(position.getVehicleStatus())) {
+		if (VehicleStatus.NONE.equals(position.getVehicleStatus())) {
 			placemark.setName(speedKph.toString() + " kph");
 			placemark.setStyleUrl("#normalStyle");
 		}
-		else if (VehicleStatus.WARNING.equals(position.getVehicleStatus())) {
+		else if (VehicleStatus.SERVICE_SOON.equals(position.getVehicleStatus())) {
 			placemark.setName(String.format(speedKph.toString() + " kph (Status: %s)", position.getVehicleStatus()));
 			placemark.setStyleUrl("#warningStyle");
 		}
-		else if (VehicleStatus.ERROR.equals(position.getVehicleStatus())) {
+		else if (VehicleStatus.SERVICE_NOW.equals(position.getVehicleStatus())) {
 			placemark.setName(String.format(speedKph.toString() + " kph (Status: %s)", position.getVehicleStatus()));
 			placemark.setStyleUrl("#errorStyle");
 		}

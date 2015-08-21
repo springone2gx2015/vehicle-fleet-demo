@@ -17,8 +17,10 @@ package demo.model;
  * @author faram
  */
 public class PositionInfo {
+
+	private String vin;
 	private Point position;
-	private VehicleStatus vehicleStatus = VehicleStatus.NORMAL;
+	private VehicleStatus vehicleStatus = VehicleStatus.NONE;
 
 	//kml path is composed of a series of legs (line segments) 1 .. n.
 	// this member denotes present leg (starting at leg 0)
@@ -91,13 +93,20 @@ public class PositionInfo {
 		this.vehicleStatus = vehicleStatus;
 	}
 
+	public String getVin() {
+		return vin;
+	}
+
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+
 	@Override
 	public String toString() {
 		return "PositionInfo [position=" + position + ", leg=" + leg + ", distanceFromStart=" + distanceFromStart
 				+ ", speed=" + speed + "]";
 	}
 
-
-	public enum VehicleStatus { NORMAL, WARNING, ERROR }
+	public enum VehicleStatus { NONE, SERVICE_INFO, SERVICE_SOON, SERVICE_NOW, STOP_NOW }
 
 }
