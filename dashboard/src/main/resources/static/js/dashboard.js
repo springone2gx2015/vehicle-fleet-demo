@@ -206,9 +206,9 @@ function setupWebSocketConnection() {
 //			xhrObj.setRequestHeader("Content-Type","application/json");
 //	    },
 	    url: 'clientConfig',
-	    success: function(stompHost) {
-	    	if (stompHost) {
-	    		var socket = new SockJS(stompHost + '/stomp');
+	    success: function(stompUrl) {
+	    	if (stompUrl) {
+	    		var socket = new SockJS(stompUrl);
 	    	    var stompClient = Stomp.over(socket);
 	    	    stompClient.heartbeat.outgoing = 0;
 	    	    stompClient.heartbeat.incoming = 0;
@@ -256,11 +256,8 @@ function initVehicles() {
 
 		// Fix up the data
 		vehicles.forEach(function(vehicle) {
-			if (!vehicle.vin && vehicle.latitude && vehicle.longitude) {
-				vehicle.vin = createIdFromCoordinates(vehicle.latitude, vehicle.longitude);
-			}
 			if (vehicle.vin) {
-				vehiclesIndex[vehicle.vin] = vehicle;				
+				vehiclesIndex[vehicle.vin] = vehicle;
 			}
 		});
 		
@@ -725,7 +722,7 @@ function setupMapLegend() {
 
 	info.onAdd = function(map) {
 		this._div = L.DomUtil.create('div', 'info');
-		var img = '<img src="https://www.mapbox.com/maki/renders/bus-18' + (L.Browser.retina ? '@2x' : '') + '.png">';
+		var img = '<img src="https://www.mapbox.com/maki/renders/bus-18' + (L.Browser.retina ? '@2x' : '') + '.png" height="18" width="18">';
 		this._div.innerHTML = '<h4 style="color: black">RentMe Vehicles</h4>'
 				+ '<i class="faa-flash animated">' + img + '</i> Moving &nbsp;&nbsp;&nbsp;&nbsp; ' + img + ' Stopped <br/>'
 				+ '<i class="fa fa-map-marker" style="color: green;"></i> Normal &nbsp;&nbsp;'

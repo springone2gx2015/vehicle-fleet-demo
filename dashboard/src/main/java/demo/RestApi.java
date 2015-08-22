@@ -18,8 +18,8 @@ public class RestApi {
 	@Autowired
     private DiscoveryClient discoveryClient;
 	
-	@Value("${stomp.host:}")
-	private String stompHost;
+	@Value("${stomp.url:}")
+	private String stompUrl;
 	
     @RequestMapping("/clientConfig")
     @ResponseBody
@@ -30,7 +30,7 @@ public class RestApi {
     	} catch (Throwable t) {
     		t.printStackTrace();
     	}
-    	return url == null || url.isEmpty() ? stompHost : url;
+    	return url == null || url.isEmpty() ? stompUrl : url + "/stomp";
     }
     
     private String getServiceUrl(String service) {
