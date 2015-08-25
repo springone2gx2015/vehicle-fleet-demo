@@ -37,9 +37,9 @@ import de.micromata.opengis.kml.v_2_2_0.LookAt;
 import de.micromata.opengis.kml.v_2_2_0.NetworkLink;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.RefreshMode;
+import demo.model.CurrentPosition;
 import demo.model.Point;
-import demo.model.PositionInfo;
-import demo.model.PositionInfo.VehicleStatus;
+import demo.model.VehicleStatus;
 import demo.service.KmlService;
 
 /**
@@ -107,12 +107,12 @@ public class DefaultKmlService implements KmlService {
 	 * @see frk.gpssimulator.service.KmlService#createPosKml(frk.gpssimulator.model.PositionInfo)
 	 */
 	@Override
-	public void updatePosition(Long instanceId, PositionInfo position) {
+	public void updatePosition(Long instanceId, CurrentPosition position) {
 		de.micromata.opengis.kml.v_2_2_0.Point point = KmlFactory.createPoint();
 		Integer speedKph = 0;
 
 		if(position != null) {
-			Coordinate coordinate = KmlFactory.createCoordinate(position.getPosition().getLongitude(), position.getPosition().getLatitude());
+			Coordinate coordinate = KmlFactory.createCoordinate(position.getPoint().getLongitude(), position.getPoint().getLatitude());
 			point.getCoordinates().add(coordinate);
 		}
 		else {

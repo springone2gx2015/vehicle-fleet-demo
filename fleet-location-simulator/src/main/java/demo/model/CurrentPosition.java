@@ -17,19 +17,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * Denotes a point on the globe.
- * @author faram
  * @author Gunnar Hillert
  */
 @Data
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class Point {
-	private Double latitude;
-	private Double longitude;
+public class CurrentPosition {
 
-	@Override
-	public String toString() {
-		return "Point [lat/lang:" + latitude + "," + longitude + "]";
-	}
+	private String vin;
+	private Point point;
+	private VehicleStatus vehicleStatus = VehicleStatus.NONE;
+	private Double speed;
+	private Double heading;
 
 }

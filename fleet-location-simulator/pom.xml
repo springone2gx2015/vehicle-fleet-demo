@@ -29,6 +29,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-hystrix</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
 			<artifactId>config-bootstrap</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -75,14 +79,19 @@
 			<version>3.3.5</version>
 		</dependency>
 		<dependency>
-		    <groupId>net.sf.sprockets</groupId>
-		    <artifactId>sprockets</artifactId>
-		    <version>2.6.0</version>
+			<groupId>net.sf.sprockets</groupId>
+			<artifactId>sprockets</artifactId>
+			<version>2.6.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>com.squareup.okhttp</groupId>
-		  <artifactId>okhttp</artifactId>
-		  <version>2.4.0</version>
+			<groupId>com.squareup.okhttp</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 

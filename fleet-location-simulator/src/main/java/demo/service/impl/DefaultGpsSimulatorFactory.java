@@ -18,16 +18,14 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Service;
 
 import demo.model.GpsSimulatorRequest;
 import demo.model.Leg;
 import demo.model.Point;
 import demo.service.GpsSimulatorFactory;
-import demo.service.KmlService;
 import demo.service.PathService;
+import demo.service.PositionService;
 import demo.support.NavUtils;
 import demo.task.GpsSimulator;
 
@@ -42,11 +40,7 @@ public class DefaultGpsSimulatorFactory implements GpsSimulatorFactory {
 	private PathService pathService;
 
 	@Autowired
-	private KmlService kmlService;
-
-	@Autowired
-	@Qualifier("sendPosition")
-	private MessageChannel messageChannel;
+	private PositionService positionService;
 
 	private final AtomicLong instanceCounter = new AtomicLong();
 
@@ -55,8 +49,7 @@ public class DefaultGpsSimulatorFactory implements GpsSimulatorFactory {
 
 		final GpsSimulator gpsSimulator = new GpsSimulator(gpsSimulatorRequest);
 
-		gpsSimulator.setMessageChannel(messageChannel);
-		gpsSimulator.setKmlService(kmlService);
+		gpsSimulator.setPositionInfoService(positionService);
 		gpsSimulator.setId(this.instanceCounter.incrementAndGet());
 
 		final List<Point> points = NavUtils.decodePolyline(gpsSimulatorRequest.getPolyline());

@@ -10,26 +10,20 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package demo.model;
+package demo.service;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import demo.model.CurrentPosition;
 
 /**
- * Denotes a point on the globe.
- * @author faram
+ *
  * @author Gunnar Hillert
+ *
  */
-@Data
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class Point {
-	private Double latitude;
-	private Double longitude;
+public interface PositionService {
 
-	@Override
-	public String toString() {
-		return "Point [lat/lang:" + latitude + "," + longitude + "]";
-	}
+	void processPositionInfo(long id,
+			CurrentPosition currentPosition,
+			boolean exportPositionsToKml,
+			boolean sendPositionsToIngestionSerice);
 
 }

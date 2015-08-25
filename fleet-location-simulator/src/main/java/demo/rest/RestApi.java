@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import demo.model.DirectionInput;
 import demo.model.GpsSimulatorRequest;
 import demo.model.Point;
-import demo.model.PositionInfo.VehicleStatus;
+import demo.model.VehicleStatus;
 import demo.model.ServiceLocation;
 import demo.model.SimulatorFixture;
 import demo.service.GpsSimulatorFactory;

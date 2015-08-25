@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
@@ -36,8 +37,8 @@ import de.micromata.opengis.kml.v_2_2_0.Kml;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableCircuitBreaker
 @EnableScheduling
-@ImportResource("classpath:spring-integration-context.xml")
 public class GpsSimulatorApplication {
 
 	public static void main(String[] args) throws Exception {

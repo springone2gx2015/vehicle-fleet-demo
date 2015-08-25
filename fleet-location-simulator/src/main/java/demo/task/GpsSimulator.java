@@ -16,15 +16,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.messaging.MessageChannel;
-
+import demo.model.CurrentPosition;
 import demo.model.GpsSimulatorRequest;
 import demo.model.Leg;
 import demo.model.Point;
 import demo.model.PositionInfo;
-import demo.model.PositionInfo.VehicleStatus;
-import demo.service.KmlService;
+import demo.model.VehicleStatus;
+import demo.service.PositionService;
 import demo.support.NavUtils;
 
 /**
@@ -37,8 +35,7 @@ public class GpsSimulator implements Runnable {
 
 	private long id;
 
-	private MessageChannel messageChannel;
-	private KmlService kmlService;
+	private PositionService positionInfoService;
 
 	private AtomicBoolean cancel = new AtomicBoolean();
 
@@ -48,7 +45,7 @@ public class GpsSimulator implements Runnable {
 	private boolean exportPositionsToMessaging = true;
 
 	private Integer reportInterval = 500; // millisecs at which to send position reports
-	private PositionInfo currentPosition = null;
+	private PositionInfo positionInfo = null;
 	private List<Leg> legs;
 	private VehicleStatus vehicleStatus = VehicleStatus.NONE;
 	private String vin;
@@ -79,32 +76,35 @@ public class GpsSimulator implements Runnable {
 			}
 			while (!Thread.interrupted()) {
 				long startTime = new Date().getTime();
-				if (currentPosition != null) {
+				if (positionInfo != null) {
 					if (shouldMove) {
 						moveVehicle();
-						currentPosition.setSpeed(speedInMps);
+						positionInfo.setSpeed(speedInMps);
 					} else {
-						currentPosition.setSpeed(0d);
+						positionInfo.setSpeed(0d);
 					}
 
 					if (this.secondsToError > 0 && startTime  - executionStartTime.getTime() >= this.secondsToError * 1000) {
 						this.vehicleStatus = VehicleStatus.SERVICE_NOW;
 					}
 
-					currentPosition.setVehicleStatus(this.vehicleStatus);
+					positionInfo.setVehicleStatus(this.vehicleStatus);
 
-					if (this.exportPositionsToKml) {
-						kmlService.updatePosition(id, currentPosition);
-					}
-					if (this.exportPositionsToMessaging) {
-						messageChannel.send(MessageBuilder.withPayload(currentPosition).build());
-					}
+					final CurrentPosition currentPosition = new CurrentPosition(
+							positionInfo.getVin(),
+							new Point(positionInfo.getPosition().getLatitude(), positionInfo.getPosition().getLongitude()),
+							positionInfo.getVehicleStatus(),
+							positionInfo.getSpeed(),
+							positionInfo.getLeg().getHeading());
+					positionInfoService.processPositionInfo(id, currentPosition, this.exportPositionsToKml, this.exportPositionsToMessaging);
+
 				}
 
 				// wait till next position report is due
 				sleep(startTime);
-			} // loop endlessly
-		} catch (InterruptedException ie) {
+			}
+		}
+		catch (InterruptedException ie) {
 			destroy();
 			return;
 		}
@@ -117,7 +117,7 @@ public class GpsSimulator implements Runnable {
 	 * sim has closed.
 	 */
 	void destroy() {
-		currentPosition = null;
+		positionInfo = null;
 	}
 
 	/**
@@ -138,21 +138,21 @@ public class GpsSimulator implements Runnable {
 	 */
 	void moveVehicle() {
 		Double distance = speedInMps * reportInterval / 1000.0;
-		Double distanceFromStart = currentPosition.getDistanceFromStart() + distance;
+		Double distanceFromStart = positionInfo.getDistanceFromStart() + distance;
 		Double excess = 0.0; // amount by which next postion will exceed end
 								// point of present leg
 
-		for (int i = currentPosition.getLeg().getId(); i < legs.size(); i++) {
+		for (int i = positionInfo.getLeg().getId(); i < legs.size(); i++) {
 			Leg currentLeg = legs.get(i);
 			excess = distanceFromStart > currentLeg.getLength() ? distanceFromStart - currentLeg.getLength() : 0.0;
 
 			if (Double.doubleToRawLongBits(excess) == 0) {
 				// this means new position falls within current leg
-				currentPosition.setDistanceFromStart(distanceFromStart);
-				currentPosition.setLeg(currentLeg);
+				positionInfo.setDistanceFromStart(distanceFromStart);
+				positionInfo.setLeg(currentLeg);
 				Point newPosition = NavUtils.getPosition(currentLeg.getStartPosition(), distanceFromStart,
 						currentLeg.getHeading());
-				currentPosition.setPosition(newPosition);
+				positionInfo.setPosition(newPosition);
 				return;
 			}
 			distanceFromStart = excess;
@@ -167,12 +167,12 @@ public class GpsSimulator implements Runnable {
 	 * Position vehicle at start of path.
 	 */
 	public void setStartPosition() {
-		currentPosition = new PositionInfo();
-		currentPosition.setVin(this.vin);
+		positionInfo = new PositionInfo();
+		positionInfo.setVin(this.vin);
 		Leg leg = legs.get(0);
-		currentPosition.setLeg(leg);
-		currentPosition.setPosition(leg.getStartPosition());
-		currentPosition.setDistanceFromStart(0.0);
+		positionInfo.setLeg(leg);
+		positionInfo.setPosition(leg.getStartPosition());
+		positionInfo.setDistanceFromStart(0.0);
 	}
 
 	/**
@@ -211,10 +211,6 @@ public class GpsSimulator implements Runnable {
 		this.shouldMove = shouldMove;
 	}
 
-	public void setMessageChannel(MessageChannel sendPosition) {
-		this.messageChannel = sendPosition;
-	}
-
 	public synchronized void cancel() {
 		this.cancel.set(true);
 	}
@@ -223,20 +219,16 @@ public class GpsSimulator implements Runnable {
 		this.exportPositionsToKml = exportPositionsToKml;
 	}
 
-	public void setKmlService(KmlService kmlService) {
-		this.kmlService = kmlService;
-	}
-
 	public void setLegs(List<Leg> legs) {
 		this.legs = legs;
 	}
 
 	public PositionInfo getCurrentPosition() {
-		return currentPosition;
+		return positionInfo;
 	}
 
 	public void setCurrentPosition(PositionInfo currentPosition) {
-		this.currentPosition = currentPosition;
+		this.positionInfo = currentPosition;
 	}
 
 	public long getId() {
@@ -271,12 +263,16 @@ public class GpsSimulator implements Runnable {
 		this.secondsToError = secondsToError;
 	}
 
+	public void setPositionInfoService(PositionService positionInfoService) {
+		this.positionInfoService = positionInfoService;
+	}
+
 	@Override
 	public String toString() {
 		return "GpsSimulator [id=" + id + ", speedInMps=" + speedInMps + ", shouldMove=" + shouldMove
 				+ ", exportPositionsToKml=" + exportPositionsToKml + ", exportPositionsToMessaging="
 				+ exportPositionsToMessaging + ", reportInterval=" + reportInterval + ", currentPosition="
-				+ currentPosition + "]";
+				+ positionInfo + "]";
 	}
 
 }

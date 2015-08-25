@@ -12,7 +12,7 @@
  */
 package demo.model;
 
-import demo.model.PositionInfo.VehicleStatus;
+import demo.model.VehicleStatus;
 
 /**
  *

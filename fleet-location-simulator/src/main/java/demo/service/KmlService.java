@@ -14,8 +14,8 @@ package demo.service;
 
 import java.util.Set;
 
+import demo.model.CurrentPosition;
 import demo.model.Point;
-import demo.model.PositionInfo;
 
 /**
  *
@@ -32,7 +32,7 @@ public interface KmlService {
 	 */
 	void setupKmlIntegration(Set<Long> intanceIds, Point lookAtPoint, String kmlUrl);
 
-	void updatePosition(Long id, PositionInfo position);
+	void updatePosition(Long id, CurrentPosition position);
 
 	byte[] getKmlInstance(Long instanceId);
 
