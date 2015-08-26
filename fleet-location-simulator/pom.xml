@@ -9,7 +9,7 @@
 	<description>Demo project for Spring One</description>
 
 	<parent>
-	<groupId>org.springframework.cloud</groupId>
+	<groupId>org.demo</groupId>
 	<artifactId>spring-cloud-sample-vehicle-fleet</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
