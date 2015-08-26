@@ -1,0 +1,56 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://fleet.cfapps.pez.pivotal.io/locations/search/findByUnitInfoUnitVin?vin=6d43aee7-f6f3-4cb1-a086-e03a750ed23b",
+      "templated": false
+    }
+  },
+  "_embedded": {
+    "locations": [
+      {
+        "vin": "6d43aee7-f6f3-4cb1-a086-e03a750ed23b",
+        "unitInfo": {
+          "unitVin": "6d43aee7-f6f3-4cb1-a086-e03a750ed23b",
+          "engineMake": "VOL",
+          "customerName": "Zboncak-Halvorson",
+          "unitNumber": "92445067"
+        },
+        "unitFault": {
+          "vin": "6d43aee7-f6f3-4cb1-a086-e03a750ed23b",
+          "spn": 3031,
+          "fmi": 2
+        },
+        "latitude": 33.7489996,
+        "longitude": -84.9097116,
+        "heading": "W",
+        "gpsSpeed": 39,
+        "gpsStatus": "OK",
+        "odometer": 46168,
+        "totalEngineTime": 912.05,
+        "totalIdleTime": 146.5,
+        "totalFuelUsage": 7302.770768,
+        "address": "958-1098 GA-61, Villa Rica, GA, 30180, US",
+        "timestamp": "2015-07-02T16:00:39.000+0000",
+        "tspProvider": "cyntrx",
+        "vehicleMovementType": "IN_MOTION",
+        "serviceType": "ServiceInfo",
+        "_links": {
+          "self": {
+            "href": "http://fleet.cfapps.pez.pivotal.io/locations/3",
+            "templated": false
+          },
+          "location": {
+            "href": "http://fleet.cfapps.pez.pivotal.io/locations/3",
+            "templated": false
+          }
+        }
+      }
+    ]
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 1,
+    "totalPages": 1,
+    "number": 0
+  }
+}

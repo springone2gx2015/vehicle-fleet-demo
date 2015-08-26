@@ -1,0 +1,39 @@
+= Fleet Location Service Endpoints
+:toc: left
+:idprefix: fleet_location_service_
+:sectanchors:
+:icons: font
+:last-update-label!:
+
+== Locations
+
+The locations endpoint can be discovered by following the link
+labelled "locations". It provides a paginated view of vehicle
+locations and other telemetry, including embedded unit information and
+diagnostic data if there is a fault.
+
+Example curl request:
+include::{generated}/locations/curl-request.adoc[]
+
+Example HTTP request: [small]##link:../locations[icon:external-link[role="silver"]]##
+include::{generated}/locations/http-request.adoc[]
+
+Example HTTP response:
+include::{generated}/locations/http-response.adoc[]
+
+== Find By VIN
+
+A vehicle can be found by it's identification number using the find by
+VIN endpoint, which can be discovered by following links
+"locations/search/findByUnitInfoUnitVin".
+
+Example curl request:
+include::{generated}/findByVin/curl-request.adoc[]
+
+Example HTTP request: [small]##link:../locations[icon:external-link[role="silver"]]##
+include::{generated}/findByVin/http-request.adoc[]
+
+Example HTTP response:
+include::{generated}/findByVin/http-response.adoc[]
+
+
