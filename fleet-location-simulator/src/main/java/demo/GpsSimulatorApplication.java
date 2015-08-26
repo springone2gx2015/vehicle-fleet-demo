@@ -23,7 +23,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -42,8 +41,7 @@ import de.micromata.opengis.kml.v_2_2_0.Kml;
 public class GpsSimulatorApplication {
 
 	public static void main(String[] args) throws Exception {
-		final SpringApplication application = new SpringApplication(GpsSimulatorApplication.class);
-		application.run(args);
+		SpringApplication.run(GpsSimulatorApplication.class);
 	}
 
 	@Bean

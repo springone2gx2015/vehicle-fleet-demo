@@ -28,7 +28,6 @@
 		<h1>Service Location Updater</h1>
 		<div class="row">
 			<div class="col-xs-12 control-buttons">
-				<p class="lead">Generates vehicle traffic as defined in <code>fixture.json</code>.</p>
 				<a class="btn btn-default" onclick="subscribe();">Subscribe to Location Updates</a>
 				<a class="btn btn-default" onclick="unsubscribe();">UnSubscribe to Location Updates</a>
 			</div>
@@ -43,26 +42,14 @@
 				<button id="sendMessage" class="btn btn-default" style="margin-bottom: 1em;" onclick="sendMessage();">Send Test Message</button>
 				<textarea id="messageContents" class="form-control" rows="5">
 {
-  "position": {
+  "vin": "4c3476fb-c60e-4970-8c3d-cb788c49f766",
+  "point": {
     "latitude": 38.94286343501579,
     "longitude": -76.99099467966852
   },
   "vehicleStatus": "NORMAL",
-  "leg": {
-    "id": 0,
-    "startPosition": {
-      "latitude": 38.942870000000006,
-      "longitude": -76.99244
-    },
-    "endPosition": {
-      "latitude": 38.94286,
-      "longitude": -76.99024
-    },
-    "length": 190.26924849743094,
-    "heading": 90.33415225409419
-  },
-  "distanceFromStart": 124.99999999999999,
-  "speed": 13.88888888888889
+  "speed": 13.8,
+  "heading": 236,
 }
 				</textarea>
 			</div>

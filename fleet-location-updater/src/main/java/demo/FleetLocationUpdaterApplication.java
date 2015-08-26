@@ -32,8 +32,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class FleetLocationUpdaterApplication {
 
 	public static void main(String[] args) throws Exception {
-		final SpringApplication application = new SpringApplication(FleetLocationUpdaterApplication.class);
-		application.run(args);
+		SpringApplication.run(FleetLocationUpdaterApplication.class);
 	}
 
 }

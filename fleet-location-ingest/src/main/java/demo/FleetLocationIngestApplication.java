@@ -18,7 +18,6 @@ package demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -30,23 +29,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableScheduling
-@ImportResource("classpath:spring-integration-context.xml")
 public class FleetLocationIngestApplication {
 
 	public static void main(String[] args) throws Exception {
-		final SpringApplication application = new SpringApplication(FleetLocationIngestApplication.class);
-		application.run(args);
+		SpringApplication.run(FleetLocationIngestApplication.class);
 	}
 
-//	@Bean
-//	public Jaxb2Marshaller getMarshaller() {
-//		final Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-//		jaxb2Marshaller.setClassesToBeBound(Kml.class);
-//
-//		final Map<String,Object> map = new HashMap<>();
-//		map.put("jaxb.formatted.output", true);
-//
-//		jaxb2Marshaller.setMarshallerProperties(map);
-//		return jaxb2Marshaller;
-//	}
 }

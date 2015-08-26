@@ -5,3 +5,7 @@ server:
 spring:
   application:
     name: service-location-updater
+  cloud:
+    stream:
+      bindings:
+        input: vehicle-fleet-demo

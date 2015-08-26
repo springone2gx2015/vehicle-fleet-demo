@@ -5,3 +5,7 @@ server:
 spring:
   application:
     name: service-location-ingest
+  cloud:
+    stream:
+      bindings:
+        output: vehicle-fleet-demo

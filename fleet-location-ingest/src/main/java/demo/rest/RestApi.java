@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApi {
 
 	@Autowired
-	private MessageChannel toRabbit;
+	private MessageChannel output;
 
 	@RequestMapping(path="/locations", method=RequestMethod.POST)
 	public void locations(@RequestBody String positionInfo) {
-		toRabbit.send(MessageBuilder.withPayload(positionInfo).build());
+		output.send(MessageBuilder.withPayload(positionInfo).build());
 	}
 
 }
