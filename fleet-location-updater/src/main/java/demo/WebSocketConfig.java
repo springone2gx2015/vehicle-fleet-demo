@@ -12,9 +12,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableStompBrokerRelay("/queue/fleet.location.ingest.queue")
-		.setSystemLogin("guest").setSystemPasscode("guest").setClientLogin("guest")
-		.setClientPasscode("guest");
+		config.enableSimpleBroker("/queue/fleet.location.ingest.queue");;
 		config.setApplicationDestinationPrefixes("/app");
 	}
 

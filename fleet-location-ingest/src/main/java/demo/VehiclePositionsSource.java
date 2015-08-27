@@ -15,11 +15,8 @@
  */
 package demo;
 
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.cloud.stream.annotation.EnableModule;
 import org.springframework.cloud.stream.annotation.Source;
-import org.springframework.context.annotation.Bean;
 
 /**
  * Spring Cloud Stream {@link Source}, responsible for ingesting vehicle position
@@ -30,13 +27,5 @@ import org.springframework.context.annotation.Bean;
  */
 @EnableModule(Source.class)
 public class VehiclePositionsSource {
-
-	@Bean
-	public ConnectionFactory connectionFactory() {
-		CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-		connectionFactory.setUsername("guest");
-		connectionFactory.setPassword("guest");
-		return connectionFactory;
-	}
 
 }

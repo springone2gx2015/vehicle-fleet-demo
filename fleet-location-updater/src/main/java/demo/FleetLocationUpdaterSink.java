@@ -15,15 +15,9 @@
  */
 package demo;
 
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableModule;
 import org.springframework.cloud.stream.annotation.Sink;
-import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -44,26 +38,8 @@ public class FleetLocationUpdaterSink {
 	@Autowired
 	private SimpMessagingTemplate template;
 
-	@Bean
-	public ConnectionFactory connectionFactory() {
-		CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-		connectionFactory.setUsername("guest");
-		connectionFactory.setPassword("guest");
-		return connectionFactory;
-	}
-
 	@ServiceActivator(inputChannel="input")
 	public void sendToStompClients(String payload) {
 		template.convertAndSend("/queue/fleet.location.ingest.queue", payload);
-	}
-
-	@Bean
-	public AmqpAdmin amqpAdmin() {
-		return new RabbitAdmin(connectionFactory());
-	}
-
-	@Bean
-	public RabbitTemplate rabbitTemplate() {
-		return new RabbitTemplate(connectionFactory());
 	}
 }
