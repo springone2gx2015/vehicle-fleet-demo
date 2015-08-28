@@ -12,6 +12,6 @@ spring:
 ribbon:
   eureka:
     enabled: false
-service-location-ingest:
+fleet-location-ingest:
   ribbon:
     listOfServers: localhost:9006

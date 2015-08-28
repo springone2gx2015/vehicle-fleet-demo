@@ -50,11 +50,11 @@ public class DefaultPositionService implements PositionService {
 			boolean sendPositionsToIngestionService) {
 
 		if (exportPositionsToKml) {
-			kmlService.updatePosition(id, currentPosition);
+			this.kmlService.updatePosition(id, currentPosition);
 		}
 
 		if (sendPositionsToIngestionService) {
-			restTemplate.postForLocation("http://service-location-ingest/api/locations", currentPosition);
+			this.restTemplate.postForLocation("http://fleet-location-ingest/api/locations", currentPosition);
 		}
 
 	}

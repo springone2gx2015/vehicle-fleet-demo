@@ -16,7 +16,7 @@
 	</parent>
 
 	<properties>
-		<start-class>democ.DashboardApplication</start-class>
+		<start-class>demo.DashboardApplication</start-class>
 	</properties>
 
 	<dependencies>
