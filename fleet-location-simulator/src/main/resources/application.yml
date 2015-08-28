@@ -1,9 +1,17 @@
 server:
   port: 9005
-  address: "http://localhost"
-  context-path: "/"
 spring:
   application:
     name: service-location-simulator
 gpsSimmulator:
   googleApiKey:
+  
+---
+spring:
+  profiles: test
+ribbon:
+  eureka:
+    enabled: false
+service-location-ingest:
+  ribbon:
+    listOfServers: localhost:9006

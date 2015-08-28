@@ -27,5 +27,4 @@ import org.springframework.cloud.stream.annotation.Source;
  */
 @EnableModule(Source.class)
 public class VehiclePositionsSource {
-
 }

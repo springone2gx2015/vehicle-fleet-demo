@@ -48,7 +48,7 @@ Contains the **from** and **to** addresses. This file is **NOT** used during act
 
 ### fixture.json
 
-This is the main simulator fixture. Contains simulator settings (e.g. the speed pf the vehicle) as well as the actual path to be driven. If you like to update the file hit the the Json endpoint: `http://localhost:8080/api/fixture` and copy the result to `fixture.json`.
+This is the main simulator fixture. Contains simulator settings (e.g. the speed of the vehicle) as well as the actual path to be driven. If you like to update the file hit the the Json endpoint: `http://localhost:8080/api/fixture` and copy the result to `fixture.json`.
 
 ## Building
 

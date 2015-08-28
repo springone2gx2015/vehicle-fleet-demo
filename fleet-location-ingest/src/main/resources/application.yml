@@ -1,10 +1,6 @@
 server:
   port: 9006
-  address: "http://localhost"
-  context-path: "/"
 spring:
-  application:
-    name: service-location-ingest
   cloud:
     stream:
       bindings:

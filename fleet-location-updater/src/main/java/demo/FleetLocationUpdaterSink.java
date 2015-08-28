@@ -40,6 +40,6 @@ public class FleetLocationUpdaterSink {
 
 	@ServiceActivator(inputChannel="input")
 	public void sendToStompClients(String payload) {
-		template.convertAndSend("/queue/fleet.location.ingest.queue", payload);
+		this.template.convertAndSend("/queue/fleet.location.ingest.queue", payload);
 	}
 }

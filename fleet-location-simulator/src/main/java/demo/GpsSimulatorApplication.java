@@ -41,7 +41,7 @@ import de.micromata.opengis.kml.v_2_2_0.Kml;
 public class GpsSimulatorApplication {
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(GpsSimulatorApplication.class);
+		SpringApplication.run(GpsSimulatorApplication.class, args);
 	}
 
 	@Bean

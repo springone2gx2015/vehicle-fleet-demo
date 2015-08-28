@@ -1,18 +1,427 @@
-[{"address1":"2151 SE FRONTAGE RD",
-"address2":" ",
-"city":"STURTEVANT",
-"latitude":"42.708494",
-"longitude":"-87.953346",
-"location":"STURTEVANT",
-"state":"WI",
-"zip":"53177",
-"type":"Service"},
-{"address1":"8520 N GEORGETOWN RD",
-"address2":" ",
-"city":"INDIANAPOLIS",
-"latitude":"39.909792",
-"longitude":"-86.240824",
-"location":"FLEETY INDY PARK",
-"state":"IN",
-"zip":"46268",
-"type":"Service"}]
+{
+  "_links" : {
+    "first" : {
+      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=0&size=20",
+      "templated" : false
+    },
+    "self" : {
+      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations",
+      "templated" : false
+    },
+    "next" : {
+      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=1&size=20",
+      "templated" : false
+    },
+    "last" : {
+      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=24&size=20",
+      "templated" : false
+    },
+    "search" : {
+      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/search",
+      "templated" : false
+    }
+  },
+  "_embedded" : {
+    "locations" : [ {
+      "latitude" : 42.708494,
+      "longitude" : -87.953346,
+      "address1" : "2151 SE FRONTAGE RD",
+      "address2" : " ",
+      "city" : "STURTEVANT",
+      "location" : "STURTEVANT",
+      "state" : "WI",
+      "zip" : "53177",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec3",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec3",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 39.909792,
+      "longitude" : -86.240824,
+      "address1" : "8520 N GEORGETOWN RD",
+      "address2" : " ",
+      "city" : "INDIANAPOLIS",
+      "location" : "RENTME INDY PARK",
+      "state" : "IN",
+      "zip" : "46268",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec4",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec4",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 36.177168,
+      "longitude" : -115.156064,
+      "address1" : "1132 W BONANZA RD",
+      "address2" : "SUITE C",
+      "city" : "LAS VEGAS",
+      "location" : "LAS VEGAS",
+      "state" : "NV",
+      "zip" : "89106",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 45.332162,
+      "longitude" : -122.772522,
+      "address1" : "9255 SW RIDDER RD",
+      "address2" : " ",
+      "city" : "WILSONVILLE",
+      "location" : "RENTME WILSONVILLE",
+      "state" : "OR",
+      "zip" : "97070",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec6",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec6",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 45.552052,
+      "longitude" : -122.73032,
+      "address1" : "4110 NW ST HELENS RD",
+      "address2" : " ",
+      "city" : "PORTLAND",
+      "location" : "RENTME PORTLAND",
+      "state" : "OR",
+      "zip" : "97210",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec7",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec7",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 51.005161,
+      "longitude" : -113.981624,
+      "address1" : "5308 36TH ST SE",
+      "address2" : " ",
+      "city" : "CALGARY",
+      "location" : "CALGARY 36TH ST",
+      "state" : "AB",
+      "zip" : "T2C 1P1",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec8",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec8",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 34.696174,
+      "longitude" : -87.66122,
+      "address1" : "2405 MISSOURI ST",
+      "address2" : " ",
+      "city" : "TUSCUMBIA",
+      "location" : "TUSCUMBIA",
+      "state" : "AL",
+      "zip" : "35674",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec9",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec9",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 37.525188,
+      "longitude" : -77.324432,
+      "address1" : "540 TRAMPTON RD",
+      "address2" : " ",
+      "city" : "SANDSTON",
+      "location" : "RENTME RICHMOND AIRPORT",
+      "state" : "VA",
+      "zip" : "23150",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaeca",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaeca",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 37.152628,
+      "longitude" : -94.314653,
+      "address1" : "2110 S GARRISON",
+      "address2" : " ",
+      "city" : "CARTHAGE",
+      "location" : "CARTHAGE",
+      "state" : "MO",
+      "zip" : "64836",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecb",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecb",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 36.23736,
+      "longitude" : -83.2172,
+      "address1" : "444 JONES FRANKLIN RD",
+      "address2" : " ",
+      "city" : "MORRISTOWN",
+      "location" : "MORRISTOWN",
+      "state" : "TN",
+      "zip" : "37813",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecc",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecc",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 41.923977,
+      "longitude" : -85.664615,
+      "address1" : "14975 M-60 WEST",
+      "address2" : " ",
+      "city" : "THREE RIVERS",
+      "location" : "THREE RIVERS",
+      "state" : "MI",
+      "zip" : "49093",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecd",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecd",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 27.764221,
+      "longitude" : -97.463803,
+      "address1" : "5522 BEAR LN",
+      "address2" : " ",
+      "city" : "CORPUS CHRISTI",
+      "location" : "RENTME CORPUS CHRISTI",
+      "state" : "TX",
+      "zip" : "78405",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaece",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaece",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 38.90127,
+      "longitude" : -75.422584,
+      "address1" : "620 MARSHALL ST",
+      "address2" : " ",
+      "city" : "MILFORD",
+      "location" : "RENTME MILFORD",
+      "state" : "DE",
+      "zip" : "19963",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecf",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecf",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 44.231084,
+      "longitude" : -88.46944,
+      "address1" : "2301 AMERICAN DR",
+      "address2" : " ",
+      "city" : "NEENAH",
+      "location" : "RENTME NEENAH",
+      "state" : "WI",
+      "zip" : "54956",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed0",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed0",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 40.634968,
+      "longitude" : -75.433296,
+      "address1" : "1702 HOOVER AVE",
+      "address2" : " ",
+      "city" : "ALLENTOWN",
+      "location" : "RENTME ALLENTOWN AIRPORT",
+      "state" : "PA",
+      "zip" : "18109",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed1",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed1",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 40.5775,
+      "longitude" : -75.480824,
+      "address1" : "1701 LEHIGH ST",
+      "address2" : " ",
+      "city" : "ALLENTOWN",
+      "location" : "RENTME ALLENTOWN",
+      "state" : "PA",
+      "zip" : "18103",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed2",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed2",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 37.358744,
+      "longitude" : -77.426192,
+      "address1" : "13201 GROVER COURT",
+      "address2" : " ",
+      "city" : "CHESTER",
+      "location" : "RENTME RICHMOND SOUTH",
+      "state" : "VA",
+      "zip" : "23836",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed3",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed3",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 33.382805,
+      "longitude" : -82.001568,
+      "address1" : "1501 DIXON AIRLINE RD",
+      "address2" : " ",
+      "city" : "AUGUSTA",
+      "location" : "RENTME AUGUSTA",
+      "state" : "GA",
+      "zip" : "30906",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed4",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed4",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 34.261828,
+      "longitude" : -83.864736,
+      "address1" : "2195 CENTENNIAL DR",
+      "address2" : " ",
+      "city" : "GAINESVILLE",
+      "location" : "GAINESVILLE",
+      "state" : "GA",
+      "zip" : "30501",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed5",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed5",
+          "templated" : false
+        }
+      }
+    }, {
+      "latitude" : 43.131376,
+      "longitude" : -76.199104,
+      "address1" : "4469 STEELWAY BLVD N",
+      "address2" : " ",
+      "city" : "LIVERPOOL",
+      "location" : "RENTME SYRACUSE",
+      "state" : "NY",
+      "zip" : "13090",
+      "type" : "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed6",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed6",
+          "templated" : false
+        }
+      }
+    } ]
+  }
+}

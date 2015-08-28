@@ -1,8 +1,3 @@
 spring:
   application:
     name: service-location-updater
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER_URI:${vcap.services.${PREFIX:}configserver.credentials.uri:http://localhost:8888}}
-encrypt:
-  failOnError: false
