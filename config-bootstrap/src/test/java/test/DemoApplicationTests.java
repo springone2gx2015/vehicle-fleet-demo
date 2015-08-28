@@ -24,12 +24,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import test.DemoApplicationTests.DemoApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DemoApplication.class)
-@IntegrationTest("CONFIG_SERVER_URI:http://testserver")
+@IntegrationTest({"CONFIG_SERVER_URI:http://testserver", "server.port=0"})
+@WebAppConfiguration
 public class DemoApplicationTests {
 
 	@Value("${spring.cloud.config.uri:}")

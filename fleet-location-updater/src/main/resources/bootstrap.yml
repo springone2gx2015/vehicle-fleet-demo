@@ -1,3 +1,4 @@
 spring:
   application:
     name: service-location-updater
+debug: true
