@@ -1,4 +1,3 @@
 spring:
   application:
-    name: service-location-updater
-debug: true
+    name: fleet-location-updater
