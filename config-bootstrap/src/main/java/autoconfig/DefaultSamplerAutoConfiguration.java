@@ -28,7 +28,7 @@ import org.springframework.cloud.sleuth.zipkin.ZipkinSpanListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.github.kristofa.brave.LoggingSpanCollectorImpl;
+import com.github.kristofa.brave.LoggingSpanCollector;
 import com.github.kristofa.brave.SpanCollector;
 
 /**
@@ -54,7 +54,7 @@ public class DefaultSamplerAutoConfiguration {
 		@Bean
 		@ConditionalOnProperty(value="fleet.zipkin.enabled", havingValue="false", matchIfMissing=true)
 		public SpanCollector spanCollector() {
-			return new LoggingSpanCollectorImpl();
+			return new LoggingSpanCollector();
 		}
 
 	}
