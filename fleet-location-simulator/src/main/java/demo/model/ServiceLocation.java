@@ -17,9 +17,9 @@
 package demo.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import lombok.Data;
 
@@ -35,7 +35,7 @@ public class ServiceLocation {
 	private String address1;
 	private String address2;
 	private String city;
-	@JsonIgnore
+	@JsonUnwrapped
 	private final Point point;
 	private String location;
 	private String state;
