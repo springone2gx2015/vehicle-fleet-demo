@@ -78,6 +78,7 @@ Please ensure that you have running:
 **fleet-location-service**
 
 	$ java -jar fleet-location-service/target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
+	$ curl -H "Content-Type: application/json" localhost:9000/fleet -d @fle
 
 **service-location-service**
 
