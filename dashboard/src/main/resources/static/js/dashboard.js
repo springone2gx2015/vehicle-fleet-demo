@@ -327,9 +327,9 @@ function getRandomInt(min, max) {
 function handleUpdateMessage(msg) {
 	var vehicle = vehiclesIndex[msg.vin];
 	if (vehicle) {
-		if (msg.position) {
-			vehicle.latitude = msg.position.latitude;
-			vehicle.longitude = msg.position.longitude;
+		if (msg.point) {
+			vehicle.latitude = msg.point.latitude;
+			vehicle.longitude = msg.point.longitude;
 		}
 		if (msg.vehicleStatus && MESSAGE_STATUS_TO_STATUS_MAP[msg.vehicleStatus]) {
 			vehicle.serviceType = MESSAGE_STATUS_TO_STATUS_MAP[msg.vehicleStatus];
@@ -405,8 +405,12 @@ function updateMarker(marker) {
 //		lon : marker.vehicle.longitude
 //	});
 //	marker.setIcon(resolveMarker(marker.vehicle));
+	var isPopupOpened = marker._popup && marker._popup._isOpen;
 	removeMarker(marker);
-	createMarker(marker.vehicle);
+	var newMarker = createMarker(marker.vehicle);
+	if (isPopupOpened) {
+		newMarker.openPopup();
+	}
 }
 
 function removeMarker(marker) {
