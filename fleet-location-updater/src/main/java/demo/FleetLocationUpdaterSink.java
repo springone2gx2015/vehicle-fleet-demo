@@ -18,7 +18,10 @@ package demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableModule;
 import org.springframework.cloud.stream.annotation.Sink;
+import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.integration.annotation.Transformer;
+import org.springframework.integration.channel.DirectChannel;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
@@ -38,7 +41,17 @@ public class FleetLocationUpdaterSink {
 	@Autowired
 	private SimpMessagingTemplate template;
 
-	@ServiceActivator(inputChannel="input")
+	@Transformer(inputChannel="input", outputChannel="sendToBroker")
+	public String addServiceLocations(String payload) {
+		return payload;
+	}
+
+	@Bean
+	public MessageChannel sendToBroker() {
+		return new DirectChannel();
+	}
+
+	@ServiceActivator(inputChannel="sendToBroker")
 	public void sendToStompClients(String payload) {
 		this.template.convertAndSend("/queue/fleet.location.ingest.queue", payload);
 	}

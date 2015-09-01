@@ -1,0 +1,182 @@
+[
+  {
+    "address1": "1317 9th St NW",
+    "city": "Washington",
+    "latitude": 38.907773,
+    "longitude": -77.023735,
+    "state": "DC",
+    "zip": "20001",
+    "type": "Service"
+  },
+  {
+    "address1": "1301 13th St NW",
+    "city": "Washington",
+    "latitude": 38.907487,
+    "longitude": -77.029325,
+    "state": "DC",
+    "zip": "20005",
+    "type": "Service"
+  },
+  {
+    "address1": "1928-1998 9th St NE",
+    "city": "Washington",
+    "latitude": 38.916177,
+    "longitude": -76.994057,
+    "state": "DC",
+    "zip": "20018",
+    "type": "Service"
+  },
+  {
+    "address1": "1927 Rhode Island Ave NE",
+    "city": "Washington",
+    "latitude": 38.92855,
+    "longitude": -76.976541,
+    "state": "DC",
+    "zip": "20018",
+    "type": "Service"
+  },
+  {
+    "address1": "4136 Georgia Ave NW",
+    "city": "Washington",
+    "latitude": 38.941608,
+    "longitude": -77.025818,
+    "state": "DC",
+    "zip": "20011",
+    "type": "Service"
+  },
+  {
+    "address1": "1101 H St NE",
+    "city": "Washington",
+    "latitude": 38.899941,
+    "longitude": -76.991267,
+    "state": "DC",
+    "zip": "20002",
+    "type": "Service"
+  },
+  {
+    "address1": "306 Rhode Island Ave NW",
+    "city": "Washington",
+    "latitude": 38.914064,
+    "longitude": -77.016078,
+    "state": "DC",
+    "zip": "20001",
+    "type": "Service"
+  },
+  {
+    "address1": "2800 12th St NE",
+    "city": "Washington",
+    "latitude": 38.925855,
+    "longitude": -76.990825,
+    "state": "DC",
+    "zip": "20017",
+    "type": "Service"
+  },
+  {
+    "address1": "2708 Virginia Ave NW",
+    "city": "Washington",
+    "latitude": 38.900372,
+    "longitude": -77.056711,
+    "state": "DC",
+    "zip": "20037",
+    "type": "Service"
+  },
+  {
+    "address1": "2303 4th St NE",
+    "city": "Washington",
+    "latitude": 38.920135,
+    "longitude": -77.000384,
+    "state": "DC",
+    "zip": "20002",
+    "type": "Service"
+  },
+  {
+    "address1": "4000 Georgia Ave NW",
+    "city": "Washington",
+    "latitude": 38.940059,
+    "longitude": -77.025335,
+    "state": "DC",
+    "zip": "20011",
+    "type": "Service"
+  },
+  {
+    "address1": "2230 New York Ave NE",
+    "city": "Washington",
+    "latitude": 38.917846,
+    "longitude": -76.972612,
+    "state": "DC",
+    "zip": "20002",
+    "type": "Service"
+  },
+  {
+    "address1": "2600 14th St NW",
+    "city": "Washington",
+    "latitude": 38.923848,
+    "longitude": -77.032398,
+    "state": "DC",
+    "zip": "20009",
+    "type": "Service"
+  },
+  {
+    "address1": "4501 14th St NW",
+    "city": "Washington",
+    "latitude": 38.945286,
+    "longitude": -77.032489,
+    "state": "DC",
+    "zip": "20011",
+    "type": "Service"
+  },
+  {
+    "address1": "2210 Bladensburg Rd NE",
+    "city": "Washington",
+    "latitude": 38.920162,
+    "longitude": -76.970633,
+    "state": "DC",
+    "zip": "20018",
+    "type": "Service"
+  },
+  {
+    "address1": "2501 Pennsylvania Ave SE",
+    "city": "Washington",
+    "latitude": 38.873151,
+    "longitude": -76.970642,
+    "state": "DC",
+    "zip": "20020",
+    "type": "Service"
+  },
+  {
+    "address1": "100-130 Pershing Dr",
+    "city": "Arlington",
+    "latitude": 38.874555,
+    "longitude": -77.080818,
+    "state": "VA",
+    "zip": "22211",
+    "type": "Service"
+  },
+  {
+    "address1": "823 Pennsylvania Ave SE",
+    "city": "Washington",
+    "latitude": 38.883475,
+    "longitude": -76.994041,
+    "state": "DC",
+    "zip": "20003",
+    "type": "Service"
+  },
+  {
+    "address1": "1601 New York Ave NE",
+    "city": "Washington",
+    "latitude": 38.916836,
+    "longitude": -76.98117,
+    "state": "DC",
+    "zip": "20002",
+    "type": "Service"
+  },
+  {
+    "address1": "3426 Georgia Ave NW",
+    "city": "Washington",
+    "latitude": 38.932808,
+    "longitude": -77.024077,
+    "state": "DC",
+    "zip": "20010",
+    "type": "Service"
+  }
+]

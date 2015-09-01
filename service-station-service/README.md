@@ -5,7 +5,7 @@
 You can do bulk uploads of location data by POSTing to the `/bulk/serviceLocations` endpoint. E.g.
 
 ```
-$ curl -H "Content-Type: application/json" localhost:9001/bulk/serviceLocations -d @locations.json
+$ curl -H "Content-Type: application/json" localhost:9001/bulk/serviceLocations -d @service-locations.json
 ```
 
 where `locations.json` is a file containing a JSON array of `ServiceLocation` objects.
@@ -16,6 +16,6 @@ http://assets.springone2gx2015.s3.amazonaws.com/fleet/serviceLocations.json
 
 ## Deploying to Cloud Foundry
 
-This app deploys nicely to Cloud Foundry and looks for a config server (via its 
-`bootstrap.yml`) via a service called "configserver" with credentials containing a 
+This app deploys nicely to Cloud Foundry and looks for a config server (via its
+`bootstrap.yml`) via a service called "configserver" with credentials containing a
 URI.

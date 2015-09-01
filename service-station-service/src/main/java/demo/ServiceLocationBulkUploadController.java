@@ -19,6 +19,10 @@ package demo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +49,28 @@ public class ServiceLocationBulkUploadController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void upload(@RequestBody List<ServiceLocation> locations) {
 		this.repository.save(locations);
+	}
+
+	@Autowired
+	private MongoTemplate mongoTemplate;
+
+	@RequestMapping(value="/closest-service-location", method=RequestMethod.GET)
+	public ServiceLocation getClosestServiceLocation(double latitude, double longitude) {
+
+		final Point point = new Point(longitude, latitude);
+		final List<ServiceLocation> serviceLocations =
+			mongoTemplate.find(new Query(Criteria.where("point").near(point).maxDistance(0.01)), ServiceLocation.class);
+
+		if (serviceLocations.isEmpty()) {
+			return null;
+		}
+
+		return serviceLocations.get(0);
+	}
+
+	@RequestMapping(value="/purge", method=RequestMethod.GET)
+	public void purge() {
+		this.repository.deleteAll();
 	}
 
 }

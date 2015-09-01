@@ -52,6 +52,45 @@ Foundry the platform services are provided by Spring Cloud Services
 | fleet-location-updater     | http://localhost:9007/          |
 | RabbitMQ (guest/guest)     | http://localhost:15672/         |
 
+In order to run the entire application locally please execute the following steps:
+
+Please ensure that you have running:
+
+* Rabbit
+* Mongo
+
+**Start Eureka**
+
+	$ java -jar platform/eureka/target/fleet-eureka-server-0.0.1-SNAPSHOT.jar
+
+**fleet-location-simulator**
+
+	$ java -jar fleet-location-simulator/target/fleet-location-simulator-1.0.0.BUILD-SNAPSHOT.jar
+
+**fleet-location-ingest**
+
+	$ java -jar fleet-location-ingest/target/fleet-location-ingest-1.0.0.BUILD-SNAPSHOT.jar
+
+**fleet-location-updater**
+
+	$ java -jar fleet-location-updater/target/fleet-location-updater-1.0.0.BUILD-SNAPSHOT.jar
+
+**fleet-location-service**
+
+	$ java -jar fleet-location-service/target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
+
+**service-location-service**
+
+	$ java -jar fleet-location-service/target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
+	$ curl -H "Content-Type: application/json" localhost:9001/bulk/serviceLocations -d @fleet-location-service/locations.json
+
+**dashboard**
+
+	$ java -jar dashboard/target/dashboard-1.0.0.BUILD-SNAPSHOT.war
+
+If you go to the Eureka Dashboard, you should see all services registered and running:
+
+http://localhost:8761/
 
 [Git]: https://help.github.com/articles/set-up-git/
 [JDK 8]: http://www.oracle.com/technetwork/java/javase/downloads
