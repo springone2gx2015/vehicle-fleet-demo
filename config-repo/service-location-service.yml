@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: service-location-service
+  data:
+    mongodb:
+      uri: ${vcap.services.${PREFIX:}mongodb.credentials.uri:mongodb://${MONGODB_HOST:localhost}:${MONGODB_PORT:27017}/test}
+  
