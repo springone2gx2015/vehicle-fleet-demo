@@ -51,6 +51,7 @@ Foundry the platform services are provided by Spring Cloud Services
 | fleet-location-ingest      | http://localhost:9006/          |
 | fleet-location-updater     | http://localhost:9007/          |
 | RabbitMQ (guest/guest)     | http://localhost:15672/         |
+| Dashboard                  | http://localhost:8080/          |
 
 In order to run the entire application locally please execute the following steps:
 
@@ -78,6 +79,9 @@ Please ensure that you have running:
 **fleet-location-service**
 
 	$ java -jar fleet-location-service/target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
+
+	$ wget http://assets.springone2gx2015.s3.amazonaws.com/fleet/fleet.json
+
 	$ curl -H "Content-Type: application/json" localhost:9000/fleet -d @fleet.json
 
 **service-location-service**
@@ -92,6 +96,16 @@ Please ensure that you have running:
 If you go to the Eureka Dashboard, you should see all services registered and running:
 
 http://localhost:8761/
+
+Please ensure all services started successfully. Next, start the simulation using
+the `service-location-simulator` application, either through the simple UI at http://localhost:9005/
+or by executing:
+
+	$ curl http://localhost:9005/api/dc
+
+You should now be able to see the moving vehicles inside the main `Dashboard` application:
+
+http://localhost:8080/
 
 [Git]: https://help.github.com/articles/set-up-git/
 [JDK 8]: http://www.oracle.com/technetwork/java/javase/downloads
