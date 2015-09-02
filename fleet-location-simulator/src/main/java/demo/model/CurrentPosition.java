@@ -24,7 +24,7 @@ import lombok.Data;
 public class CurrentPosition {
 
 	private String vin;
-	private Point point;
+	private Point location;
 	private VehicleStatus vehicleStatus = VehicleStatus.NONE;
 	private Double speed;
 	private Double heading;
