@@ -20,3 +20,19 @@ include::{generated}/serviceLocations/http-request.adoc[]
 
 Example HTTP response:
 include::{generated}/serviceLocations/http-response.adoc[]
+
+== Find By Location
+
+The findByLocation endpoint can be discovered by following the links
+labelled "locations/search/by-location". It provides a paginated view of vehicle
+locations and other telemetry, including embedded unit information and
+diagnostic data if there is a fault.
+
+Example curl request:
+include::{generated}/findByLocation/curl-request.adoc[]
+
+Example HTTP request: [small]##link:../findByLocation[icon:external-link[role="silver"]]##
+include::{generated}/findByLocation/http-request.adoc[]
+
+Example HTTP response:
+include::{generated}/findByLocation/http-response.adoc[]

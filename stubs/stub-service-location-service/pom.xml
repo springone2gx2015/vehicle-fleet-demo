@@ -13,7 +13,7 @@
 		<groupId>org.demo</groupId>
 		<artifactId>spring-cloud-sample-vehicle-fleet</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
-        <relativePath>../..</relativePath>
+		<relativePath>../..</relativePath>
 	</parent>
 
 	<properties>

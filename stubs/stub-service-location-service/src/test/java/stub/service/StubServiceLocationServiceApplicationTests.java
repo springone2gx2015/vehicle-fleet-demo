@@ -54,45 +54,45 @@ public class StubServiceLocationServiceApplicationTests {
 		.andDo(document("serviceLocations"));
 	}
 
-}
+	static class ForwardAwareMockMvcBuilders {
 
-class ForwardAwareMockMvcBuilders {
+		public static DefaultMockMvcBuilder webAppContextSetup(
+				WebApplicationContext context) {
+			DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(context);
+			ForwardAwareResultHandler forwarder = new ForwardAwareResultHandler();
+			builder.alwaysDo(forwarder);
+			forwarder.setMockMvc(builder.build());
+			return builder;
+		}
 
-	public static DefaultMockMvcBuilder webAppContextSetup(
-			WebApplicationContext context) {
-		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(context);
-		ForwardAwareResultHandler forwarder = new ForwardAwareResultHandler();
-		builder.alwaysDo(forwarder);
-		forwarder.setMockMvc(builder.build());
-		return builder;
-	}
+		private static class ForwardAwareResultHandler implements ResultHandler {
 
-	private static class ForwardAwareResultHandler implements ResultHandler {
+			private MockMvc mockMvc;
 
-		private MockMvc mockMvc;
+			@Override
+			public void handle(MvcResult result) throws Exception {
+				MockHttpServletRequest request = result.getRequest();
+				String uri = request.getRequestURI();
+				MockHttpServletResponse response = result.getResponse();
+				String forward = response.getForwardedUrl();
+				if (StringUtils.hasText(forward)) {
+					request.setRequestURI(forward);
+					response.setForwardedUrl(null);
+					MvcResult forwarded = this.mockMvc.perform(servletContext -> request)
+							.andReturn();
+					// Hack response into result so it can be asserted as normal
+					ReflectionTestUtils.setField(result, "mockResponse",
+							forwarded.getResponse());
+					// Reset request to original uri
+					request.setRequestURI(uri);
+				}
+			}
 
-		@Override
-		public void handle(MvcResult result) throws Exception {
-			MockHttpServletRequest request = result.getRequest();
-			String uri = request.getRequestURI();
-			MockHttpServletResponse response = result.getResponse();
-			String forward = response.getForwardedUrl();
-			if (StringUtils.hasText(forward)) {
-				request.setRequestURI(forward);
-				response.setForwardedUrl(null);
-				MvcResult forwarded = this.mockMvc.perform(servletContext -> request)
-						.andReturn();
-				// Hack response into result so it can be asserted as normal
-				ReflectionTestUtils.setField(result, "mockResponse",
-						forwarded.getResponse());
-				// Reset request to original uri
-				request.setRequestURI(uri);
+			public void setMockMvc(MockMvc mockMvc) {
+				this.mockMvc = mockMvc;
 			}
 		}
 
-		public void setMockMvc(MockMvc mockMvc) {
-			this.mockMvc = mockMvc;
-		}
 	}
 
 }

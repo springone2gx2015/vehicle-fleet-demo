@@ -16,9 +16,6 @@
 
 package demo;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.geo.Point;
@@ -29,6 +26,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author Dave Syer
@@ -46,28 +46,27 @@ public class ServiceLocation {
 	private String address2;
 	private String city;
 	@JsonIgnore
-	private final @GeoSpatialIndexed Point point;
-	private String location;
+	private final @GeoSpatialIndexed Point location;
 	private String state;
 	private String zip;
 	private String type;
 
 	@SuppressWarnings("unused")
 	private ServiceLocation() {
-		this.point = new Point(0, 0);
+		this.location = new Point(0, 0);
 	}
 
 	@JsonCreator
 	public ServiceLocation(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
-		this.point = new Point(longitude, latitude);
+		this.location = new Point(longitude, latitude);
 	}
 
 	public double getLatitude() {
-		return this.point.getY();
+		return this.location.getY();
 	}
 
 	public double getLongitude() {
-		return this.point.getX();
+		return this.location.getX();
 	}
 
 }

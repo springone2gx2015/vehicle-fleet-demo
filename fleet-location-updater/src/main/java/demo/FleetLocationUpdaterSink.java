@@ -15,10 +15,17 @@
  */
 package demo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableModule;
 import org.springframework.cloud.stream.annotation.Sink;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.integration.channel.DirectChannel;
@@ -29,7 +36,6 @@ import org.springframework.web.client.RestTemplate;
 
 import demo.model.CurrentPosition;
 import demo.model.ServiceLocation;
-import demo.model.VehicleStatus;
 
 /**
  * Spring Cloud Stream {@link Sink}, responsible for sending current position data to connected
@@ -66,16 +72,18 @@ public class FleetLocationUpdaterSink {
 
 		switch(payload.getVehicleStatus()) {
 
-			case SERVICE_NOW:
-			case SERVICE_SOON:
-				ServiceLocation serviceLocation =  restTemplate.getForObject("http://SERVICE-LOCATION-SERVICE/closest-service-location?latitude={latitude}&longitude={longitude}",
-						ServiceLocation.class, payload.getPoint().getLatitude(), payload.getPoint().getLongitude());
-				System.out.println(serviceLocation);
-				if (serviceLocation != null) {
-					payload.setServiceLocation(serviceLocation);
-				}
-				break;
-			default:
+		case SERVICE_NOW:
+		case SERVICE_SOON:
+			ResponseEntity<Resource<List<ServiceLocation>>> result = this.restTemplate.exchange(
+					"http://SERVICE-LOCATION-SERVICE/serviceLocations/search/findByLocationNear?location={lat},{long}&distance={radius}km&pageSize={size}", HttpMethod.GET,
+					new HttpEntity<Void>((Void) null),
+					new ParameterizedTypeReference<Resource<List<ServiceLocation>>>() {
+					}, payload.getPoint().getLatitude(), payload.getPoint().getLongitude(), 10, 1);
+			if (!result.getBody().getContent().isEmpty()) {
+				payload.setServiceLocation(result.getBody().getContent().get(0));
+			}
+			break;
+		default:
 		}
 		return payload;
 	}

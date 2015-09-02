@@ -35,7 +35,7 @@ public interface ServiceLocationRepository extends
 PagingAndSortingRepository<ServiceLocation, Long> {
 
 	@RestResource(rel = "by-location", description = @Description("Find by location, comma separated, e.g. 'lat,long', and distance, e.g. '50km'"))
-	Page<ServiceLocation> findByLocation(@Param("location") Point location,
+	Page<ServiceLocation> findByLocationNear(@Param("location") Point location,
 			@Param("distance") Distance distance, Pageable pageable);
 
 }

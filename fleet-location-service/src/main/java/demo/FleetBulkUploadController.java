@@ -47,4 +47,9 @@ public class FleetBulkUploadController {
 		this.repository.save(trucks);
 	}
 
+	@RequestMapping(value="/purge", method=RequestMethod.POST)
+	public void purge() {
+		this.repository.deleteAll();
+	}
+
 }

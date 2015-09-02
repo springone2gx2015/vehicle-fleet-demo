@@ -49,10 +49,10 @@ public class ServiceLocationTests {
 	public void jsonWithLocation() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		ServiceLocation input = new ServiceLocation(52, 0);
-		input.setLocation("Down");
+		input.setAddress1("Down");
 		ServiceLocation value = mapper.readValue(mapper.writeValueAsString(input), ServiceLocation.class);
 		assertEquals(52, value.getLatitude(), 0.01);
-		assertEquals("Down", value.getLocation());
+		assertEquals("Down", value.getAddress1());
 	}
 
 }
