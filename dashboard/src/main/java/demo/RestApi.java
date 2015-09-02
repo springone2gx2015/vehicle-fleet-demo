@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class RestApi {
 
-	private static final String SERVICE_LOCATION_UPDATER = "service-location-updater";
+	private static final String SERVICE_LOCATION_UPDATER = "fleet-location-updater";
 
 	@Autowired
 	private DiscoveryClient discoveryClient;

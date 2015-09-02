@@ -56,20 +56,6 @@ legend.scheduler-border {
 	font-size: xx-small;
 }
 
-/* #dataExportView > h3 {
-	margin-top: 5px;
-}
-#dataExportView > hr {
-	margin-top: 5px;
-	color: rgb(60,90,180);
-	background: rgb(60,90,180);
-	height: 1px;
-}
-
-#dataExportView > #tabs {
-	font-size: small;
-}
- */
 .well {
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     display:none;
@@ -97,10 +83,6 @@ td {
 	padding-right: 3px;
 }
 
-.login {
-	font-size: small;
-	text-align: right;
-}
 h4 {
 	margin-top: 3px;
 	margin-bottom: 0px;
@@ -181,7 +163,7 @@ h4 {
 	}
 
 .visual_search {
-  padding-left: 140px;
+  padding-left: 170px;
   padding-top: 10px;
   width: 600px;
 }
@@ -214,28 +196,30 @@ label {
 /* End of GroupedLayer LeafLet plugin */
 
 .navbar {
-	background-color: #002496;
+	background-color: #6db33f;
 	color: #ffffff;
+	position: static;
+	z-index: auto;
+	margin: 0px;
 }
 .navbar-inverse {
     background-color: #ffffff;
-    border-color: #002496;
+    border-color: #6db33f;
 }
 .container {
 	padding-top: 0px;
 }
 
 #map {
-  height: 620px;
+  	height: 620px;
 }
 
 body {
-  padding-top: 50px;
-  padding-bottom: 20px;
-  background-color: rgba(254,203,0,0.5);
+	background-color: #6db33f;
 }
 
 footer {
 	text-align: center;
 	font-size: 10px;
+	padding-top: 10px;
 }
