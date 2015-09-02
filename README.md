@@ -16,21 +16,30 @@ menu item.
 
 ## Building from Source
 
-This application uses a [Maven][]-based build system. Please ensure it is installed.
+This application uses a [Maven][]-based build system. Please ensure
+Java 8 is installed and use the wrapper script (`mvnw` in the root of
+the project).
 
 ### Prerequisites
 
 * [Git][]
 * [JDK 8][]
 * [MongoDB][]
+* [RabbitMQ][]
+
+> NOTE: You can run the middleware in docker containers using
+> docker-compose (works best on a Linux host because otherwise you
+> need to configure the host because it isn't localhost with
+> boot2docker).
 
 ### Check out sources
 
 	$ git clone https://github.com/springone2gx2015/vehicle-fleet-demo.git
+    $ cd vehicle-fleet-demo
 
 ### Compile, test and build all jars
 
-	$ mvn clean install
+	$ ./mvnw clean install
 
 ## Running
 
@@ -63,9 +72,6 @@ Please ensure that you have running:
 
 * Rabbit - for the simulator, ingest and updater components
 * Mongo - for the service-location-service
-
-You can run them in docker containers using docker-compose (works best on a Linux host
-because otherwise you need to configure the host because it isn't localhost with boot2docker).
 
 > NOTE: the dashboard UI can run on it's own with just the
 > `fleet-location-service` and `service-location-service` (if you run
