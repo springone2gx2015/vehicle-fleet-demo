@@ -59,7 +59,7 @@ public class ServiceLocationBulkUploadController {
 
 		final Point point = new Point(longitude, latitude);
 		final List<ServiceLocation> serviceLocations =
-			mongoTemplate.find(new Query(Criteria.where("point").near(point).maxDistance(0.01)), ServiceLocation.class);
+			mongoTemplate.find(new Query(Criteria.where("point").near(point).maxDistance(0.1)), ServiceLocation.class);
 
 		if (serviceLocations.isEmpty()) {
 			return null;

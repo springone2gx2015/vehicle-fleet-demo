@@ -22,8 +22,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.json.JsonToObjectTransformer;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.client.RestTemplate;
+
+import demo.model.CurrentPosition;
+import demo.model.ServiceLocation;
+import demo.model.VehicleStatus;
 
 /**
  * Spring Cloud Stream {@link Sink}, responsible for sending current position data to connected
@@ -41,8 +47,36 @@ public class FleetLocationUpdaterSink {
 	@Autowired
 	private SimpMessagingTemplate template;
 
-	@Transformer(inputChannel="input", outputChannel="sendToBroker")
-	public String addServiceLocations(String payload) {
+	@Autowired
+	private RestTemplate restTemplate;
+
+	@Bean
+	@Transformer(inputChannel="input", outputChannel="addCurrentPositionChannel")
+	public org.springframework.integration.transformer.Transformer JsonToObjectTransformer( ) {
+		return new JsonToObjectTransformer( CurrentPosition.class );
+	}
+
+	@Bean
+	public MessageChannel addCurrentPositionChannel() {
+		return new DirectChannel();
+	}
+
+	@Transformer(inputChannel="addCurrentPositionChannel", outputChannel="sendToBroker")
+	public CurrentPosition addServiceLocations(CurrentPosition payload) {
+
+		switch(payload.getVehicleStatus()) {
+
+			case SERVICE_NOW:
+			case SERVICE_SOON:
+				ServiceLocation serviceLocation =  restTemplate.getForObject("http://SERVICE-LOCATION-SERVICE/closest-service-location?latitude={latitude}&longitude={longitude}",
+						ServiceLocation.class, payload.getPoint().getLatitude(), payload.getPoint().getLongitude());
+				System.out.println(serviceLocation);
+				if (serviceLocation != null) {
+					payload.setServiceLocation(serviceLocation);
+				}
+				break;
+			default:
+		}
 		return payload;
 	}
 
@@ -52,7 +86,7 @@ public class FleetLocationUpdaterSink {
 	}
 
 	@ServiceActivator(inputChannel="sendToBroker")
-	public void sendToStompClients(String payload) {
+	public void sendToStompClients(CurrentPosition payload) {
 		this.template.convertAndSend("/queue/fleet.location.ingest.queue", payload);
 	}
 }
