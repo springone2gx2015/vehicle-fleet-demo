@@ -72,6 +72,7 @@ public class FleetLocationUpdaterSink {
 
 		case SERVICE_NOW:
 		case SERVICE_SOON:
+		case STOP_NOW:
 			ResponseEntity<Resource<ServiceLocation>> result = this.restTemplate.exchange(
 					"http://SERVICE-LOCATION-SERVICE/serviceLocations/search/findFirstByLocationNear?location={lat},{long}",
 					HttpMethod.GET, new HttpEntity<Void>((Void) null),
