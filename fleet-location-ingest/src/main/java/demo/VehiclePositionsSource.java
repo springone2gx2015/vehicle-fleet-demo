@@ -15,8 +15,9 @@
  */
 package demo;
 
-import org.springframework.cloud.stream.annotation.EnableModule;
-import org.springframework.cloud.stream.annotation.Source;
+
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Source;
 
 /**
  * Spring Cloud Stream {@link Source}, responsible for ingesting vehicle position
@@ -25,6 +26,6 @@ import org.springframework.cloud.stream.annotation.Source;
  * @author Gunnar Hillert
  *
  */
-@EnableModule(Source.class)
+@EnableBinding(Source.class)
 public class VehiclePositionsSource {
 }
