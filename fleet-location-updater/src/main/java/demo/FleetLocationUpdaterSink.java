@@ -48,9 +48,6 @@ import demo.model.ServiceLocation;
 public class FleetLocationUpdaterSink {
 
 	@Autowired
-	MessageChannel input;
-
-	@Autowired
 	private SimpMessagingTemplate template;
 
 	@Autowired
@@ -58,7 +55,7 @@ public class FleetLocationUpdaterSink {
 	private RestTemplate restTemplate;
 
 	@Bean
-	@Transformer(inputChannel = "input", outputChannel = "addCurrentPositionChannel")
+	@Transformer(inputChannel = Sink.INPUT, outputChannel = "addCurrentPositionChannel")
 	public org.springframework.integration.transformer.Transformer JsonToObjectTransformer() {
 		return new JsonToObjectTransformer(CurrentPosition.class);
 	}
