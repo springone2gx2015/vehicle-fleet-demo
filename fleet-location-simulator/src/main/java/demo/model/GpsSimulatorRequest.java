@@ -29,6 +29,7 @@ public class GpsSimulatorRequest {
 	private int secondsToError = 0;
 	private VehicleStatus vehicleStatus = VehicleStatus.NONE;
 	private String polyline;
+	private FaultCode faultCode;
 
 	public Double getSpeedInKph() {
 		return speedInKph;
@@ -91,6 +92,12 @@ public class GpsSimulatorRequest {
 		return "GpsSimulatorRequest [vin=" + vin + ", speedInKph=" + speedInKph + ", move=" + move + ", exportPositionsToKml="
 				+ exportPositionsToKml + ", exportPositionsToMessaging=" + exportPositionsToMessaging
 				+ ", reportInterval=" + reportInterval + "]";
+	}
+	public void setFaultCode(FaultCode faultCode) {
+		this.faultCode = faultCode;
+	}
+	public FaultCode getFaultCode() {
+		return faultCode;
 	}
 
 }

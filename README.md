@@ -62,7 +62,7 @@ Foundry the platform services are provided by Spring Cloud Services
 | fleet-location-simulator   | http://localhost:9005/          |
 | fleet-location-ingest      | http://localhost:9006/          |
 | fleet-location-updater     | http://localhost:9007/          |
-| RabbitMQ                   | http://localhost:5672/          |
+| RabbitMQ                   | http://localhost:15672/         |
 | MongoDB                    | http://localhost:27017/         |
 | Dashboard                  | http://localhost:8080/          |
 
@@ -127,3 +127,4 @@ http://localhost:8080/
 [JDK 8]: http://www.oracle.com/technetwork/java/javase/downloads
 [Maven]: https://maven.apache.org/
 [MongoDB]: https://www.mongodb.org/
+[RabbitMQ]: https://www.rabbitmq.com/
