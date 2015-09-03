@@ -17,8 +17,8 @@ package demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.stream.annotation.EnableModule;
-import org.springframework.cloud.stream.annotation.Sink;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.Resource;
@@ -44,7 +44,7 @@ import demo.model.ServiceLocation;
  * @author Gunnar Hillert
  *
  */
-@EnableModule(Sink.class)
+@EnableBinding(Sink.class)
 public class FleetLocationUpdaterSink {
 
 	@Autowired
