@@ -10,24 +10,29 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package demo.model;
+package demo.support;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import javax.xml.bind.JAXBException;
+
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.junit.Assert;
 
 /**
  * @author Gunnar Hillert
+ *
  */
-@Data
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class CurrentPosition {
+public class FaultCodeUtilsTests {
 
-	private String vin;
-	private Point location;
-	private VehicleStatus vehicleStatus = VehicleStatus.NONE;
-	private Double speed;
-	private Double heading;
-	private FaultCode faultCode;
+	private static final Logger LOGGER = LoggerFactory.getLogger(FaultCodeUtilsTests.class);
+
+	@Test
+	public void testTotalDistance() throws NumberFormatException, JAXBException {
+
+		Assert.assertNotNull(FaultCodeUtils.getRandomFaultCode());
+
+	}
 
 }

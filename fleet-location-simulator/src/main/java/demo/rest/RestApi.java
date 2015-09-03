@@ -41,6 +41,7 @@ import demo.model.SimulatorFixture;
 import demo.service.GpsSimulatorFactory;
 import demo.service.KmlService;
 import demo.service.PathService;
+import demo.support.FaultCodeUtils;
 import demo.support.NavUtils;
 import demo.task.GpsSimulator;
 import demo.task.GpsSimulatorInstance;
@@ -147,6 +148,7 @@ public class RestApi {
 			gpsSimulatorRequest.setExportPositionsToMessaging(true);
 			gpsSimulatorRequest.setSecondsToError(60);
 			gpsSimulatorRequest.setVehicleStatus(VehicleStatus.NONE);
+			gpsSimulatorRequest.setFaultCode(FaultCodeUtils.getRandomFaultCode());
 			fixture.getGpsSimulatorRequests().add(gpsSimulatorRequest);
 		}
 
