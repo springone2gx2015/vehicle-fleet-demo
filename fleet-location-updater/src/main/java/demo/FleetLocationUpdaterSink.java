@@ -16,13 +16,12 @@
 package demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.stream.annotation.EnableModule;
 import org.springframework.cloud.stream.annotation.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -39,20 +38,17 @@ import demo.model.CurrentPosition;
 import demo.model.ServiceLocation;
 
 /**
- * Spring Cloud Stream {@link Sink}, responsible for sending current position data to connected
- * Websocket clients.
+ * Spring Cloud Stream {@link Sink}, responsible for sending current position data to
+ * connected Websocket clients.
  *
  * @author Gunnar Hillert
  *
  */
 @EnableModule(Sink.class)
-@ConfigurationProperties("fleet.locations")
 public class FleetLocationUpdaterSink {
 
 	@Autowired
 	MessageChannel input;
-
-	private int radius = 10;
 
 	@Autowired
 	private SimpMessagingTemplate template;
@@ -62,9 +58,9 @@ public class FleetLocationUpdaterSink {
 	private RestTemplate restTemplate;
 
 	@Bean
-	@Transformer(inputChannel="input", outputChannel="addCurrentPositionChannel")
-	public org.springframework.integration.transformer.Transformer JsonToObjectTransformer( ) {
-		return new JsonToObjectTransformer( CurrentPosition.class );
+	@Transformer(inputChannel = "input", outputChannel = "addCurrentPositionChannel")
+	public org.springframework.integration.transformer.Transformer JsonToObjectTransformer() {
+		return new JsonToObjectTransformer(CurrentPosition.class);
 	}
 
 	@Bean
@@ -72,20 +68,22 @@ public class FleetLocationUpdaterSink {
 		return new DirectChannel();
 	}
 
-	@Transformer(inputChannel="addCurrentPositionChannel", outputChannel="sendToBroker")
+	@Transformer(inputChannel = "addCurrentPositionChannel", outputChannel = "sendToBroker")
 	public CurrentPosition addServiceLocations(CurrentPosition payload) {
 
-		switch(payload.getVehicleStatus()) {
+		switch (payload.getVehicleStatus()) {
 
 		case SERVICE_NOW:
 		case SERVICE_SOON:
-			ResponseEntity<Resources<ServiceLocation>> result = this.restTemplate.exchange(
-					"http://SERVICE-LOCATION-SERVICE/serviceLocations/search/findByLocationNear?location={lat},{long}&distance={radius}km&page=0&size={size}", HttpMethod.GET,
-					new HttpEntity<Void>((Void) null),
-					new ParameterizedTypeReference<Resources<ServiceLocation>>() {
-					}, payload.getLocation().getLatitude(), payload.getLocation().getLongitude(), this.radius, 1);
-			if (result.getStatusCode()==HttpStatus.OK && result.getBody().getContent()!=null && !result.getBody().getContent().isEmpty()) {
-				payload.setServiceLocation(result.getBody().getContent().iterator().next());
+			ResponseEntity<Resource<ServiceLocation>> result = this.restTemplate.exchange(
+					"http://SERVICE-LOCATION-SERVICE/serviceLocations/search/findFirstByLocationNear?location={lat},{long}",
+					HttpMethod.GET, new HttpEntity<Void>((Void) null),
+					new ParameterizedTypeReference<Resource<ServiceLocation>>() {
+					}, payload.getLocation().getLatitude(),
+					payload.getLocation().getLongitude());
+			if (result.getStatusCode() == HttpStatus.OK
+					&& result.getBody().getContent() != null) {
+				payload.setServiceLocation(result.getBody().getContent());
 			}
 			break;
 		default:
@@ -98,16 +96,9 @@ public class FleetLocationUpdaterSink {
 		return new DirectChannel();
 	}
 
-	@ServiceActivator(inputChannel="sendToBroker")
+	@ServiceActivator(inputChannel = "sendToBroker")
 	public void sendToStompClients(CurrentPosition payload) {
 		this.template.convertAndSend("/queue/fleet.location.ingest.queue", payload);
 	}
 
-	public int getRadius() {
-		return this.radius;
-	}
-
-	public void setRadius(int radius) {
-		this.radius = radius;
-	}
 }
