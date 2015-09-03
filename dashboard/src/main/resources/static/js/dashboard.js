@@ -221,8 +221,10 @@ function setupWebSocketConnection() {
 	    			});
 	    	    };
 	    	    var on_error =  function() {
-	    	        console.log('error');
-	    	        console.log(JSON.stringify(arguments));
+	    	        /*
+	    	         * Re-attempt to connect to web socket.
+	    	         */
+	    	        setTimeout(setupWebSocketConnection, 3000);
 	    	    };
 	    	    stompClient.connect('guest', 'guest', on_connect, on_error, '/');
 	    	} else {
@@ -232,6 +234,10 @@ function setupWebSocketConnection() {
 	    error: function(xhr, error){
 	    	console.error('Cannot retrieve "service-location-updater" URL.');
 	    	console.error(JSON.stringify(error));
+	        /*
+	         * Re-attempt to setup a web socket connection.
+	         */
+	        setTimeout(setupWebSocketConnection, 3000);
 	    },
 //	    dataType: 'json'
 	});
@@ -270,7 +276,7 @@ function initVehicles() {
 function showVehicles() {
 	clearFleetMarkers();
 	// See https://github.com/Leaflet/Leaflet.markercluster
-	markers = L.markerClusterGroup({maxClusterRadius: 30}); /*L.layerGroup();*/
+	markers = /* L.markerClusterGroup({maxClusterRadius: 30}); */ L.layerGroup();
 	markersMap = [];
 	Object.keys(vehiclesIndex).forEach(function(vin) {
     	var vehicle = vehiclesIndex[vin];
@@ -300,7 +306,10 @@ function showVehicles() {
 function shouldShowMarker(vehicle) {
 	return vehicle &&
 		(filter.serviceFilters.length === 0 || filter.serviceFilters.indexOf(vehicle.serviceType) >= 0) &&
-		(filter.vehicleMovementFilters.length === 0 || filter.vehicleMovementFilters.indexOf(vehicle.vehicleMovementType) >= 0);
+		(filter.vehicleMovementFilters.length === 0 || filter.vehicleMovementFilters.indexOf(vehicle.vehicleMovementType) >= 0) &&
+		(filter.vins.length === 0 || filter.vins.indexOf(vehicle.vin) >= 0) &&
+		(!vehicle.unitInfo || filter.customers.length === 0 || filter.customers.indexOf(vehicle.unitInfo.customerName) >= 0) &&
+		(!vehicle.unitInfo || filter.unitIds.length === 0 || filter.unitIds.indexOf(vehicle.unitInfo.unitNumber) >= 0);
 }
 
 function createMarker(vehicle) {
@@ -327,9 +336,9 @@ function getRandomInt(min, max) {
 function handleUpdateMessage(msg) {
 	var vehicle = vehiclesIndex[msg.vin];
 	if (vehicle) {
-		if (msg.point) {
-			vehicle.latitude = msg.point.latitude;
-			vehicle.longitude = msg.point.longitude;
+		if (msg.location) {
+			vehicle.latitude = msg.location.latitude;
+			vehicle.longitude = msg.location.longitude;
 		}
 		if (msg.vehicleStatus && MESSAGE_STATUS_TO_STATUS_MAP[msg.vehicleStatus]) {
 			vehicle.serviceType = MESSAGE_STATUS_TO_STATUS_MAP[msg.vehicleStatus];
@@ -400,17 +409,17 @@ function updateVehicleOnMiniMap(vehicle) {
 }
 
 function updateMarker(marker) {
-//	marker.setLatLng({
-//		lat : marker.vehicle.latitude,
-//		lon : marker.vehicle.longitude
-//	});
-//	marker.setIcon(resolveMarker(marker.vehicle));
-	var isPopupOpened = marker._popup && marker._popup._isOpen;
-	removeMarker(marker);
-	var newMarker = createMarker(marker.vehicle);
-	if (isPopupOpened) {
-		newMarker.openPopup();
-	}
+	marker.setLatLng({
+		lat : marker.vehicle.latitude,
+		lon : marker.vehicle.longitude
+	});
+	marker.setIcon(resolveMarker(marker.vehicle));
+//	var isPopupOpened = marker._popup && marker._popup._isOpen;
+//	removeMarker(marker);
+//	var newMarker = createMarker(marker.vehicle);
+//	if (isPopupOpened) {
+//		newMarker.openPopup();
+//	}
 }
 
 function removeMarker(marker) {

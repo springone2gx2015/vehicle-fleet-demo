@@ -16,21 +16,30 @@ menu item.
 
 ## Building from Source
 
-This application uses a [Maven][]-based build system. Please ensure it is installed.
+This application uses a [Maven][]-based build system. Please ensure
+Java 8 is installed and use the wrapper script (`mvnw` in the root of
+the project).
 
 ### Prerequisites
 
 * [Git][]
 * [JDK 8][]
 * [MongoDB][]
+* [RabbitMQ][]
+
+> NOTE: You can run the middleware in docker containers using
+> docker-compose (works best on a Linux host because otherwise you
+> need to configure the host because it isn't localhost with
+> boot2docker).
 
 ### Check out sources
 
 	$ git clone https://github.com/springone2gx2015/vehicle-fleet-demo.git
+    $ cd vehicle-fleet-demo
 
 ### Compile, test and build all jars
 
-	$ mvn clean install
+	$ ./mvnw clean install
 
 ## Running
 
@@ -47,18 +56,27 @@ Foundry the platform services are provided by Spring Cloud Services
 | Module                     | Dashboard URL                   |
 |----------------------------|---------------------------------|
 | Eureka                     | http://localhost:8761/          |
-| service-location-simulator | http://localhost:9005/          |
+| Confgiserver               | http://localhost:8888/          |
+| fleet-location-service     | http://localhost:9000/          |
+| service-location-service   | http://localhost:9001/          |
+| fleet-location-simulator   | http://localhost:9005/          |
 | fleet-location-ingest      | http://localhost:9006/          |
 | fleet-location-updater     | http://localhost:9007/          |
-| RabbitMQ (guest/guest)     | http://localhost:15672/         |
+| RabbitMQ                   | http://localhost:5672/          |
+| MongoDB                    | http://localhost:27017/         |
 | Dashboard                  | http://localhost:8080/          |
 
 In order to run the entire application locally please execute the following steps:
 
 Please ensure that you have running:
 
-* Rabbit
-* Mongo
+* Rabbit - for the simulator, ingest and updater components
+* Mongo - for the service-location-service
+
+> NOTE: the dashboard UI can run on it's own with just the
+> `fleet-location-service` and `service-location-service` (if you run
+> in a "test" profile) and with those 2 plus eureka (in the "default"
+> profile).
 
 **Start Eureka**
 
@@ -79,9 +97,7 @@ Please ensure that you have running:
 **fleet-location-service**
 
 	$ java -jar fleet-location-service/target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
-
 	$ wget http://assets.springone2gx2015.s3.amazonaws.com/fleet/fleet.json
-
 	$ curl -H "Content-Type: application/json" localhost:9000/fleet -d @fleet.json
 
 **service-location-service**
@@ -91,7 +107,7 @@ Please ensure that you have running:
 
 **dashboard**
 
-	$ java -jar dashboard/target/dashboard-1.0.0.BUILD-SNAPSHOT.war
+	$ java -jar dashboard/target/dashboard-1.0.0.BUILD-SNAPSHOT.jar
 
 If you go to the Eureka Dashboard, you should see all services registered and running:
 

@@ -95,7 +95,7 @@ public class DefaultKmlService implements KmlService {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 		try {
-			marshaller.marshal(kml, new StreamResult(out));
+			this.marshaller.marshal(kml, new StreamResult(out));
 		} catch (XmlMappingException | IOException e) {
 			throw new IllegalStateException(e);
 		}
@@ -112,7 +112,7 @@ public class DefaultKmlService implements KmlService {
 		Integer speedKph = 0;
 
 		if(position != null) {
-			Coordinate coordinate = KmlFactory.createCoordinate(position.getPoint().getLongitude(), position.getPoint().getLatitude());
+			Coordinate coordinate = KmlFactory.createCoordinate(position.getLocation().getLongitude(), position.getLocation().getLatitude());
 			point.getCoordinates().add(coordinate);
 		}
 		else {
@@ -124,8 +124,8 @@ public class DefaultKmlService implements KmlService {
 		final Document document = kml.createAndSetDocument().withOpen(true);
 
 		final IconStyle iconStyleError = document.createAndAddStyle()
-			.withId("errorStyle")
-			.createAndSetIconStyle();
+				.withId("errorStyle")
+				.createAndSetIconStyle();
 		iconStyleError.setColor("ff0000ff");
 		iconStyleError.setScale(1.2);
 
@@ -169,7 +169,7 @@ public class DefaultKmlService implements KmlService {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 		try {
-			marshaller.marshal(kml, new StreamResult(out));
+			this.marshaller.marshal(kml, new StreamResult(out));
 			this.kmlInstances.put(instanceId, out.toByteArray());
 		} catch (XmlMappingException | IOException e) {
 			throw new IllegalStateException(e);
@@ -189,7 +189,7 @@ public class DefaultKmlService implements KmlService {
 
 	@Override
 	public byte[] getKmlBootstrap() {
-		return kmlBootstrap;
+		return this.kmlBootstrap;
 	}
 
 }

@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
  * @author Dave Syer
  *
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
 @RequiredArgsConstructor(onConstructor=@__(@PersistenceConstructor))
 @Document

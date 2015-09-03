@@ -44,10 +44,10 @@ public class StubServiceLocationServiceFinderTests {
 	public void getLocations() throws Exception {
 		this.mockMvc
 		.perform(MockMvcRequestBuilders.get(
-				"/serviceLocations/search/findByLocationNear?location={lat},{long}&distance={radius}km&size={size}",
-				39, -77, 100, 1))
-		.andExpect(MockMvcResultMatchers.content()
-				.string(containsString("_embedded")))
+				"/serviceLocations/search/findFirstByLocationNear?location={lat},{long}",
+				39, -77))
+		.andExpect(
+				MockMvcResultMatchers.content().string(containsString("_links")))
 		.andDo(document("findByLocation"));
 	}
 

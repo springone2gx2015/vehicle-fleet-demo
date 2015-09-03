@@ -1,0 +1,18 @@
+{
+  "latitude" : 39.909792,
+  "longitude" : -86.240824,
+  "address1" : "8520 N GEORGETOWN RD",
+  "address2" : " ",
+  "city" : "INDIANAPOLIS",
+  "state" : "IN",
+  "zip" : "46268",
+  "type" : "Service",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:9001/serviceLocations/55e7641d0fd88370416eafdf"
+    },
+    "serviceLocation" : {
+      "href" : "http://localhost:9001/serviceLocations/55e7641d0fd88370416eafdf"
+    }
+  }
+}

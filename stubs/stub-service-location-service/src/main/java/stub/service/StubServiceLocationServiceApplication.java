@@ -17,14 +17,11 @@ public class StubServiceLocationServiceApplication {
 		return "forward:/stubs/locations.json";
 	}
 
-	@RequestMapping("/search/findByLocationNear")
-	public String findByLocation(@RequestParam String location,
-			@RequestParam String distance,
-			@RequestParam(required = false, defaultValue = "10") int size) {
+	@RequestMapping("/search/findFirstByLocationNear")
+	public String findByLocation(@RequestParam String location) {
 		Assert.state(location.contains(","),
 				"Location should be comma-separated lat,long");
-		Assert.state(distance.endsWith("km"), "Distance should be in km");
-		return "forward:/stubs/locations.json";
+		return "forward:/stubs/location.json";
 	}
 
 	public static void main(String[] args) {

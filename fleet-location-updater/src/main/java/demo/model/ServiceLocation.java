@@ -28,7 +28,7 @@ import lombok.Data;
  * @author Gunnar Hillert
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ServiceLocation {
 
 	private String id;
@@ -37,23 +37,22 @@ public class ServiceLocation {
 	private String city;
 
 	@JsonIgnore
-	private final Point point;
+	private final Point location;
 
-	private String location;
 	private String state;
 	private String zip;
 	private String type;
 
 	@JsonCreator
 	public ServiceLocation(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
-		this.point = new Point(latitude, longitude);
+		this.location = new Point(latitude, longitude);
 	}
 
 	public double getLatitude() {
-		return this.point.getLatitude();
+		return this.location.getLatitude();
 	}
 
 	public double getLongitude() {
-		return this.point.getLongitude();
+		return this.location.getLongitude();
 	}
 }

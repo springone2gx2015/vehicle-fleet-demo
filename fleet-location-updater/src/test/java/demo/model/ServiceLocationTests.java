@@ -37,8 +37,8 @@ public class ServiceLocationTests {
 		final ObjectMapper objectMapper = new ObjectMapper();
 		final ServiceLocation serviceLocation = objectMapper.readValue(is, ServiceLocation.class);
 		Assert.assertNotNull(serviceLocation);
-		Assert.assertEquals(Double.valueOf(38.907773), serviceLocation.getPoint().getLatitude());
-		Assert.assertEquals(Double.valueOf(-77.023735), serviceLocation.getPoint().getLongitude());
+		Assert.assertEquals(Double.valueOf(38.907773), serviceLocation.getLocation().getLatitude());
+		Assert.assertEquals(Double.valueOf(-77.023735), serviceLocation.getLocation().getLongitude());
 
 		Assert.assertEquals("55e521c430044aedf761fa52", serviceLocation.getId());
 		Assert.assertEquals("1317 9th St NW", serviceLocation.getAddress1());
