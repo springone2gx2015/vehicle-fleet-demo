@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath 'com.bertramlabs.plugins:asset-pipeline-gradle:2.1.1'
+        classpath 'com.bertramlabs.plugins:asset-pipeline-gradle:2.5.0'
     }
 }
 
@@ -71,7 +71,7 @@ dependencies {
     compile "org.hibernate:hibernate-ehcache"
     compile "org.grails.plugins:scaffolding"
     
-    runtime "org.grails.plugins:asset-pipeline"
+    runtime "org.grails.plugins:asset-pipeline:3.0.8"
     
 
     testCompile "org.grails:grails-plugin-testing"
