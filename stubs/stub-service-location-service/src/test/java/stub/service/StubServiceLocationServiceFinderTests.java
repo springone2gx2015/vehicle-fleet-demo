@@ -46,8 +46,8 @@ public class StubServiceLocationServiceFinderTests {
 		.perform(MockMvcRequestBuilders.get(
 				"/serviceLocations/search/findFirstByLocationNear?location={lat},{long}",
 				39, -77))
-		.andExpect(MockMvcResultMatchers.content()
-				.string(containsString("_embedded")))
+		.andExpect(
+				MockMvcResultMatchers.content().string(containsString("_links")))
 		.andDo(document("findByLocation"));
 	}
 
