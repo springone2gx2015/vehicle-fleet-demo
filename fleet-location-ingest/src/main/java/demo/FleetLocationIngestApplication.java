@@ -18,17 +18,15 @@ package demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * Main entry point for the GpsSimulator application.
+ * Main entry point for the simulator application.
  *
  * @author Gunnar Hillert
  *
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableScheduling
 public class FleetLocationIngestApplication {
 
 	public static void main(String[] args) throws Exception {

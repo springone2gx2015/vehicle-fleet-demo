@@ -1,4 +1,3 @@
 spring:
   application:
     name: fleet-location-ingest
-debug: true

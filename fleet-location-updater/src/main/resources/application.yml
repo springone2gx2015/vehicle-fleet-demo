@@ -5,3 +5,13 @@ spring:
     stream:
       bindings:
         input: vehicle-fleet-demo
+
+---
+spring:
+  profiles: test
+ribbon:
+  eureka:
+    enabled: false
+service-location-service:
+  ribbon:
+    listOfServers: localhost:9001
