@@ -13,19 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package demo;
 
+package demo.model;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Spring Cloud Stream {@link Source}, responsible for ingesting vehicle position
- * data.
- *
  * @author Gunnar Hillert
- *
  */
-@EnableBinding(Source.class)
-public class VehiclePositionsSource {
+@Data
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+public class FaultCode {
+
+	private String engineMake;
+	private String faultCode;
+	private String faultCodeId;
+	private String faultCodeClassification;
+	private String description;
+	private String repairInstructions;
+	private String fmi;
+	private String sa;
+	private String spn;
+
 }

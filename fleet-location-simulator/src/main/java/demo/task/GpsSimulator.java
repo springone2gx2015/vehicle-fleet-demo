@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import demo.model.CurrentPosition;
+import demo.model.FaultCode;
 import demo.model.GpsSimulatorRequest;
 import demo.model.Leg;
 import demo.model.Point;
@@ -53,6 +54,7 @@ public class GpsSimulator implements Runnable {
 	private Integer secondsToError = 45;
 	private Point startPoint;
 	private Date executionStartTime;
+	private FaultCode faultCode;
 
 	public GpsSimulator(GpsSimulatorRequest gpsSimulatorRequest) {
 		this.shouldMove = gpsSimulatorRequest.isMove();
@@ -64,6 +66,7 @@ public class GpsSimulator implements Runnable {
 		this.secondsToError = gpsSimulatorRequest.getSecondsToError();
 		this.vin = gpsSimulatorRequest.getVin();
 		this.vehicleStatus = gpsSimulatorRequest.getVehicleStatus();
+		this.faultCode = gpsSimulatorRequest.getFaultCode();
 	}
 
 	@Override
@@ -90,12 +93,26 @@ public class GpsSimulator implements Runnable {
 
 					positionInfo.setVehicleStatus(this.vehicleStatus);
 
+					final FaultCode faultCodeToUse;
+
+					switch(this.vehicleStatus) {
+						case SERVICE_INFO:
+						case SERVICE_SOON:
+						case STOP_NOW:
+							faultCodeToUse = this.faultCode;
+							break;
+						default:
+							faultCodeToUse = null;
+							break;
+					}
+
 					final CurrentPosition currentPosition = new CurrentPosition(
 							positionInfo.getVin(),
 							new Point(positionInfo.getPosition().getLatitude(), positionInfo.getPosition().getLongitude()),
 							positionInfo.getVehicleStatus(),
 							positionInfo.getSpeed(),
-							positionInfo.getLeg().getHeading());
+							positionInfo.getLeg().getHeading(),
+							faultCodeToUse);
 					positionInfoService.processPositionInfo(id, currentPosition, this.exportPositionsToKml, this.exportPositionsToMessaging);
 
 				}
