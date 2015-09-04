@@ -7,9 +7,9 @@ grails:
         defaultPackage: fleet.location.actuator.ui
 info:
     app:
-        name: '@info.app.name@'
-        version: '@info.app.version@'
-        grailsVersion: '@info.app.grailsVersion@'
+        name: fleet-location-actuator-ui
+        version: 1.0
+        grailsVersion: 3.1
 spring:
     groovy:
         template:
