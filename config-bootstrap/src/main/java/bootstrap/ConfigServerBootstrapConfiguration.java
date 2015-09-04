@@ -43,8 +43,8 @@ public class ConfigServerBootstrapConfiguration implements EnvironmentPostProces
 			map.put("spring.cloud.config.uri",
 					"${CONFIG_SERVER_URI:${vcap.services.${PREFIX:}configserver.credentials.uri:http://localhost:8888}}");
 			map.put("encrypt.failOnError", "false");
-			environment.getPropertySources().addLast(
-					new MapPropertySource(CONFIG_SERVER_BOOTSTRAP, map));
+			environment.getPropertySources()
+					.addLast(new MapPropertySource(CONFIG_SERVER_BOOTSTRAP, map));
 		}
 	}
 

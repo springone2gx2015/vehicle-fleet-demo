@@ -18,7 +18,6 @@ package demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Main entry point for the Fleet Location Updater application.
@@ -28,11 +27,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableScheduling
 public class FleetLocationUpdaterApplication {
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(FleetLocationUpdaterApplication.class);
+		SpringApplication.run(FleetLocationUpdaterApplication.class, args);
 	}
 
 }
