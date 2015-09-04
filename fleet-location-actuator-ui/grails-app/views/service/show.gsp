@@ -5,7 +5,6 @@
 </head>
 
 <body>
-<a href="#" id="username" data-type="text" data-pk="1" data-url="/post" data-title="Enter username">superuser</a>
 <tmpl:page title="Service Environment: ${service.id} (${service.uri})">
     <g:each in="${service.env}" var="propertySource">
         <g:if test="${propertySource.value}">

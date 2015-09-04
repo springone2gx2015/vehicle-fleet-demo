@@ -66,11 +66,6 @@ dependencies {
     compile "org.grails:grails-web-boot"
 
     compile "org.grails.plugins:actuator-ui:0.1"
-    compile "org.grails.plugins:hibernate"
-    compile "org.grails.plugins:cache"
-    compile "org.hibernate:hibernate-ehcache"
-    compile "org.grails.plugins:scaffolding"
-    
     runtime "org.grails.plugins:asset-pipeline:3.0.8"
     
 
