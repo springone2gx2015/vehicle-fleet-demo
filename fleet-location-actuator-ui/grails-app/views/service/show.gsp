@@ -14,14 +14,16 @@
                 <tr>
                     <th>Key</th>
                     <th>Value</th>
-                    <g:each in="${propertySource.value}" var="setting">
-                        <tr>
-                            <td>${setting.key}</td>
-                            <td>
-                                <span id="${setting.key}" class="settingValue">${setting.value}</span>
-                            </td>
-                        </tr>
-                    </g:each>
+                    <g:if test="${propertySource.value instanceof Map}">
+                        <g:each in="${propertySource.value}" var="setting">
+                            <tr>
+                                <td>${setting.key}</td>
+                                <td>
+                                    <span id="${setting.key}" class="settingValue">${setting.value}</span>
+                                </td>
+                            </tr>
+                        </g:each>
+                    </g:if>
                 </tr>
                 </thead>
             </table>
