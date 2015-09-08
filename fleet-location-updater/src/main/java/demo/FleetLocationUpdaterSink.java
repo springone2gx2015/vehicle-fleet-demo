@@ -16,24 +16,16 @@
 package demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Sink;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import demo.model.CurrentPosition;
-import demo.model.ServiceLocation;
+import demo.service.ServiceLocationService;
 
 /**
  * Spring Cloud Stream {@link Sink}, responsible for sending current position data to
@@ -50,35 +42,18 @@ public class FleetLocationUpdaterSink {
 	private SimpMessagingTemplate template;
 
 	@Autowired
-	@LoadBalanced
-	private RestTemplate restTemplate;
-
-	@Autowired
 	private ObjectMapper objectMapper;
 
+	@Autowired
+	private ServiceLocationService serviceLocationService;
+
 	@ServiceActivator(inputChannel = Sink.INPUT)
-	public void addServiceLocations(String input) throws Exception {
+	public void updateLocationaddServiceLocations(String input) throws Exception {
 
 		CurrentPosition payload = this.objectMapper.readValue(input, CurrentPosition.class);
 
-		switch (payload.getVehicleStatus()) {
+		serviceLocationService.updateServiceLocations(payload);
 
-		case SERVICE_NOW:
-		case SERVICE_SOON:
-		case STOP_NOW:
-			ResponseEntity<Resource<ServiceLocation>> result = this.restTemplate.exchange(
-					"http://service-location-service/serviceLocations/search/findFirstByLocationNear?location={lat},{long}",
-					HttpMethod.GET, new HttpEntity<Void>((Void) null),
-					new ParameterizedTypeReference<Resource<ServiceLocation>>() {
-					}, payload.getLocation().getLatitude(),
-					payload.getLocation().getLongitude());
-			if (result.getStatusCode() == HttpStatus.OK
-					&& result.getBody().getContent() != null) {
-				payload.setServiceLocation(result.getBody().getContent());
-			}
-			break;
-		default:
-		}
 		this.template.convertAndSend("/queue/fleet.location.ingest.queue", payload);
 	}
 

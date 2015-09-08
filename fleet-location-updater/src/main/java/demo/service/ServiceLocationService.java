@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package demo;
+package demo.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import demo.model.CurrentPosition;
 
 /**
- * Main entry point for the Fleet Location Updater application.
  *
  * @author Gunnar Hillert
  *
  */
-@SpringBootApplication
-@EnableDiscoveryClient
-@EnableCircuitBreaker
-public class FleetLocationUpdaterApplication {
+public interface ServiceLocationService {
 
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(FleetLocationUpdaterApplication.class, args);
-	}
+	void updateServiceLocations(CurrentPosition currentPosition);
 
 }
