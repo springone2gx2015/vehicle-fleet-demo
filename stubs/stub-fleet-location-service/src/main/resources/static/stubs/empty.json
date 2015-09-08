@@ -1,0 +1,28 @@
+{"_links" : {
+    "first" : {
+      "href" : "http://fleet.cfapps.pez.pivotal.io/locations?page=0&size=20",
+      "templated" : false
+    },
+    "self" : {
+      "href" : "http://fleet.cfapps.pez.pivotal.io/locations",
+      "templated" : false
+    },
+    "last" : {
+      "href" : "http://fleet.cfapps.pez.pivotal.io/locations?page=0&size=20",
+      "templated" : false
+    },
+    "search" : {
+      "href" : "http://fleet.cfapps.pez.pivotal.io/locations/search",
+      "templated" : false
+    }
+  },
+  "_embedded" : {
+    "locations" : []
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 1,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}

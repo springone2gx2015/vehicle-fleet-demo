@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StubFleetLocationServiceApplication {
 
 	@RequestMapping("")
-	public String home() {
+	public String home(@RequestParam(required=false, defaultValue="0") int page) {
+		if (page>0) {
+			return "forward:/stubs/empty.json";
+		}
 		return "forward:/stubs/locations.json";
 	}
 

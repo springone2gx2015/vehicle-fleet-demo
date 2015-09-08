@@ -23,6 +23,24 @@
   },
   "_embedded" : {
     "locations" : [ {
+"latitude": 38.925855,
+"longitude": -76.990825,
+"address1": "2800 12th St NE",
+"city": "Washington",
+"state": "DC",
+"zip": "20017",
+"type": "Service",
+      "_links" : {
+        "self" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "templated" : false
+        },
+        "serviceLocation" : {
+          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "templated" : false
+        }
+      }
+}, {
       "latitude" : 42.708494,
       "longitude" : -87.953346,
       "address1" : "2151 SE FRONTAGE RD",

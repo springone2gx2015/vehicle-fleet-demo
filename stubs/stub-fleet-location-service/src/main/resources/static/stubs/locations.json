@@ -1,4 +1,4 @@
-"_links" : {
+{"_links" : {
     "first" : {
       "href" : "http://fleet.cfapps.pez.pivotal.io/locations?page=0&size=20",
       "templated" : false
@@ -7,12 +7,8 @@
       "href" : "http://fleet.cfapps.pez.pivotal.io/locations",
       "templated" : false
     },
-    "next" : {
-      "href" : "http://fleet.cfapps.pez.pivotal.io/locations?page=1&size=20",
-      "templated" : false
-    },
     "last" : {
-      "href" : "http://fleet.cfapps.pez.pivotal.io/locations?page=360&size=20",
+      "href" : "http://fleet.cfapps.pez.pivotal.io/locations?page=0&size=20",
       "templated" : false
     },
     "search" : {
@@ -21,29 +17,59 @@
     }
   },
   "_embedded" : {
-    "locations" : [{"address1":"2151 SE FRONTAGE RD",
-"address2":" ",
-"city":"STURTEVANT",
-"latitude":"42.708494",
-"longitude":"-87.953346",
-"location":"STURTEVANT",
-"state":"WI",
-"zip":"53177",
-"type":"Service"},
-{"address1":"8520 N GEORGETOWN RD",
-"address2":" ",
-"city":"INDIANAPOLIS",
-"latitude":"39.909792",
-"longitude":"-86.240824",
-"location":"FLEETY INDY PARK",
-"state":"IN",
-"zip":"46268",
-"type":"Service"}]
+    "locations" : [
+    {
+  "vin" : "7c08973d-bed4-4cbd-9c28-9282a02a6032",
+  "latitude" : "38.9093216",
+  "longitude" : "-77.0036435",
+  "heading" : "E",
+  "gpsSpeed" : "0",
+  "gpsStatus" : "OK",
+  "odometer" : "76056",
+  "totalEngineTime" : "2139.25",
+  "totalIdleTime" : "409",
+  "totalFuelUsage" : "9798.667824",
+  "address" : "270 New York Ave NE, Washington, DC, 20002, USA",
+  "timestamp" : "2015-07-02T15:49:35Z",
+  "tspProvider" : "cyntrx",
+  "vehicleMovementType" : "STOPPED",
+  "serviceType" : "ServiceInfo",
+  "unitInfo" : {
+    "unitVin" : "7c08973d-bed4-4cbd-9c28-9282a02a6032",
+    "engineMake" : "DET",
+    "customerName" : "Koss and Sons",
+    "unitNumber" : "22832911"
+  },
+  "unitFault" : {
+    "vin" : "7c08973d-bed4-4cbd-9c28-9282a02a6032",
+    "spn" : "524287",
+    "fmi" : "31"
+  },
+  "faultCode" : null
+}, {
+  "vin" : "972fa2f8-b910-4069-aa94-cd918a4e93ff",
+  "latitude" : "39.145856",
+  "longitude" : "-76.806005",
+  "heading" : "S",
+  "gpsSpeed" : "0",
+  "gpsStatus" : null,
+  "odometer" : "81864",
+  "totalEngineTime" : "1627.65",
+  "totalIdleTime" : "297.71666666666664",
+  "totalFuelUsage" : "10327.8",
+  "address" : "8685 Washington Blvd, Jessup, MD, 20794, US",
+  "timestamp" : "2015-07-01T15:48:30Z",
+  "tspProvider" : "cyntrx",
+  "vehicleMovementType" : "STOPPED",
+  "serviceType" : "None",
+  "unitFault" : null,
+  "faultCode" : null
+}]
   },
   "page" : {
-    "size" : 20,
-    "totalElements" : 7216,
-    "totalPages" : 361,
-    "number" : 0
+    "size" : 2,
+    "totalElements" : 1,
+    "totalPages" : 1,
+    "number" : 2
   }
 }
