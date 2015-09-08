@@ -102,7 +102,7 @@ Please ensure that you have running:
 
 **service-location-service**
 
-	$ java -jar fleet-location-service/target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
+	$ java -jar service-location-service/target/service-location-service-1.0.0.BUILD-SNAPSHOT.jar
 	$ wget http://assets.springone2gx2015.s3.amazonaws.com/fleet/serviceLocations.json
 	$ curl -H "Content-Type: application/json" localhost:9001/bulk/serviceLocations -d @serviceLocations.json
 
