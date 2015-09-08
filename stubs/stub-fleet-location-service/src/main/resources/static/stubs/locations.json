@@ -68,8 +68,8 @@
   },
   "page" : {
     "size" : 2,
-    "totalElements" : 1,
+    "totalElements" : 2,
     "totalPages" : 1,
-    "number" : 2
+    "number" : 0
   }
 }
