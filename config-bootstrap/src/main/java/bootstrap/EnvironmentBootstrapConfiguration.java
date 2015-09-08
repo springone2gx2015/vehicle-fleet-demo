@@ -25,13 +25,14 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
+import org.springframework.util.ClassUtils;
 
 /**
  * @author Dave Syer
  *
  */
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class ConfigServerBootstrapConfiguration implements EnvironmentPostProcessor {
+public class EnvironmentBootstrapConfiguration implements EnvironmentPostProcessor {
 
 	private static final String CONFIG_SERVER_BOOTSTRAP = "configServerBootstrap";
 
@@ -42,6 +43,15 @@ public class ConfigServerBootstrapConfiguration implements EnvironmentPostProces
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("spring.cloud.config.uri",
 					"${CONFIG_SERVER_URI:${vcap.services.${PREFIX:}configserver.credentials.uri:http://localhost:8888}}");
+			if (ClassUtils.isPresent("org.springframework.cloud.sleuth.zipkin.ZipkinProperties", null)) {
+				map.put("spring.zipkin.host",
+						"${ZIPKIN_HOST:${vcap.services.${PREFIX:}zipkin.credentials.host:localhost}}");
+				map.put("logging.pattern.console",
+						"%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}]){yellow} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex");
+				if (!"".equals(environment.resolvePlaceholders("${${vcap.services.${PREFIX:}zipkin.credentials.host:}"))) {
+					map.put("fleet.zipkin.enabled", "true");	
+				}
+			}
 			map.put("encrypt.failOnError", "false");
 			environment.getPropertySources()
 					.addLast(new MapPropertySource(CONFIG_SERVER_BOOTSTRAP, map));

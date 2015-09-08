@@ -31,6 +31,10 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.demo</groupId>
 			<artifactId>config-bootstrap</artifactId>
 			<version>${project.version}</version>
@@ -40,6 +44,10 @@
 			<artifactId>spring-restdocs</artifactId>
 			<version>0.1.0.BUILD-SNAPSHOT</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

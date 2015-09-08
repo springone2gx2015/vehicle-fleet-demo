@@ -46,6 +46,7 @@ public class DefaultSamplerAutoConfiguration {
 		return new AlwaysSampler();
 	}
 
+
 	@Configuration
 	@ConditionalOnClass(ZipkinSpanListener.class)
 	protected static class ZipkinAutoConfiguration {

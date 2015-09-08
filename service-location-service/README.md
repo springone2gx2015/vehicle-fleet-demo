@@ -16,6 +16,6 @@ http://assets.springone2gx2015.s3.amazonaws.com/fleet/serviceLocations.json
 
 ## Deploying to Cloud Foundry
 
-This app deploys nicely to Cloud Foundry and looks for a config server (via its
-`bootstrap.yml`) via a service called "configserver" with credentials containing a
-URI.
+This app deploys nicely to Cloud Foundry and looks for a config server
+(via the `config-bootstrap` dependency) via a service called
+"configserver" with credentials containing a URI.
