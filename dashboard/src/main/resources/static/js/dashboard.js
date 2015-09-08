@@ -760,9 +760,8 @@ function setupServiceCenters() {
 						.forEach(function(value, index) {
 							var content = "<div class='scg_popup'>"
 									+ "<div class='loc_header'><i class='fa fa-wrench'></i>RentMe Service Center</div>"
-									+ "<div class='loc_comments'>"
-									+ value.address2 + "</div>" + "<div>"
-									+ value.address1 + "</div>" + "<div>"
+									+ (typeof value.address2 === 'string' && value.address2.length > 0 ? "<div class='loc_comments'>" + value.address2 + "</div>" : '')
+									+ "<div>" + value.address1 + "</div>" + "<div>"
 									+ value.city + ", " + value.state + " "
 									+ value.zip + "</div>" + "</div>";
 
