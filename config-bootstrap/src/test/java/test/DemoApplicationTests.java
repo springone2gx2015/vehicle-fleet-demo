@@ -30,7 +30,7 @@ import test.DemoApplicationTests.DemoApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DemoApplication.class)
-@IntegrationTest({"CONFIG_SERVER_URI:http://testserver", "server.port=0"})
+@IntegrationTest({"CONFIG_SERVER_URI:http://testserver", "server.port=0", "debug=true"})
 @WebAppConfiguration
 public class DemoApplicationTests {
 

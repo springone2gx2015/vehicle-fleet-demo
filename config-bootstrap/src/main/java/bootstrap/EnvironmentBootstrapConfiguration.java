@@ -48,7 +48,7 @@ public class EnvironmentBootstrapConfiguration implements EnvironmentPostProcess
 						"${ZIPKIN_HOST:${vcap.services.${PREFIX:}zipkin.credentials.host:localhost}}");
 				map.put("logging.pattern.console",
 						"%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}]){yellow} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex");
-				if (!"".equals(environment.resolvePlaceholders("${${vcap.services.${PREFIX:}zipkin.credentials.host:}"))) {
+				if (!"".equals(environment.resolvePlaceholders("${vcap.services.${PREFIX:}zipkin.credentials.host:}"))) {
 					map.put("fleet.zipkin.enabled", "true");
 				}
 			}
