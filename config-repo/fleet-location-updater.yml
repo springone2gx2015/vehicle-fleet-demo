@@ -1,0 +1,2 @@
+hystrix:
+  command.default.circuitBreaker.forceOpen: false
