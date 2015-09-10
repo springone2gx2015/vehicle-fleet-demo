@@ -24,6 +24,7 @@ import org.springframework.cloud.sleuth.Sampler;
 import org.springframework.cloud.sleuth.Trace;
 import org.springframework.cloud.sleuth.autoconfig.TraceAutoConfiguration;
 import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
+import org.springframework.cloud.sleuth.zipkin.ZipkinAutoConfiguration;
 import org.springframework.cloud.sleuth.zipkin.ZipkinSpanListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +37,8 @@ import com.github.kristofa.brave.SpanCollector;
  *
  */
 @Configuration
-@ConditionalOnClass(Trace.class)
-@AutoConfigureBefore(TraceAutoConfiguration.class)
+@ConditionalOnClass({Trace.class, ZipkinSpanListener.class})
+@AutoConfigureBefore({TraceAutoConfiguration.class, ZipkinAutoConfiguration.class})
 public class DefaultSamplerAutoConfiguration {
 
 	@Bean
@@ -49,7 +50,7 @@ public class DefaultSamplerAutoConfiguration {
 
 	@Configuration
 	@ConditionalOnClass(ZipkinSpanListener.class)
-	protected static class ZipkinAutoConfiguration {
+	protected static class ZipkinCollectorAutoConfiguration {
 
 		// Use this for debugging (or if there is no Zipkin collector running on port 9410)
 		@Bean

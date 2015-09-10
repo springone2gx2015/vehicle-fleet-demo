@@ -13,23 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package demo.web;
+package demo.service;
 
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.RestController;
+import demo.model.CurrentPosition;
 
 /**
  *
  * @author Gunnar Hillert
  *
  */
-@RestController
-public class WebSocketApi {
+public interface ServiceLocationService {
 
-	@MessageMapping("/sendMessage")
-	@SendTo("/queue/vehicles")
-	public String sendMessage(String message) throws Exception {
-		return message;
-	}
+	void updateServiceLocations(CurrentPosition currentPosition);
+
 }

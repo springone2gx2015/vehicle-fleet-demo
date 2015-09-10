@@ -56,7 +56,7 @@ Foundry the platform services are provided by Spring Cloud Services
 | Module                     | Dashboard URL                   |
 |----------------------------|---------------------------------|
 | Eureka                     | http://localhost:8761/          |
-| Confgiserver               | http://localhost:8888/          |
+| Config Server              | http://localhost:8888/          |
 | fleet-location-service     | http://localhost:9000/          |
 | service-location-service   | http://localhost:9001/          |
 | fleet-location-simulator   | http://localhost:9005/          |
@@ -124,8 +124,38 @@ You should now be able to see the moving vehicles inside the main `Dashboard` ap
 
 http://localhost:8080/
 
+### Dynamic Config Changes when running locally
+
+The **fleet-location-updater** makes calls to **service-location-service** and uses
+[Hystrix][] to provide fault tolerance. [Hystrix][] can be fine-tuned using various properties:
+
+https://github.com/Netflix/Hystrix/wiki/Configuration
+
+In conjunction with [Spring Cloud Config][], you can changes those properties at runtime as well.
+
+Please ensure that you have **Config Server** running. Also, in order to simplify things,
+you may want to point directly to a local [Git][] with the configuration settings used by **Config Server**.
+
+E.g. in `vehicle-fleet-demo/platform/configserver/src/main/resources/application.yml`
+change the value of property `spring.cloud.config.server.git.uri` to your local repo such as:
+`file://${HOME}/dev/git/vehicle-fleet-demo`.
+
+In `vehicle-fleet-demo/config-repo/fleet-location-updater.yml` we define a property
+`hystrix.command.default.circuitBreaker.forceOpen: false`. By setting this property to `true`
+we can simulate a failure and consequently the [Hystrix][] `fallbackMethod` `handleServiceLocationServiceFailure` will
+be called in `DefaultServiceLocationService`, even though the **service-location-service** may still be running fine.
+
+Once you change the configuration in `fleet-location-updater.yml`, you must **refresh** the
+configuration by posting to the `/refresh` endpoint:
+
+	$ curl -d{} http://127.0.0.1:9007/refresh
+
+You can see configuration changes for the **fleet-location-updater** by going to `http://localhost:9007/env`
+
 [Git]: https://help.github.com/articles/set-up-git/
+[Hystrix]: https://github.com/Netflix/Hystrix
 [JDK 8]: http://www.oracle.com/technetwork/java/javase/downloads
 [Maven]: https://maven.apache.org/
 [MongoDB]: https://www.mongodb.org/
 [RabbitMQ]: https://www.rabbitmq.com/
+[Spring Cloud Config]: http://cloud.spring.io/spring-cloud-config/
