@@ -4,7 +4,7 @@ spring:
   cloud:
     stream:
       bindings:
-        input: vehicle-fleet-demo
+        input: vehicles
 
 ---
 spring:
