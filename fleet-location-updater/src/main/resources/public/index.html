@@ -34,7 +34,7 @@
 		</div>
 		<div class="row" style="margin-bottom: 1em;">
 			<div class="col-xs-12">
-				<p>Please connect to queue <code>/queue/fleet.location.ingest.queue</code> to receive vehicle position updates.</p>
+				<p>Please connect to queue <code>/queue/vehicles</code> to receive vehicle position updates.</p>
 			</div>
 		</div>
 		<div class="row" style="margin-bottom: 1em;">
@@ -79,7 +79,7 @@
 
 		Stomp.WebSocketClass = SockJS;
 		var url = window.location.protocol + '//' + window.location.host + '/stomp';
-		var queueName = '/queue/fleet.location.ingest.queue';
+		var queueName = '/queue/vehicles';
 		var ws = new SockJS(url);
 		var client = Stomp.over(ws);
 
