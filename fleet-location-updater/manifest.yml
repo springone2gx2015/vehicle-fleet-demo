@@ -1,0 +1,7 @@
+applications:
+- name: fleet-location-updater
+  services:
+    - rabbitmq
+    - zipkin
+    - configserver
+    - eureka

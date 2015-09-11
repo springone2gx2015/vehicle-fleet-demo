@@ -36,7 +36,9 @@ public class RestApi {
 		if (this.discoveryClient != null) {
 			List<ServiceInstance> instances = this.discoveryClient.getInstances(service);
 			if (instances != null && !instances.isEmpty()) {
-				return instances.get(0).getUri().toString();
+				ServiceInstance instance = instances.get(0);
+				String host = instance.getHost();
+				return host+(instance.getPort()==80 ? "" : ":" + instance.getPort());
 			}
 		}
 		return null;

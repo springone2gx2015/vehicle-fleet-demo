@@ -1,8 +1,11 @@
+spring:
+  application:
+    name: dashboard
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
 ribbon:
   ConnectTimeout: 3000
   ReadTimeout: 60000
-stomp.url: http://localhost:9007/stomp
+stomp.url: localhost:9007/stomp
 
 ---
 spring:

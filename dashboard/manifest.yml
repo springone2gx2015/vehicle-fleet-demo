@@ -1,0 +1,6 @@
+applications:
+- name: fleet-dashboard
+  services:
+    - zipkin
+    - configserver
+    - eureka

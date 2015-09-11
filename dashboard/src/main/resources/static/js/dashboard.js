@@ -222,14 +222,14 @@ function setupWebSocketConnection() {
 	    url: 'clientConfig',
 	    success: function(stompUrl) {
 	    	if (stompUrl) {
-	    		var socket = new SockJS(stompUrl);
+	    		var socket = new SockJS("//"+stompUrl);
 	    	    var stompClient = Stomp.over(socket);
 	    	    stompClient.heartbeat.outgoing = 0;
 	    	    stompClient.heartbeat.incoming = 0;
 	    	    stompClient.debug = function() {};  //turn off debugging
 	    	    var on_connect = function() {
-	    	        console.log('connected');
-	    	        stompClient.subscribe("/queue/fleet.location.ingest.queue", function(m) {
+	    	        console.log('Connected to vehicle updates: ' + stompUrl);
+	    	        stompClient.subscribe("/queue/vehicles", function(m) {
 	    	        	var updateMsg = JSON.parse(m.body);
 	    				handleUpdateMessage(updateMsg);
 	    			});
