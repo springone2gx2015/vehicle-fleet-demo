@@ -2,6 +2,6 @@ applications:
 - name: service-location-service
   services:
     - mongodb
-    - zipkin
+#    - zipkin
     - configserver
     - eureka

@@ -2,6 +2,6 @@ applications:
 - name: fleet-location-ingest
   services:
     - rabbitmq
-    - zipkin
+#    - zipkin
     - configserver
     - eureka

@@ -1,7 +1,7 @@
 applications:
-- name: fleet-location-actuator-ui
+- name: fleet-location-updater
   services:
     - rabbitmq
-    - zipkin
+#    - zipkin
     - configserver
     - eureka

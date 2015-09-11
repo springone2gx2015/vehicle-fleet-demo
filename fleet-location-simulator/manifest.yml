@@ -1,7 +1,0 @@
-applications:
-- name: fleet-location-simulator
-  services:
-    - rabbitmq
-    - zipkin
-    - configserver
-    - eureka

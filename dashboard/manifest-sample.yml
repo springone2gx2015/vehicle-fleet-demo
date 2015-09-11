@@ -1,7 +1,7 @@
 applications:
-- name: fleet-location-service
+- name: dashboard
+  host: fleet-dashboard
   services:
-    - mysql
-    - zipkin
+#    - zipkin
     - configserver
     - eureka
