@@ -1,5 +1,6 @@
 applications:
-- name: fleet-dashboard
+- name: dashboard
+  host: fleet-dashboard
   services:
     - zipkin
     - configserver
