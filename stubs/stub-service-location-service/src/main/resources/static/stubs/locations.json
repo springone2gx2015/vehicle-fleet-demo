@@ -1,23 +1,23 @@
 {
   "_links" : {
     "first" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=0&size=20",
+      "href" : "http://localhost:9001/serviceLocations?page=0&size=20",
       "templated" : false
     },
     "self" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations",
+      "href" : "http://localhost:9001/serviceLocations",
       "templated" : false
     },
     "next" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=1&size=20",
+      "href" : "http://localhost:9001/serviceLocations?page=1&size=20",
       "templated" : false
     },
     "last" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=24&size=20",
+      "href" : "http://localhost:9001/serviceLocations?page=24&size=20",
       "templated" : false
     },
     "search" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/search",
+      "href" : "http://localhost:9001/serviceLocations/search",
       "templated" : false
     }
   },
@@ -32,11 +32,11 @@
 "type": "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec5",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec5",
           "templated" : false
         }
       }
@@ -52,11 +52,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec3",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec3",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec3",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec3",
           "templated" : false
         }
       }
@@ -72,11 +72,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec4",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec4",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec4",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec4",
           "templated" : false
         }
       }
@@ -92,11 +92,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec5",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec5",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec5",
           "templated" : false
         }
       }
@@ -112,11 +112,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec6",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec6",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec6",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec6",
           "templated" : false
         }
       }
@@ -132,11 +132,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec7",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec7",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec7",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec7",
           "templated" : false
         }
       }
@@ -152,11 +152,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec8",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec8",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec8",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec8",
           "templated" : false
         }
       }
@@ -172,11 +172,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec9",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec9",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaec9",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaec9",
           "templated" : false
         }
       }
@@ -192,11 +192,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaeca",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaeca",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaeca",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaeca",
           "templated" : false
         }
       }
@@ -212,11 +212,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecb",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecb",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecb",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecb",
           "templated" : false
         }
       }
@@ -232,11 +232,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecc",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecc",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecc",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecc",
           "templated" : false
         }
       }
@@ -252,11 +252,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecd",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecd",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecd",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecd",
           "templated" : false
         }
       }
@@ -272,11 +272,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaece",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaece",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaece",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaece",
           "templated" : false
         }
       }
@@ -292,11 +292,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecf",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecf",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaecf",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaecf",
           "templated" : false
         }
       }
@@ -312,11 +312,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed0",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed0",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed0",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed0",
           "templated" : false
         }
       }
@@ -332,11 +332,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed1",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed1",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed1",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed1",
           "templated" : false
         }
       }
@@ -352,11 +352,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed2",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed2",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed2",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed2",
           "templated" : false
         }
       }
@@ -372,11 +372,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed3",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed3",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed3",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed3",
           "templated" : false
         }
       }
@@ -392,11 +392,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed4",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed4",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed4",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed4",
           "templated" : false
         }
       }
@@ -412,11 +412,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed5",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed5",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed5",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed5",
           "templated" : false
         }
       }
@@ -432,11 +432,11 @@
       "type" : "Service",
       "_links" : {
         "self" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed6",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed6",
           "templated" : false
         },
         "serviceLocation" : {
-          "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/55b63ed1080e25b5fdeaaed6",
+          "href" : "http://localhost:9001/serviceLocations/55b63ed1080e25b5fdeaaed6",
           "templated" : false
         }
       }
