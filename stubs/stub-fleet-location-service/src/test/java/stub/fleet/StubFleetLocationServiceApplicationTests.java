@@ -55,7 +55,7 @@ public class StubFleetLocationServiceApplicationTests {
 	}
 
 	@Test
-	public void findByUnitVin() throws Exception {
+	public void findByUnitInfoUnitVin() throws Exception {
 		this.mockMvc
 		.perform(MockMvcRequestBuilders.get("/locations/search/findByUnitInfoUnitVin?vin={vin}",
 				"6d43aee7-f6f3-4cb1-a086-e03a750ed23b"))

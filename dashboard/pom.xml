@@ -20,6 +20,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sloth</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.demo</groupId>
 			<artifactId>config-bootstrap</artifactId>
 			<version>${project.version}</version>
