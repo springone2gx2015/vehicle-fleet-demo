@@ -22,8 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 @SpringApplicationConfiguration(classes = ServiceLocationServiceApplication.class)
+@WebAppConfiguration
 public class DemoApplicationTests {
 
 	@ClassRule
