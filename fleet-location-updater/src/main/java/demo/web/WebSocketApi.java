@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebSocketApi {
 
 	@MessageMapping("/sendMessage")
-	@SendTo("/queue/fleet.location.ingest.queue")
+	@SendTo("/queue/vehicles")
 	public String sendMessage(String message) throws Exception {
 		return message;
 	}

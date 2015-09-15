@@ -11,18 +11,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootApplication
 @EnableDiscoveryClient
 @Controller
-@RequestMapping("/serviceLocations")
 public class StubServiceLocationServiceApplication {
 
-	@RequestMapping("")
-	public String home(@RequestParam(required=false, defaultValue="0") int page) {
+	@RequestMapping("/")
+	public String home() {
+		return "forward:/stubs/home.json";
+	}
+
+	@RequestMapping("/serviceLocations")
+	public String locations(@RequestParam(required=false, defaultValue="0") int page) {
 		if (page>0) {
 			return "forward:/stubs/empty.json";
 		}
 		return "forward:/stubs/locations.json";
 	}
 
-	@RequestMapping("/search/findFirstByLocationNear")
+	@RequestMapping("/serviceLocations/search/findFirstByLocationNear")
 	public String findByLocation(@RequestParam String location) {
 		Assert.state(location.contains(","),
 				"Location should be comma-separated lat,long");

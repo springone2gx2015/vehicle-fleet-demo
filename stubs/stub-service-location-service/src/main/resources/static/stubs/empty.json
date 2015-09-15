@@ -1,19 +1,19 @@
 {
   "_links" : {
     "first" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=0&size=20",
+      "href" : "http://localhost:9001/serviceLocations?page=0&size=20",
       "templated" : false
     },
     "self" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations",
+      "href" : "http://localhost:9001/serviceLocations",
       "templated" : false
     },
     "last" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations?page=0&size=20",
+      "href" : "http://localhost:9001/serviceLocations?page=0&size=20",
       "templated" : false
     },
     "search" : {
-      "href" : "http://service.cfapps.pez.pivotal.io/serviceLocations/search",
+      "href" : "http://localhost:9001/serviceLocations/search",
       "templated" : false
     }
   },

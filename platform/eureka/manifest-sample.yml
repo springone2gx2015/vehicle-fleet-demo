@@ -1,0 +1,5 @@
+applications:
+- name: fleet-eureka-server
+  services:
+    - configserver
+    - eureka

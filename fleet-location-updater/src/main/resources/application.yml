@@ -1,10 +1,12 @@
 server:
   port: 9007
 spring:
+  application:
+    name: fleet-location-updater
   cloud:
     stream:
       bindings:
-        input: vehicle-fleet-demo
+        input: vehicles
 
 ---
 spring:

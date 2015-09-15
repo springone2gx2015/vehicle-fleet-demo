@@ -1,0 +1,11 @@
+{
+  "_links" : {
+    "locations" : {
+      "href" : "http://localhost:9001/serviceLocations{?page,size,sort}",
+      "templated" : true
+    },
+    "profile" : {
+      "href" : "http://localhost:9001/profile"
+    }
+  }
+}

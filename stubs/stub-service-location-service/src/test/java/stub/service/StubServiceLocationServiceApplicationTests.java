@@ -47,6 +47,14 @@ public class StubServiceLocationServiceApplicationTests {
 	}
 
 	@Test
+	public void getHome() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/"))
+		.andExpect(MockMvcResultMatchers.content()
+				.string(containsString("locations")))
+		.andDo(document("home"));
+	}
+
+	@Test
 	public void getLocations() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/serviceLocations"))
 		.andExpect(MockMvcResultMatchers.content()

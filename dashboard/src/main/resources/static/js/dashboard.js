@@ -222,14 +222,14 @@ function setupWebSocketConnection() {
 	    url: 'clientConfig',
 	    success: function(stompUrl) {
 	    	if (stompUrl) {
-	    		var socket = new SockJS(stompUrl);
+	    		var socket = new SockJS("//"+stompUrl);
 	    	    var stompClient = Stomp.over(socket);
 	    	    stompClient.heartbeat.outgoing = 0;
 	    	    stompClient.heartbeat.incoming = 0;
 	    	    stompClient.debug = function() {};  //turn off debugging
 	    	    var on_connect = function() {
-	    	        console.log('connected');
-	    	        stompClient.subscribe("/queue/fleet.location.ingest.queue", function(m) {
+	    	        console.log('Connected to vehicle updates: ' + stompUrl);
+	    	        stompClient.subscribe("/queue/vehicles", function(m) {
 	    	        	var updateMsg = JSON.parse(m.body);
 	    				handleUpdateMessage(updateMsg);
 	    			});
@@ -468,15 +468,7 @@ function setupMiniMapMarker(reZoom) {
 			miniMap.addLayer(nearestServiceCenterMarker);
 		}
 		
-		var content = "<div class='scg_popup'>"
-			+ "<div class='loc_header'><i class='fa fa-wrench'></i>RentMe Service Center</div>"
-			+ "<div class='loc_comments'>"
-			+ vehicle.serviceLocation.address2 + "</div>" + "<div>"
-			+ vehicle.serviceLocation.address1 + "</div>" + "<div>"
-			+ vehicle.serviceLocation.city + ", " + vehicle.serviceLocation.state + " "
-			+ vehicle.serviceLocation.zip + "</div>" + "</div>";
-		
-		nearestServiceCenterMarker.bindPopup(content);
+		nearestServiceCenterMarker.bindPopup(createServiceCenterPopup(vehicle.serviceLocation));
 		nearestServiceCenterMarker.setLatLng({
 			lat : vehicle.serviceLocation.latitude,
 			lon : vehicle.serviceLocation.longitude
@@ -758,13 +750,9 @@ function setupServiceCenters() {
 				// iterate over the list of results
 				data
 						.forEach(function(value, index) {
-							var content = "<div class='scg_popup'>"
-									+ "<div class='loc_header'><i class='fa fa-wrench'></i>RentMe Service Center</div>"
-									+ (typeof value.address2 === 'string' && value.address2.length > 0 ? "<div class='loc_comments'>" + value.address2 + "</div>" : '')
-									+ "<div>" + value.address1 + "</div>" + "<div>"
-									+ value.city + ", " + value.state + " "
-									+ value.zip + "</div>" + "</div>";
-
+							
+							var content = createServiceCenterPopup(value);
+							
 							L.marker({
 								lat : value.latitude,
 								lon : value.longitude
@@ -802,6 +790,15 @@ function setupServiceCenters() {
 	map.addControl(layerControl);
 	var layerControl2 = L.control.groupedLayers(null, groupedOverlays2, null);
 	miniMap.addControl(layerControl2);
+}
+
+function createServiceCenterPopup(data) {
+	return "<div class='scg_popup'>"
+		+ "<div class='loc_header'><i class='fa fa-wrench'></i>RentMe Service Center</div>"
+		+ (typeof data.address2 === 'string' && data.address2.length > 0 ? "<div class='loc_comments'>" + data.address2 + "</div>" : '')
+		+ "<div>" + data.address1 + "</div>" + "<div>"
+		+ data.city + ", " + data.state + " "
+		+ data.zip + "</div>" + "</div>";
 }
 
 function getMiles(i) {

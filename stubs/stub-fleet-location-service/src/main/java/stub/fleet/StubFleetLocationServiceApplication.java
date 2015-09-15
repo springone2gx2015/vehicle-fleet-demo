@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootApplication
 @EnableDiscoveryClient
 @Controller
-@RequestMapping("/locations")
 public class StubFleetLocationServiceApplication {
 
-	@RequestMapping("")
+	@RequestMapping("/")
+	public String home() {
+		return "forward:/stubs/home.json";
+	}
+
+	@RequestMapping("/locations")
 	public String home(@RequestParam(required=false, defaultValue="0") int page) {
 		if (page>0) {
 			return "forward:/stubs/empty.json";
@@ -21,7 +25,7 @@ public class StubFleetLocationServiceApplication {
 		return "forward:/stubs/locations.json";
 	}
 
-	@RequestMapping("/search/findByUnitInfoUnitVin")
+	@RequestMapping("/locations/search/findByUnitInfoUnitVin")
 	public String findByVin(@RequestParam String vin) {
 		return "forward:/stubs/findByVin.json";
 	}
