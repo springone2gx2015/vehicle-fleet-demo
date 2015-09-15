@@ -17,3 +17,4 @@ ribbon:
 service-location-service:
   ribbon:
     listOfServers: localhost:9001
+hystrix.command.default.execution.isolation.strategy: SEMAPHORE
