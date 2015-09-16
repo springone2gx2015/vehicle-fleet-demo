@@ -54,7 +54,7 @@ public class FleetLocationUpdaterSink {
 
 		serviceLocationService.updateServiceLocations(payload);
 
-		this.template.convertAndSend("/queue/vehicles", payload);
+		this.template.convertAndSend("/topic/vehicles", payload);
 	}
 
 }

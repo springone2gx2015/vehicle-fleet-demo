@@ -229,7 +229,7 @@ function setupWebSocketConnection() {
 	    	    stompClient.debug = function() {};  //turn off debugging
 	    	    var on_connect = function() {
 	    	        console.log('Connected to vehicle updates: ' + stompUrl);
-	    	        stompClient.subscribe("/queue/vehicles", function(m) {
+	    	        stompClient.subscribe("/topic/vehicles", function(m) {
 	    	        	var updateMsg = JSON.parse(m.body);
 	    				handleUpdateMessage(updateMsg);
 	    			});
