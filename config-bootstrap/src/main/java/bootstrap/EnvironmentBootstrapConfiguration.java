@@ -56,6 +56,11 @@ public class EnvironmentBootstrapConfiguration implements EnvironmentPostProcess
 					map.put("fleet.zipkin.enabled", "true");
 				}
 			}
+			String space = environment.resolvePlaceholders("${vcap.application.space_name:dev}");
+			log.info("Spacename: " + space);
+			if (space.startsWith("dev")) {
+				environment.addActiveProfile("dev");
+			}
 			map.put("encrypt.failOnError", "false");
 			map.put("endpoints.shutdown.enabled", "true");
 			map.put("endpoints.restart.enabled", "true");
