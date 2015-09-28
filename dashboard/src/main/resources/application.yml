@@ -6,6 +6,11 @@ ribbon:
   ConnectTimeout: 3000
   ReadTimeout: 60000
 stomp.url: localhost:9007/stomp
+# Workaround bug in Sleuth that makes zuul barf on un-sampled spans:
+fleet:
+  zipkin:
+    sampleRate:
+      1.0
 
 ---
 spring:
