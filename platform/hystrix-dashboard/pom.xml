@@ -6,9 +6,9 @@
 	<groupId>org.demo</groupId>
 	<artifactId>fleet-hystrix-dashboard</artifactId>
 	<packaging>jar</packaging>
+	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<name>Spring Cloud Netflix Hystrix</name>
 	<url>http://projects.spring.io/spring-cloud/</url>
-    <version>0.0.1.BUILD-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.springframework.cloud</groupId>

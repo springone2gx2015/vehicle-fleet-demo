@@ -1,0 +1,23 @@
+services:  fleet_eureka_server fleet_location_simulator fleet_location_ingest fleet_location_updater fleet_location_service service_location_service dashboard
+version: 1.0.0.BUILD-SNAPSHOT
+fleet_eureka_server:
+	name: fleet-eureka-server
+	port: 8761
+fleet_location_simulator:
+	name: fleet-location-simulator
+	port: 9005
+fleet_location_ingest:
+	name: fleet-location-ingest
+	port: 9006
+fleet_location_updater:
+	name: fleet-location-updater
+	port: 9007
+fleet_location_service:
+	name: fleet-location-service
+	port: 9000
+service_location_service:
+	name: service-location-service
+	port: 9001
+dashboard:
+	name: dashboard
+	port: 8080

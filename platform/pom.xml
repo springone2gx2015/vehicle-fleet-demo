@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-	<groupId>org.demo</groupId>
-	<artifactId>spring-cloud-sample-vehicle-fleet</artifactId>
-	<version>1.0.0.BUILD-SNAPSHOT</version>
+		<groupId>org.demo</groupId>
+		<artifactId>spring-cloud-sample-vehicle-fleet</artifactId>
+		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>platform</artifactId>
