@@ -5,7 +5,7 @@
 
     <groupId>org.demo</groupId>
 	<artifactId>fleet-eureka-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Eureka Server</name>

@@ -73,6 +73,18 @@ Please ensure that you have running:
 * Rabbit - for the simulator, ingest and updater components
 * Mongo - for the service-location-service
 
+#### Use The Start Script
+
+to run all services on localhost:
+
+    $ scripts/startAll.sh
+
+to stop:
+
+    $ scripts/stopAll.sh
+	
+#### Start Manually	  
+
 > NOTE: the dashboard UI can run on it's own with just the
 > `fleet-location-service` and `service-location-service` (if you run
 > in a "test" profile) and with those 2 plus eureka (in the "default"
