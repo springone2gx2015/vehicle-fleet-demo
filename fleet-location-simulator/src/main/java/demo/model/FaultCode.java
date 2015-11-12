@@ -16,17 +16,11 @@
 
 package demo.model;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * @author Gunnar Hillert
+ * @author David Turanski
  */
-@Data
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class FaultCode {
-
 	private String engineMake;
 	private String faultCode;
 	private String faultCodeId;
@@ -37,4 +31,159 @@ public class FaultCode {
 	private String sa;
 	private String spn;
 
+	public FaultCode() {}
+
+	public FaultCode(String engineMake,
+			String faultCode,
+			String faultCodeId,
+			String faultCodeClassification,
+			String description,
+			String repairInstructions,
+			String fmi,
+			String sa,
+			String spn) {
+		this.engineMake = engineMake;
+		this.faultCode = faultCode;
+		this.faultCodeId = faultCodeId;
+		this.faultCodeClassification = faultCodeClassification;
+		this.description = description;
+		this.repairInstructions = repairInstructions;
+		this.fmi = fmi;
+		this.sa = sa;
+		this.spn = spn;
+	}
+
+	public String getEngineMake() {
+		return engineMake;
+	}
+
+	public void setEngineMake(String engineMake) {
+		this.engineMake = engineMake;
+	}
+
+	public String getFaultCode() {
+		return faultCode;
+	}
+
+	public void setFaultCode(String faultCode) {
+		this.faultCode = faultCode;
+	}
+
+	public String getFaultCodeId() {
+		return faultCodeId;
+	}
+
+	public void setFaultCodeId(String faultCodeId) {
+		this.faultCodeId = faultCodeId;
+	}
+
+	public String getFaultCodeClassification() {
+		return faultCodeClassification;
+	}
+
+	public void setFaultCodeClassification(String faultCodeClassification) {
+		this.faultCodeClassification = faultCodeClassification;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getRepairInstructions() {
+		return repairInstructions;
+	}
+
+	public void setRepairInstructions(String repairInstructions) {
+		this.repairInstructions = repairInstructions;
+	}
+
+	public String getFmi() {
+		return fmi;
+	}
+
+	public void setFmi(String fmi) {
+		this.fmi = fmi;
+	}
+
+	public String getSa() {
+		return sa;
+	}
+
+	public void setSa(String sa) {
+		this.sa = sa;
+	}
+
+	public String getSpn() {
+		return spn;
+	}
+
+	public void setSpn(String spn) {
+		this.spn = spn;
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		FaultCode faultCode1 = (FaultCode) o;
+
+		if (engineMake != null ?
+				!engineMake.equals(faultCode1.engineMake) :
+				faultCode1.engineMake != null) return false;
+		if (faultCode != null ?
+				!faultCode.equals(faultCode1.faultCode) :
+				faultCode1.faultCode != null) return false;
+		if (faultCodeId != null ?
+				!faultCodeId.equals(faultCode1.faultCodeId) :
+				faultCode1.faultCodeId != null) return false;
+		if (faultCodeClassification != null ?
+				!faultCodeClassification.equals(faultCode1.faultCodeClassification) :
+				faultCode1.faultCodeClassification != null) return false;
+		if (description != null ?
+				!description.equals(faultCode1.description) :
+				faultCode1.description != null) return false;
+		if (repairInstructions != null ?
+				!repairInstructions.equals(faultCode1.repairInstructions) :
+				faultCode1.repairInstructions != null) return false;
+		if (fmi != null ? !fmi.equals(faultCode1.fmi) : faultCode1.fmi != null)
+			return false;
+		if (sa != null ? !sa.equals(faultCode1.sa) : faultCode1.sa != null) return false;
+		return !(spn != null ? !spn.equals(faultCode1.spn) : faultCode1.spn != null);
+
+	}
+
+	@Override public int hashCode() {
+		int result = engineMake != null ? engineMake.hashCode() : 0;
+		result = 31 * result + (faultCode != null ? faultCode.hashCode() : 0);
+		result = 31 * result + (faultCodeId != null ? faultCodeId.hashCode() : 0);
+		result = 31 * result + (faultCodeClassification != null ?
+				faultCodeClassification.hashCode() :
+				0);
+		result = 31 * result + (description != null ? description.hashCode() : 0);
+		result = 31 * result + (repairInstructions != null ?
+				repairInstructions.hashCode() :
+				0);
+		result = 31 * result + (fmi != null ? fmi.hashCode() : 0);
+		result = 31 * result + (sa != null ? sa.hashCode() : 0);
+		result = 31 * result + (spn != null ? spn.hashCode() : 0);
+		return result;
+	}
+
+	@Override public String toString() {
+		return "FaultCode{" +
+				"engineMake='" + engineMake + '\'' +
+				", faultCode='" + faultCode + '\'' +
+				", faultCodeId='" + faultCodeId + '\'' +
+				", faultCodeClassification='" + faultCodeClassification + '\'' +
+				", description='" + description + '\'' +
+				", repairInstructions='" + repairInstructions + '\'' +
+				", fmi=" + fmi +
+				", sa='" + sa + '\'' +
+				", spn=" + spn +
+				'}';
+	}
 }

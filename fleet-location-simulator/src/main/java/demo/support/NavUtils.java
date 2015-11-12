@@ -97,7 +97,6 @@ public class NavUtils {
 	/**
 	 * Returns coordinates of position which is given distance and bearing from given point.
 	 * @param pt1
-	 * @param dist
 	 * @param brg
 	 * @return
 	 */

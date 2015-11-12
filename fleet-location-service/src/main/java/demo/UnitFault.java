@@ -17,25 +17,71 @@
 package demo;
 
 import javax.persistence.Embeddable;
-
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Data
 @Embeddable
-@RequiredArgsConstructor
 public class UnitFault {
 
 	private final String vin;
 	private Long spn;
 	private Long fmi;
 
+	public UnitFault(String vin) {
+		this.vin = vin;
+	}
+
 	@SuppressWarnings("unused")
 	private UnitFault() {
 		this.vin = "";
 	}
 
+	public String getVin() {
+		return vin;
+	}
+
+	public Long getSpn() {
+		return spn;
+	}
+
+	public void setSpn(Long spn) {
+		this.spn = spn;
+	}
+
+	public Long getFmi() {
+		return fmi;
+	}
+
+	public void setFmi(Long fmi) {
+		this.fmi = fmi;
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		UnitFault unitFault = (UnitFault) o;
+
+		if (vin != null ? !vin.equals(unitFault.vin) : unitFault.vin != null)
+			return false;
+		if (spn != null ? !spn.equals(unitFault.spn) : unitFault.spn != null)
+			return false;
+		return !(fmi != null ? !fmi.equals(unitFault.fmi) : unitFault.fmi != null);
+
+	}
+
+	@Override public int hashCode() {
+		int result = vin != null ? vin.hashCode() : 0;
+		result = 31 * result + (spn != null ? spn.hashCode() : 0);
+		result = 31 * result + (fmi != null ? fmi.hashCode() : 0);
+		return result;
+	}
+
+	@Override public String toString() {
+		return "UnitFault{" +
+				"vin='" + vin + '\'' +
+				", spn=" + spn +
+				", fmi=" + fmi +
+				'}';
+	}
 }

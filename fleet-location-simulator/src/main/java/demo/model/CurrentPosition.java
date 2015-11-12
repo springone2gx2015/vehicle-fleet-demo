@@ -11,16 +11,11 @@
  * specific language governing permissions and limitations under the License.
  */
 package demo.model;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 /**
  * @author Gunnar Hillert
+ * @author David Turanski
  */
-@Data
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+
 public class CurrentPosition {
 
 	private String vin;
@@ -30,4 +25,101 @@ public class CurrentPosition {
 	private Double heading;
 	private FaultCode faultCode;
 
+	public CurrentPosition(String vin, Point location, VehicleStatus vehicleStatus,
+			Double speed, Double heading, FaultCode faultCode) {
+		this.vin = vin;
+		this.location = location;
+		this.vehicleStatus = vehicleStatus;
+		this.speed = speed;
+		this.heading = heading;
+		this.faultCode = faultCode;
+	}
+
+	public String getVin() {
+		return vin;
+	}
+
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+
+	public Point getLocation() {
+		return location;
+	}
+
+	public void setLocation(Point location) {
+		this.location = location;
+	}
+
+	public VehicleStatus getVehicleStatus() {
+		return vehicleStatus;
+	}
+
+	public void setVehicleStatus(VehicleStatus vehicleStatus) {
+		this.vehicleStatus = vehicleStatus;
+	}
+
+	public Double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(Double speed) {
+		this.speed = speed;
+	}
+
+	public Double getHeading() {
+		return heading;
+	}
+
+	public void setHeading(Double heading) {
+		this.heading = heading;
+	}
+
+	public FaultCode getFaultCode() {
+		return faultCode;
+	}
+
+	public void setFaultCode(FaultCode faultCode) {
+		this.faultCode = faultCode;
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		CurrentPosition that = (CurrentPosition) o;
+
+		if (vin != null ? !vin.equals(that.vin) : that.vin != null) return false;
+		if (location != null ? !location.equals(that.location) : that.location != null)
+			return false;
+		if (vehicleStatus != that.vehicleStatus) return false;
+		if (speed != null ? !speed.equals(that.speed) : that.speed != null) return false;
+		if (heading != null ? !heading.equals(that.heading) : that.heading != null)
+			return false;
+		return !(faultCode != null ?
+				!faultCode.equals(that.faultCode) :
+				that.faultCode != null);
+
+	}
+
+	@Override public int hashCode() {
+		int result = vin != null ? vin.hashCode() : 0;
+		result = 31 * result + (location != null ? location.hashCode() : 0);
+		result = 31 * result + (vehicleStatus != null ? vehicleStatus.hashCode() : 0);
+		result = 31 * result + (speed != null ? speed.hashCode() : 0);
+		result = 31 * result + (heading != null ? heading.hashCode() : 0);
+		result = 31 * result + (faultCode != null ? faultCode.hashCode() : 0);
+		return result;
+	}
+
+	@Override public String toString() {
+		return "CurrentPosition{" +
+				"vin='" + vin + '\'' +
+				", location=" + location +
+				", vehicleStatus=" + vehicleStatus +
+				", speed=" + speed +
+				", heading=" + heading +
+				", faultCode=" + faultCode +
+				'}';
+	}
 }

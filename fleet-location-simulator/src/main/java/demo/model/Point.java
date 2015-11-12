@@ -11,21 +11,57 @@
  * specific language governing permissions and limitations under the License.
  */
 package demo.model;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 /**
  * Denotes a point on the globe.
  * @author faram
  * @author Gunnar Hillert
+ * @author David Turanski
  */
-@Data
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Point {
 	private Double latitude;
 	private Double longitude;
+
+	public Point(Double latitude, Double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Point point = (Point) o;
+
+		if (latitude != null ? !latitude.equals(point.latitude) : point.latitude != null)
+			return false;
+		return !(longitude != null ?
+				!longitude.equals(point.longitude) :
+				point.longitude != null);
+
+	}
+
+	@Override public int hashCode() {
+		int result = latitude != null ? latitude.hashCode() : 0;
+		result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
+		return result;
+	}
 
 	@Override
 	public String toString() {
