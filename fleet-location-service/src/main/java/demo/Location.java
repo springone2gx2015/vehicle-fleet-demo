@@ -25,9 +25,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -41,8 +38,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Data
-@RequiredArgsConstructor
 @Entity
 public class Location {
 
@@ -86,6 +81,10 @@ public class Location {
 	@Embedded
 	private FaultCode faultCode;
 
+	public Location(UnitInfo unitInfo) {
+		this.unitInfo = unitInfo;
+	}
+
 	@SuppressWarnings("unused")
 	private Location() {
 		this.unitInfo = null;
@@ -100,4 +99,245 @@ public class Location {
 		return this.unitInfo == null ? null : this.unitInfo.getUnitVin();
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public UnitInfo getUnitInfo() {
+		return unitInfo;
+	}
+
+	public UnitFault getUnitFault() {
+		return unitFault;
+	}
+
+	public void setUnitFault(UnitFault unitFault) {
+		this.unitFault = unitFault;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getHeading() {
+		return heading;
+	}
+
+	public void setHeading(String heading) {
+		this.heading = heading;
+	}
+
+	public double getGpsSpeed() {
+		return gpsSpeed;
+	}
+
+	public void setGpsSpeed(double gpsSpeed) {
+		this.gpsSpeed = gpsSpeed;
+	}
+
+	public GpsStatus getGpsStatus() {
+		return gpsStatus;
+	}
+
+	public void setGpsStatus(GpsStatus gpsStatus) {
+		this.gpsStatus = gpsStatus;
+	}
+
+	public double getOdometer() {
+		return odometer;
+	}
+
+	public void setOdometer(double odometer) {
+		this.odometer = odometer;
+	}
+
+	public double getTotalEngineTime() {
+		return totalEngineTime;
+	}
+
+	public void setTotalEngineTime(double totalEngineTime) {
+		this.totalEngineTime = totalEngineTime;
+	}
+
+	public double getTotalIdleTime() {
+		return totalIdleTime;
+	}
+
+	public void setTotalIdleTime(double totalIdleTime) {
+		this.totalIdleTime = totalIdleTime;
+	}
+
+	public double getTotalFuelUsage() {
+		return totalFuelUsage;
+	}
+
+	public void setTotalFuelUsage(double totalFuelUsage) {
+		this.totalFuelUsage = totalFuelUsage;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public String getTspProvider() {
+		return tspProvider;
+	}
+
+	public void setTspProvider(String tspProvider) {
+		this.tspProvider = tspProvider;
+	}
+
+	public VehicleMovementType getVehicleMovementType() {
+		return vehicleMovementType;
+	}
+
+	public void setVehicleMovementType(
+			VehicleMovementType vehicleMovementType) {
+		this.vehicleMovementType = vehicleMovementType;
+	}
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public FaultCode getFaultCode() {
+		return faultCode;
+	}
+
+	public void setFaultCode(FaultCode faultCode) {
+		this.faultCode = faultCode;
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Location location = (Location) o;
+
+		if (Double.compare(location.latitude, latitude) != 0) return false;
+		if (Double.compare(location.longitude, longitude) != 0) return false;
+		if (Double.compare(location.gpsSpeed, gpsSpeed) != 0) return false;
+		if (Double.compare(location.odometer, odometer) != 0) return false;
+		if (Double.compare(location.totalEngineTime, totalEngineTime) != 0) return false;
+		if (Double.compare(location.totalIdleTime, totalIdleTime) != 0) return false;
+		if (Double.compare(location.totalFuelUsage, totalFuelUsage) != 0) return false;
+		if (id != null ? !id.equals(location.id) : location.id != null) return false;
+		if (unitInfo != null ?
+				!unitInfo.equals(location.unitInfo) :
+				location.unitInfo != null) return false;
+		if (unitFault != null ?
+				!unitFault.equals(location.unitFault) :
+				location.unitFault != null) return false;
+		if (heading != null ?
+				!heading.equals(location.heading) :
+				location.heading != null)
+			return false;
+		if (gpsStatus != location.gpsStatus) return false;
+		if (address != null ?
+				!address.equals(location.address) :
+				location.address != null)
+			return false;
+		if (timestamp != null ?
+				!timestamp.equals(location.timestamp) :
+				location.timestamp != null) return false;
+		if (tspProvider != null ?
+				!tspProvider.equals(location.tspProvider) :
+				location.tspProvider != null) return false;
+		if (vehicleMovementType != location.vehicleMovementType) return false;
+		if (serviceType != null ?
+				!serviceType.equals(location.serviceType) :
+				location.serviceType != null) return false;
+		return !(faultCode != null ?
+				!faultCode.equals(location.faultCode) :
+				location.faultCode != null);
+
+	}
+
+	@Override public int hashCode() {
+		int result;
+		long temp;
+		result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (unitInfo != null ? unitInfo.hashCode() : 0);
+		result = 31 * result + (unitFault != null ? unitFault.hashCode() : 0);
+		temp = Double.doubleToLongBits(latitude);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		result = 31 * result + (heading != null ? heading.hashCode() : 0);
+		temp = Double.doubleToLongBits(gpsSpeed);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		result = 31 * result + (gpsStatus != null ? gpsStatus.hashCode() : 0);
+		temp = Double.doubleToLongBits(odometer);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(totalEngineTime);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(totalIdleTime);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(totalFuelUsage);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		result = 31 * result + (address != null ? address.hashCode() : 0);
+		result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+		result = 31 * result + (tspProvider != null ? tspProvider.hashCode() : 0);
+		result = 31 * result + (vehicleMovementType != null ?
+				vehicleMovementType.hashCode() :
+				0);
+		result = 31 * result + (serviceType != null ? serviceType.hashCode() : 0);
+		result = 31 * result + (faultCode != null ? faultCode.hashCode() : 0);
+		return result;
+	}
+
+	@Override public String toString() {
+		return "Location{" +
+				"id=" + id +
+				", unitInfo=" + unitInfo +
+				", unitFault=" + unitFault +
+				", latitude=" + latitude +
+				", longitude=" + longitude +
+				", heading='" + heading + '\'' +
+				", gpsSpeed=" + gpsSpeed +
+				", gpsStatus=" + gpsStatus +
+				", odometer=" + odometer +
+				", totalEngineTime=" + totalEngineTime +
+				", totalIdleTime=" + totalIdleTime +
+				", totalFuelUsage=" + totalFuelUsage +
+				", address='" + address + '\'' +
+				", timestamp=" + timestamp +
+				", tspProvider='" + tspProvider + '\'' +
+				", vehicleMovementType=" + vehicleMovementType +
+				", serviceType='" + serviceType + '\'' +
+				", faultCode=" + faultCode +
+				'}';
+	}
 }
