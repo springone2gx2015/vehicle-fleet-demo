@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
  * @author Dave Syer
  * @author Gunnar Hillert
  */
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceLocation {
 
