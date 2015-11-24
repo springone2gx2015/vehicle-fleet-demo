@@ -18,6 +18,7 @@ package demo.model;
  * @author David Turanski
  */
 public class Point {
+
 	private Double latitude;
 	private Double longitude;
 
@@ -27,7 +28,6 @@ public class Point {
 	}
 
 	public Double getLatitude() {
-
 		return latitude;
 	}
 
@@ -54,7 +54,6 @@ public class Point {
 		return !(longitude != null ?
 				!longitude.equals(point.longitude) :
 				point.longitude != null);
-
 	}
 
 	@Override public int hashCode() {

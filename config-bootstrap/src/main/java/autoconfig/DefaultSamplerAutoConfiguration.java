@@ -80,8 +80,7 @@ public class DefaultSamplerAutoConfiguration {
 		// Use this for debugging (or if there is no Zipkin collector running on port
 		// 9410)
 		@Bean
-		@ConditionalOnProperty(value = "fleet.zipkin.enabled", havingValue = "false",
-				matchIfMissing = true)
+		@ConditionalOnProperty(value = "fleet.zipkin.enabled", havingValue = "false", matchIfMissing = true)
 		public SpanCollector spanCollector() {
 			return new LoggingSpanCollector();
 		}

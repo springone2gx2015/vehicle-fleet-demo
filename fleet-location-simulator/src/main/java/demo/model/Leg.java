@@ -10,15 +10,17 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package demo.model;
+
 /**
  * Path leg. A path is made up of a series of legs (line segments).
  *
  * @author faram
  * @author Gunnar Hillert
- * @author Gunnar Hillert
  */
 public class Leg {
+
 	private Integer id;
 	private Point startPosition;
 	private Point endPosition;
@@ -81,7 +83,6 @@ public class Leg {
 		if (length != null ? !length.equals(leg.length) : leg.length != null)
 			return false;
 		return !(heading != null ? !heading.equals(leg.heading) : leg.heading != null);
-
 	}
 
 	@Override public int hashCode() {

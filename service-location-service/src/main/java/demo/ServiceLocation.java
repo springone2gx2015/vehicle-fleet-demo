@@ -17,7 +17,6 @@
 package demo;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author Dave Syer
  * @author David Turanski
- *
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Document
@@ -57,7 +55,8 @@ public class ServiceLocation {
 	}
 
 	@JsonCreator
-	public ServiceLocation(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
+	public ServiceLocation(@JsonProperty("latitude") double latitude,
+			@JsonProperty("longitude") double longitude) {
 		this.location = new Point(longitude, latitude);
 	}
 
@@ -146,7 +145,6 @@ public class ServiceLocation {
 		if (state != null ? !state.equals(that.state) : that.state != null) return false;
 		if (zip != null ? !zip.equals(that.zip) : that.zip != null) return false;
 		return !(type != null ? !type.equals(that.type) : that.type != null);
-
 	}
 
 	@Override public int hashCode() {

@@ -15,7 +15,6 @@ package demo.model;
  * @author Gunnar Hillert
  * @author David Turanski
  */
-
 public class CurrentPosition {
 
 	private String vin;
@@ -99,7 +98,6 @@ public class CurrentPosition {
 		return !(faultCode != null ?
 				!faultCode.equals(that.faultCode) :
 				that.faultCode != null);
-
 	}
 
 	@Override public int hashCode() {

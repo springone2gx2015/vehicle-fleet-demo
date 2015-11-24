@@ -10,12 +10,13 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package demo.model;
+
 /**
  *
  * @author Gunnar Hillert
  * @author David Turanski
- *
  */
 public class DirectionInput {
 
@@ -31,7 +32,6 @@ public class DirectionInput {
 
 	public String getFrom() {
 		return from;
-
 	}
 
 	public void setFrom(String from) {
@@ -54,7 +54,6 @@ public class DirectionInput {
 
 		if (from != null ? !from.equals(that.from) : that.from != null) return false;
 		return !(to != null ? !to.equals(that.to) : that.to != null);
-
 	}
 
 	@Override public int hashCode() {
@@ -70,4 +69,3 @@ public class DirectionInput {
 				'}';
 	}
 }
-

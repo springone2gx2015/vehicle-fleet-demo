@@ -219,8 +219,7 @@ public class Location {
 		return vehicleMovementType;
 	}
 
-	public void setVehicleMovementType(
-			VehicleMovementType vehicleMovementType) {
+	public void setVehicleMovementType(VehicleMovementType vehicleMovementType) {
 		this.vehicleMovementType = vehicleMovementType;
 	}
 
@@ -282,7 +281,6 @@ public class Location {
 		return !(faultCode != null ?
 				!faultCode.equals(location.faultCode) :
 				location.faultCode != null);
-
 	}
 
 	@Override public int hashCode() {

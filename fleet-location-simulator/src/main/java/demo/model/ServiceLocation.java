@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
  * @author Dave Syer
  * @author Gunnar Hillert
  */
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceLocation {
 
@@ -136,7 +135,6 @@ public class ServiceLocation {
 		if (state != null ? !state.equals(that.state) : that.state != null) return false;
 		if (zip != null ? !zip.equals(that.zip) : that.zip != null) return false;
 		return !(type != null ? !type.equals(that.type) : that.type != null);
-
 	}
 
 	@Override public int hashCode() {

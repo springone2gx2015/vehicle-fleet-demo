@@ -15,12 +15,12 @@
  */
 
 package demo.model;
+
 /**
  * @author Gunnar Hillert
  * @author David Turanski
  */
 public class FaultCode {
-
 
 	private String engineMake;
 	private String faultCode;
@@ -132,7 +132,6 @@ public class FaultCode {
 			return false;
 		if (sa != null ? !sa.equals(faultCode1.sa) : faultCode1.sa != null) return false;
 		return !(spn != null ? !spn.equals(faultCode1.spn) : faultCode1.spn != null);
-
 	}
 
 	@Override public int hashCode() {

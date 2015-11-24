@@ -103,7 +103,6 @@ public class PositionInfo {
 				!distanceFromStart.equals(that.distanceFromStart) :
 				that.distanceFromStart != null) return false;
 		return !(speed != null ? !speed.equals(that.speed) : that.speed != null);
-
 	}
 
 	@Override public int hashCode() {

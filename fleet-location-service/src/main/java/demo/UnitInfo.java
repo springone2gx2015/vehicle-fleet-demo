@@ -24,7 +24,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Embeddable
 public class UnitInfo {
 
-
 	private final String unitVin;
 	private String engineMake;
 	private String customerName;
@@ -43,7 +42,6 @@ public class UnitInfo {
 	}
 
 	@SuppressWarnings("unused")
-
 	private UnitInfo() {
 		this.unitVin = "";
 	}
@@ -95,7 +93,6 @@ public class UnitInfo {
 		return !(unitNumber != null ?
 				!unitNumber.equals(unitInfo.unitNumber) :
 				unitInfo.unitNumber != null);
-
 	}
 
 	@Override public int hashCode() {

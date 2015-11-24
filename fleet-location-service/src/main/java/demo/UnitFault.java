@@ -67,7 +67,6 @@ public class UnitFault {
 		if (spn != null ? !spn.equals(unitFault.spn) : unitFault.spn != null)
 			return false;
 		return !(fmi != null ? !fmi.equals(unitFault.fmi) : unitFault.fmi != null);
-
 	}
 
 	@Override public int hashCode() {
