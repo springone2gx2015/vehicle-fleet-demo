@@ -13,7 +13,7 @@
 package demo.model;
 
 /**
- * POJO to hold position of the vehiclqe and some other data.
+ * POJO to hold position of the vehicle and some other data.
  * @author faram
  * @author Gunnar Hillert
  * @author David Turanski
