@@ -17,6 +17,7 @@ import demo.model.VehicleStatus;
 /**
  *
  * @author Gunnar Hillert
+ * @author David Turanski
  */
 public class GpsSimulatorRequest {
 

@@ -18,27 +18,100 @@ package demo;
 
 import javax.persistence.Embeddable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Data
-@AllArgsConstructor
 @Embeddable
-@RequiredArgsConstructor
 public class UnitInfo {
+
 
 	private final String unitVin;
 	private String engineMake;
 	private String customerName;
 	private String unitNumber;
 
+	public UnitInfo(String unitVin) {
+		this.unitVin = unitVin;
+	}
+
+	public UnitInfo(String unitVin, String engineMake, String customerName,
+			String unitNumber) {
+		this.unitVin = unitVin;
+		this.engineMake = engineMake;
+		this.customerName = customerName;
+		this.unitNumber = unitNumber;
+	}
+
 	@SuppressWarnings("unused")
+
 	private UnitInfo() {
 		this.unitVin = "";
 	}
 
+	public String getUnitVin() {
+		return unitVin;
+	}
+
+	public String getEngineMake() {
+		return engineMake;
+	}
+
+	public void setEngineMake(String engineMake) {
+		this.engineMake = engineMake;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getUnitNumber() {
+		return unitNumber;
+	}
+
+	public void setUnitNumber(String unitNumber) {
+		this.unitNumber = unitNumber;
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		UnitInfo unitInfo = (UnitInfo) o;
+
+		if (unitVin != null ?
+				!unitVin.equals(unitInfo.unitVin) :
+				unitInfo.unitVin != null)
+			return false;
+		if (engineMake != null ?
+				!engineMake.equals(unitInfo.engineMake) :
+				unitInfo.engineMake != null) return false;
+		if (customerName != null ?
+				!customerName.equals(unitInfo.customerName) :
+				unitInfo.customerName != null) return false;
+		return !(unitNumber != null ?
+				!unitNumber.equals(unitInfo.unitNumber) :
+				unitInfo.unitNumber != null);
+
+	}
+
+	@Override public int hashCode() {
+		int result = unitVin != null ? unitVin.hashCode() : 0;
+		result = 31 * result + (engineMake != null ? engineMake.hashCode() : 0);
+		result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
+		result = 31 * result + (unitNumber != null ? unitNumber.hashCode() : 0);
+		return result;
+	}
+
+	@Override public String toString() {
+		return "UnitInfo{" +
+				"unitVin='" + unitVin + '\'' +
+				", engineMake='" + engineMake + '\'' +
+				", customerName='" + customerName + '\'' +
+				", unitNumber='" + unitNumber + '\'' +
+				'}';
+	}
 }

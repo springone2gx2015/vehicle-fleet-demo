@@ -34,12 +34,8 @@ import org.springframework.context.annotation.Configuration;
 import com.github.kristofa.brave.LoggingSpanCollector;
 import com.github.kristofa.brave.SpanCollector;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * @author Dave Syer
- *
  */
 @Configuration
 @ConditionalOnClass({ Trace.class, ZipkinSpanListener.class })
@@ -49,13 +45,25 @@ public class DefaultSamplerAutoConfiguration {
 
 	SecureRandom random = new SecureRandom();
 
-	@Getter
-	@Setter
 	double sampleRate = 0.1;
 
-	@Getter
-	@Setter
 	private boolean enabled;
+
+	public double getSampleRate() {
+		return sampleRate;
+	}
+
+	public void setSampleRate(double sampleRate) {
+		this.sampleRate = sampleRate;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	@Bean
 	@ConditionalOnMissingBean(Sampler.class)
@@ -72,7 +80,8 @@ public class DefaultSamplerAutoConfiguration {
 		// Use this for debugging (or if there is no Zipkin collector running on port
 		// 9410)
 		@Bean
-		@ConditionalOnProperty(value = "fleet.zipkin.enabled", havingValue = "false", matchIfMissing = true)
+		@ConditionalOnProperty(value = "fleet.zipkin.enabled", havingValue = "false",
+				matchIfMissing = true)
 		public SpanCollector spanCollector() {
 			return new LoggingSpanCollector();
 		}

@@ -20,6 +20,7 @@ zuul:
       url: http://localhost:9001
 
 ---
+#TODO: Remove this?
 spring:
   profiles: pez
 eureka:
